@@ -1,0 +1,1460 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2024-11-04 05:29+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:3
+msgid "<!DOCTYPE html> <html lang='en'> <head> <title>java Â« notes Â« admin - emacs.git - Emacs source repository</title> <meta name='generator' content='cgit v1.2.3-70-g09d2'/> <meta name='robots' content='index, nofollow'/> <link rel='stylesheet' type='text/css' href='/cgit-css/cgit.css'/> <script type='text/javascript' src='&quot;&quot;'></script> <link rel='shortcut icon' href='/gitweb/git-favicon.png'/> <link rel='alternate' title='Atom feed' href='https://git.savannah.gnu.org/cgit/emacs.git/atom/admin/notes/java?h=emacs-30' type='application/atom+xml'/> <link rel='vcs-git' href='git://git.savannah.gnu.org/emacs.git' title='emacs.git Git repository'/> <link rel='vcs-git' href='https://git.savannah.gnu.org/git/emacs.git' title='emacs.git Git repository'/> <link rel='vcs-git' href='ssh://git.savannah.gnu.org/srv/git/emacs.git' title='emacs.git Git repository'/> </head> <body> <div id='cgit'><table id='header'> <tr> <td class='logo' rowspan='2'><a href='/cgit/'><img src='/cgit-css/cgit.png' alt='cgit logo'/></a></td> <td class='main'><a href='/cgit/'>index</a> : <a href='/cgit/emacs.git/'>emacs.git</a></td><td class='form'><form method='get'> <select name='h' onchange='this.form.submit();'> <option value='bugfix/shorthand-fixes'>bugfix/shorthand-fixes</option> <option value='comment-cache'>comment-cache</option> <option value='concurrency-libtask'>concurrency-libtask</option> <option value='dima_regex_embedded_modifiers'>dima_regex_embedded_modifiers</option> <option value='elparized-core'>elparized-core</option> <option value='emacs-23'>emacs-23</option> <option value='emacs-24'>emacs-24</option> <option value='emacs-25'>emacs-25</option> <option value='emacs-26'>emacs-26</option> <option value='emacs-27'>emacs-27</option> <option value='emacs-28'>emacs-28</option> <option value='emacs-29'>emacs-29</option> <option value='emacs-30' selected='selected'>emacs-30</option> <option value='feature/android'>feature/android</option> <option value='feature/asan-gc-poisoning'>feature/asan-gc-poisoning</option> <option value='feature/auth-source-pass'>feature/auth-source-pass</option> <option value='feature/breadcrumb-mode'>feature/breadcrumb-mode</option> <option value='feature/byte-switch'>feature/byte-switch</option> <option value='feature/byte-tail-recursion'>feature/byte-tail-recursion</option> <option value='feature/byte-unwind-protect'>feature/byte-unwind-protect</option> <option value='feature/cl-lib-improvements'>feature/cl-lib-improvements</option> <option value='feature/comp-use-ctors'>feature/comp-use-ctors</option> <option value='feature/completion-lazy-hilit'>feature/completion-lazy-hilit</option> <option value='feature/completions-highlight-modifications'>feature/completions-highlight-modifications</option> <option value='feature/core-elpa-by-copy'>feature/core-elpa-by-copy</option> <option value='feature/deps-download'>feature/deps-download</option> <option value='feature/dll-only-windows'>feature/dll-only-windows</option> <option value='feature/elpa-package'>feature/elpa-package</option> <option value='feature/etags-update'>feature/etags-update</option> <option value='feature/etags_update_v2'>feature/etags_update_v2</option> <option value='feature/extend_face_id'>feature/extend_face_id</option> <option value='feature/external-completion'>feature/external-completion</option> <option value='feature/gnus-select'>feature/gnus-select</option> <option value='feature/gnus-select2'>feature/gnus-select2</option> <option value='feature/icomplete-vertical'>feature/icomplete-vertical</option> <option value='feature/inhibit-native-comp-cleanup'>feature/inhibit-native-comp-cleanup</option> <option value='feature/integrated-elpa'>feature/integrated-elpa</option> <option value='feature/integration-of-dictionary-el'>feature/integration-of-dictionary-el</option> <option value='feature/internal-msys'>feature/internal-msys</option> <option value='feature/jit-improved-type-punning'>feature/jit-improved-type-punning</option> <option value='feature/jsonrpc-support-dap'>feature/jsonrpc-support-dap</option> <option value='feature/libjit'>feature/libjit</option> <option value='feature/mhtml-mode'>feature/mhtml-mode</option> <option value='feature/minibuffer-completion-enhancements'>feature/minibuffer-completion-enhancements</option> <option value='feature/more-fds'>feature/more-fds</option> <option value='feature/named-lambdas'>feature/named-lambdas</option> <option value='feature/new-tutorial'>feature/new-tutorial</option> <option value='feature/package+vc'>feature/package+vc</option> <option value='feature/parsable-ert-output'>feature/parsable-ert-output</option> <option value='feature/pgtk'>feature/pgtk</option> <option value='feature/positioned-lambdas'>feature/positioned-lambdas</option> <option value='feature/shorthand-namespacing'>feature/shorthand-namespacing</option> <option value='feature/simple-16-theme'>feature/simple-16-theme</option> <option value='feature/smaller-windows'>feature/smaller-windows</option> <option value='feature/soc-bytecode-in-traceback'>feature/soc-bytecode-in-traceback</option> <option value='feature/soc-bytecode-in-traceback-reduced'>feature/soc-bytecode-in-traceback-reduced</option> <option value='feature/stdout-stderr-stream'>feature/stdout-stderr-stream</option> <option value='feature/temacs-for-bootstrap'>feature/temacs-for-bootstrap</option> <option value='feature/tramp-thread-safe'>feature/tramp-thread-safe</option> <option value='feature/tree-sitter'>feature/tree-sitter</option> <option value='feature/type-hierarchy'>feature/type-hierarchy</option> <option value='feature/windows-with-utils'>feature/windows-with-utils</option> <option value='feature/xref-find-extra'>feature/xref-find-extra</option> <option value='feature/zach-soc-bytecode-in-traceback'>feature/zach-soc-bytecode-in-traceback</option> <option value='feature/zach-soc-funcall-from-bytecode'>feature/zach-soc-funcall-from-bytecode</option> <option value='fix/bootstrap-build-minimize'>fix/bootstrap-build-minimize</option> <option value='fix/bootstrap-build-minimize-squash'>fix/bootstrap-build-minimize-squash</option> <option value='fix/bug-2034'>fix/bug-2034</option> <option value='fix/bug-20871'>fix/bug-20871</option> <option value='fix/bug-35351'>fix/bug-35351</option> <option value='fix/bug-60974'>fix/bug-60974</option> <option value='fix/eieio-persistent'>fix/eieio-persistent</option> <option value='fix/great-revert-bill'>fix/great-revert-bill</option> <option value='fix/htmlfontify-21990'>fix/htmlfontify-21990</option> <option value='fix/not-defined-at-runtime'>fix/not-defined-at-runtime</option> <option value='girzel/gnus-headers'>girzel/gnus-headers</option> <option value='gnus/nnatom'>gnus/nnatom</option> <option value='master'>master</option> <option value='nick.lloyd-bytecode-jit'>nick.lloyd-bytecode-jit</option> <option value='old-branches/EMACS_21_1_RC'>old-branches/EMACS_21_1_RC</option> <option value='old-branches/EMACS_22_BASE'>old-branches/EMACS_22_BASE</option> <option value='old-branches/EMACS_23_1_RC'>old-branches/EMACS_23_1_RC</option> <option value='old-branches/NewVC-fileset'>old-branches/NewVC-fileset</option> <option value='old-branches/cairo'>old-branches/cairo</option> <option value='old-branches/cedet-branch'>old-branches/cedet-branch</option> <option value='old-branches/concurrency'>old-branches/concurrency</option> <option value='old-branches/dynamic-modules-rc2'>old-branches/dynamic-modules-rc2</option> <option value='old-branches/emacs-unicode'>old-branches/emacs-unicode</option> <option value='old-branches/emacs-unicode-2'>old-branches/emacs-unicode-2</option> <option value='old-branches/font-backend'>old-branches/font-backend</option> <option value='old-branches/gnus-5_10-branch'>old-branches/gnus-5_10-branch</option> <option value='old-branches/lexbind'>old-branches/lexbind</option> <option value='old-branches/multi-tty'>old-branches/multi-tty</option> <option value='old-branches/pending'>old-branches/pending</option> <option value='old-branches/profiler'>old-branches/profiler</option> <option value='old-branches/python'>old-branches/python</option> <option value='old-branches/rmail-mbox-branch'>old-branches/rmail-mbox-branch</option> <option value='old-branches/unicode-xft'>old-branches/unicode-xft</option> <option value='old-branches/window-pub'>old-branches/window-pub</option> <option value='other-branches/Boehm-GC'>other-branches/Boehm-GC</option> <option value='other-branches/Boehm-versions'>other-branches/Boehm-versions</option> <option value='other-branches/DAVELOVE'>other-branches/DAVELOVE</option> <option value='other-branches/FLYSPELL'>other-branches/FLYSPELL</option> <option value='other-branches/ILYA'>other-branches/ILYA</option> <option value='other-branches/VENDOR'>other-branches/VENDOR</option> <option value='other-branches/fx-branch'>other-branches/fx-branch</option> <option value='other-branches/gerd_0001'>other-branches/gerd_0001</option> <option value='other-branches/gerd_dbe'>other-branches/gerd_dbe</option> <option value='other-branches/old-bidi'>other-branches/old-bidi</option> <option value='other-branches/old-concurrency'>other-branches/old-concurrency</option> <option value='other-branches/patches_21_0'>other-branches/patches_21_0</option> <option value='other-branches/test2'>other-branches/test2</option> <option value='other-branches/ttn-vms-21-2-stash'>other-branches/ttn-vms-21-2-stash</option> <option value='other-branches/ttn-vms-21-3-stash'>other-branches/ttn-vms-21-3-stash</option> <option value='pdumper'>pdumper</option> <option value='scratch/a-modest-completion-redesign-proposal'>scratch/a-modest-completion-redesign-proposal</option> <option value='scratch/accurate-warning-pos'>scratch/accurate-warning-pos</option> <option value='scratch/add-jsonrpc'>scratch/add-jsonrpc</option> <option value='scratch/add-lisp-data-mode'>scratch/add-lisp-data-mode</option> <option value='scratch/albinus'>scratch/albinus</option> <option value='scratch/alloc'>scratch/alloc</option> <option value='scratch/allow-custom-load-paths-in-elisp-flymake'>scratch/allow-custom-load-paths-in-elisp-flymake</option> <option value='scratch/allow-custom-null-and-false-objects-in-jsonc'>scratch/allow-custom-null-and-false-objects-in-jsonc</option> <option value='scratch/annotation-function-improvements'>scratch/annotation-function-improvements</option> <option value='scratch/api.el'>scratch/api.el</option> <option value='scratch/backend-completion'>scratch/backend-completion</option> <option value='scratch/benchmarks'>scratch/benchmarks</option> <option value='scratch/bug#48029'>scratch/bug#48029</option> <option value='scratch/bug-42149-funny-pcm-completion-scores'>scratch/bug-42149-funny-pcm-completion-scores</option> <option value='scratch/bug-50244'>scratch/bug-50244</option> <option value='scratch/bug-50959-fix'>scratch/bug-50959-fix</option> <option value='scratch/build-test'>scratch/build-test</option> <option value='scratch/bulk-tracing'>scratch/bulk-tracing</option> <option value='scratch/comp-branch-optim'>scratch/comp-branch-optim</option> <option value='scratch/comp-static-data'>scratch/comp-static-data</option> <option value='scratch/completion-api'>scratch/completion-api</option> <option value='scratch/correct-warning-pos'>scratch/correct-warning-pos</option> <option value='scratch/customize-quotes'>scratch/customize-quotes</option> <option value='scratch/dbusbind-type'>scratch/dbusbind-type</option> <option value='scratch/dbusbind-type-tests'>scratch/dbusbind-type-tests</option> <option value='scratch/eldoc-async'>scratch/eldoc-async</option> <option value='scratch/eldoc-display-functions'>scratch/eldoc-display-functions</option> <option value='scratch/eldoc-eglot-rework'>scratch/eldoc-eglot-rework</option> <option value='scratch/eldoc-xref-project-gnu-elpa-core-packages'>scratch/eldoc-xref-project-gnu-elpa-core-packages</option> <option value='scratch/electric-pair-cleanup-and-49518-bugfix'>scratch/electric-pair-cleanup-and-49518-bugfix</option> <option value='scratch/emacs-editorconfig'>scratch/emacs-editorconfig</option> <option value='scratch/erc-oldies'>scratch/erc-oldies</option> <option value='scratch/etags-regen'>scratch/etags-regen</option> <option value='scratch/eudc-bbdb-3'>scratch/eudc-bbdb-3</option> <option value='scratch/fcr'>scratch/fcr</option> <option value='scratch/fido-mode'>scratch/fido-mode</option> <option value='scratch/fix-40529-tabulated-list-mode-bootstrapping'>scratch/fix-40529-tabulated-list-mode-bootstrapping</option> <option value='scratch/fix-snapshot-building'>scratch/fix-snapshot-building</option> <option value='scratch/flymake-augment-api'>scratch/flymake-augment-api</option> <option value='scratch/flymake-fancy-end-of-line'>scratch/flymake-fancy-end-of-line</option> <option value='scratch/flymake-refactor-cleaner-for-emacs-26'>scratch/flymake-refactor-cleaner-for-emacs-26</option> <option value='scratch/follow'>scratch/follow</option> <option value='scratch/font_lock_large_files'>scratch/font_lock_large_files</option> <option value='scratch/fontify-open-string'>scratch/fontify-open-string</option> <option value='scratch/func-type-decls'>scratch/func-type-decls</option> <option value='scratch/gl-state-bytepos'>scratch/gl-state-bytepos</option> <option value='scratch/gnus-decoded'>scratch/gnus-decoded</option> <option value='scratch/gnus-docs'>scratch/gnus-docs</option> <option value='scratch/gnus-hashtables'>scratch/gnus-hashtables</option> <option value='scratch/gnus-roadmap'>scratch/gnus-roadmap</option> <option value='scratch/gnus-search'>scratch/gnus-search</option> <option value='scratch/handler-bind-2'>scratch/handler-bind-2</option> <option value='scratch/hard-narrow'>scratch/hard-narrow</option> <option value='scratch/highlight-n-windows'>scratch/highlight-n-windows</option> <option value='scratch/icomplete-lazy-highlight-attempt-2'>scratch/icomplete-lazy-highlight-attempt-2</option> <option value='scratch/icomplete-lazy-highlight-no-string-props'>scratch/icomplete-lazy-highlight-no-string-props</option> <option value='scratch/icomplete-vertical-mode-gregory-and-joao'>scratch/icomplete-vertical-mode-gregory-and-joao</option> <option value='scratch/icomplete-vertical-mode-improvements'>scratch/icomplete-vertical-mode-improvements</option> <option value='scratch/icons'>scratch/icons</option> <option value='scratch/igc'>scratch/igc</option> <option value='scratch/interpreted-function'>scratch/interpreted-function</option> <option value='scratch/isearch-show-toggles'>scratch/isearch-show-toggles</option> <option value='scratch/joaot/make-completion-at-point-function'>scratch/joaot/make-completion-at-point-function</option> <option value='scratch/kqueue'>scratch/kqueue</option> <option value='scratch/last-cedet-merge'>scratch/last-cedet-merge</option> <option value='scratch/lexspaces'>scratch/lexspaces</option> <option value='scratch/markers-as-gap-array'>scratch/markers-as-gap-array</option> <option value='scratch/merge-cedet-tests'>scratch/merge-cedet-tests</option> <option value='scratch/modern-mode'>scratch/modern-mode</option> <option value='scratch/multi-level-test-makefile'>scratch/multi-level-test-makefile</option> <option value='scratch/native-timers-blocked'>scratch/native-timers-blocked</option> <option value='scratch/new-flex-completion-style'>scratch/new-flex-completion-style</option> <option value='scratch/no-ls-lisp-advice'>scratch/no-ls-lisp-advice</option> <option value='scratch/no-purespace'>scratch/no-purespace</option> <option value='scratch/no-purespace-old'>scratch/no-purespace-old</option> <option value='scratch/nonspecial-handlers'>scratch/nonspecial-handlers</option> <option value='scratch/np/backports-26.2'>scratch/np/backports-26.2</option> <option value='scratch/ns/emacs27-drawing'>scratch/ns/emacs27-drawing</option> <option value='scratch/octave-eldoc-fixes'>scratch/octave-eldoc-fixes</option> <option value='scratch/package-security'>scratch/package-security</option> <option value='scratch/pkg'>scratch/pkg</option> <option value='scratch/posix-spawn'>scratch/posix-spawn</option> <option value='scratch/pure-overflow-warn'>scratch/pure-overflow-warn</option> <option value='scratch/python-eldoc-async'>scratch/python-eldoc-async</option> <option value='scratch/raeburn-startup'>scratch/raeburn-startup</option> <option value='scratch/resolve-cc-mode-and-e-p-m'>scratch/resolve-cc-mode-and-e-p-m</option> <option value='scratch/reworked-icomplete-in-buffer-mode'>scratch/reworked-icomplete-in-buffer-mode</option> <option value='scratch/seccomp'>scratch/seccomp</option> <option value='scratch/shorthand-namespacing'>scratch/shorthand-namespacing</option> <option value='scratch/some-more-icomplete-hacks'>scratch/some-more-icomplete-hacks</option> <option value='scratch/support-plists-in-jsonc'>scratch/support-plists-in-jsonc</option> <option value='scratch/support-plists-in-jsonc-autodetect'>scratch/support-plists-in-jsonc-autodetect</option> <option value='scratch/tango-icons'>scratch/tango-icons</option> <option value='scratch/timsort'>scratch/timsort</option> <option value='scratch/tsdh-vc-list-files'>scratch/tsdh-vc-list-files</option> <option value='scratch/tty-child-frames'>scratch/tty-child-frames</option> <option value='scratch/tzz/auth-source-reveal-mode'>scratch/tzz/auth-source-reveal-mode</option> <option value='scratch/tzz/cicd'>scratch/tzz/cicd</option> <option value='scratch/tzz/gnus-cloud-aead'>scratch/tzz/gnus-cloud-aead</option> <option value='scratch/tzz/import-pl'>scratch/tzz/import-pl</option> <option value='scratch/tzz/prettify-text-mode'>scratch/tzz/prettify-text-mode</option> <option value='scratch/windows-98'>scratch/windows-98</option> <option value='scratch/windows-branch-build-2'>scratch/windows-branch-build-2</option> <option value='scratch/with-fetched-url'>scratch/with-fetched-url</option> <option value='scratch/write-eglot-manual-for-advanced-server-config'>scratch/write-eglot-manual-for-advanced-server-config</option> <option value='stream'>stream</option> <option value='test-concurrency'>test-concurrency</option> <option value='wallet'>wallet</option> <option value='xwidget'>xwidget</option> <option value='xwidget_mvp'>xwidget_mvp</option> </select> <input type='submit' value='switch'/></form></td></tr> <tr><td class='sub'>Emacs source repository</td><td class='sub right'></td></tr></table> <table class='tabs'><tr><td> <a href='/cgit/emacs.git/?h=emacs-30'>summary</a><a href='/cgit/emacs.git/refs/?h=emacs-30'>refs</a><a href='/cgit/emacs.git/log/admin/notes/java?h=emacs-30'>log</a><a class='active' href='/cgit/emacs.git/tree/admin/notes/java?h=emacs-30'>tree</a><a href='/cgit/emacs.git/commit/admin/notes/java?h=emacs-30'>commit</a><a href='/cgit/emacs.git/diff/admin/notes/java?h=emacs-30'>diff</a></td><td class='form'><form class='right' method='get' action='/cgit/emacs.git/log/admin/notes/java'> <input type='hidden' name='h' value='emacs-30'/><select name='qt'> <option value='grep'>log msg</option> <option value='author'>author</option> <option value='committer'>committer</option> <option value='range'>range</option> </select> <input class='txt' type='search' size='10' name='q' value=''/> <input type='submit' value='search'/> </form> </td></tr></table> <div class='path'>path: <a href='/cgit/emacs.git/tree/?h=emacs-30'>root</a>/<a href='/cgit/emacs.git/tree/admin?h=emacs-30'>admin</a>/<a href='/cgit/emacs.git/tree/admin/notes?h=emacs-30'>notes</a>/<a href='/cgit/emacs.git/tree/admin/notes/java?h=emacs-30'>java</a></div><div class='content'>blob: e10f09f780f157f6670fb00286ae6f7942ac4f2d (<a href='/cgit/emacs.git/plain/admin/notes/java?h=emacs-30'>plain</a>) <table summary='blob content' class='blob'> <tr><td class='linenumbers'><pre><a id='n1' href='#n1'>1</a> <a id='n2' href='#n2'>2</a> <a id='n3' href='#n3'>3</a> <a id='n4' href='#n4'>4</a> <a id='n5' href='#n5'>5</a> <a id='n6' href='#n6'>6</a> <a id='n7' href='#n7'>7</a> <a id='n8' href='#n8'>8</a> <a id='n9' href='#n9'>9</a> <a id='n10' href='#n10'>10</a> <a id='n11' href='#n11'>11</a> <a id='n12' href='#n12'>12</a> <a id='n13' href='#n13'>13</a> <a id='n14' href='#n14'>14</a> <a id='n15' href='#n15'>15</a> <a id='n16' href='#n16'>16</a> <a id='n17' href='#n17'>17</a> <a id='n18' href='#n18'>18</a> <a id='n19' href='#n19'>19</a> <a id='n20' href='#n20'>20</a> <a id='n21' href='#n21'>21</a> <a id='n22' href='#n22'>22</a> <a id='n23' href='#n23'>23</a> <a id='n24' href='#n24'>24</a> <a id='n25' href='#n25'>25</a> <a id='n26' href='#n26'>26</a> <a id='n27' href='#n27'>27</a> <a id='n28' href='#n28'>28</a> <a id='n29' href='#n29'>29</a> <a id='n30' href='#n30'>30</a> <a id='n31' href='#n31'>31</a> <a id='n32' href='#n32'>32</a> <a id='n33' href='#n33'>33</a> <a id='n34' href='#n34'>34</a> <a id='n35' href='#n35'>35</a> <a id='n36' href='#n36'>36</a> <a id='n37' href='#n37'>37</a> <a id='n38' href='#n38'>38</a> <a id='n39' href='#n39'>39</a> <a id='n40' href='#n40'>40</a> <a id='n41' href='#n41'>41</a> <a id='n42' href='#n42'>42</a> <a id='n43' href='#n43'>43</a> <a id='n44' href='#n44'>44</a> <a id='n45' href='#n45'>45</a> <a id='n46' href='#n46'>46</a> <a id='n47' href='#n47'>47</a> <a id='n48' href='#n48'>48</a> <a id='n49' href='#n49'>49</a> <a id='n50' href='#n50'>50</a> <a id='n51' href='#n51'>51</a> <a id='n52' href='#n52'>52</a> <a id='n53' href='#n53'>53</a> <a id='n54' href='#n54'>54</a> <a id='n55' href='#n55'>55</a> <a id='n56' href='#n56'>56</a> <a id='n57' href='#n57'>57</a> <a id='n58' href='#n58'>58</a> <a id='n59' href='#n59'>59</a> <a id='n60' href='#n60'>60</a> <a id='n61' href='#n61'>61</a> <a id='n62' href='#n62'>62</a> <a id='n63' href='#n63'>63</a> <a id='n64' href='#n64'>64</a> <a id='n65' href='#n65'>65</a> <a id='n66' href='#n66'>66</a> <a id='n67' href='#n67'>67</a> <a id='n68' href='#n68'>68</a> <a id='n69' href='#n69'>69</a> <a id='n70' href='#n70'>70</a> <a id='n71' href='#n71'>71</a> <a id='n72' href='#n72'>72</a> <a id='n73' href='#n73'>73</a> <a id='n74' href='#n74'>74</a> <a id='n75' href='#n75'>75</a> <a id='n76' href='#n76'>76</a> <a id='n77' href='#n77'>77</a> <a id='n78' href='#n78'>78</a> <a id='n79' href='#n79'>79</a> <a id='n80' href='#n80'>80</a> <a id='n81' href='#n81'>81</a> <a id='n82' href='#n82'>82</a> <a id='n83' href='#n83'>83</a> <a id='n84' href='#n84'>84</a> <a id='n85' href='#n85'>85</a> <a id='n86' href='#n86'>86</a> <a id='n87' href='#n87'>87</a> <a id='n88' href='#n88'>88</a> <a id='n89' href='#n89'>89</a> <a id='n90' href='#n90'>90</a> <a id='n91' href='#n91'>91</a> <a id='n92' href='#n92'>92</a> <a id='n93' href='#n93'>93</a> <a id='n94' href='#n94'>94</a> <a id='n95' href='#n95'>95</a> <a id='n96' href='#n96'>96</a> <a id='n97' href='#n97'>97</a> <a id='n98' href='#n98'>98</a> <a id='n99' href='#n99'>99</a> <a id='n100' href='#n100'>100</a> <a id='n101' href='#n101'>101</a> <a id='n102' href='#n102'>102</a> <a id='n103' href='#n103'>103</a> <a id='n104' href='#n104'>104</a> <a id='n105' href='#n105'>105</a> <a id='n106' href='#n106'>106</a> <a id='n107' href='#n107'>107</a> <a id='n108' href='#n108'>108</a> <a id='n109' href='#n109'>109</a> <a id='n110' href='#n110'>110</a> <a id='n111' href='#n111'>111</a> <a id='n112' href='#n112'>112</a> <a id='n113' href='#n113'>113</a> <a id='n114' href='#n114'>114</a> <a id='n115' href='#n115'>115</a> <a id='n116' href='#n116'>116</a> <a id='n117' href='#n117'>117</a> <a id='n118' href='#n118'>118</a> <a id='n119' href='#n119'>119</a> <a id='n120' href='#n120'>120</a> <a id='n121' href='#n121'>121</a> <a id='n122' href='#n122'>122</a> <a id='n123' href='#n123'>123</a> <a id='n124' href='#n124'>124</a> <a id='n125' href='#n125'>125</a> <a id='n126' href='#n126'>126</a> <a id='n127' href='#n127'>127</a> <a id='n128' href='#n128'>128</a> <a id='n129' href='#n129'>129</a> <a id='n130' href='#n130'>130</a> <a id='n131' href='#n131'>131</a> <a id='n132' href='#n132'>132</a> <a id='n133' href='#n133'>133</a> <a id='n134' href='#n134'>134</a> <a id='n135' href='#n135'>135</a> <a id='n136' href='#n136'>136</a> <a id='n137' href='#n137'>137</a> <a id='n138' href='#n138'>138</a> <a id='n139' href='#n139'>139</a> <a id='n140' href='#n140'>140</a> <a id='n141' href='#n141'>141</a> <a id='n142' href='#n142'>142</a> <a id='n143' href='#n143'>143</a> <a id='n144' href='#n144'>144</a> <a id='n145' href='#n145'>145</a> <a id='n146' href='#n146'>146</a> <a id='n147' href='#n147'>147</a> <a id='n148' href='#n148'>148</a> <a id='n149' href='#n149'>149</a> <a id='n150' href='#n150'>150</a> <a id='n151' href='#n151'>151</a> <a id='n152' href='#n152'>152</a> <a id='n153' href='#n153'>153</a> <a id='n154' href='#n154'>154</a> <a id='n155' href='#n155'>155</a> <a id='n156' href='#n156'>156</a> <a id='n157' href='#n157'>157</a> <a id='n158' href='#n158'>158</a> <a id='n159' href='#n159'>159</a> <a id='n160' href='#n160'>160</a> <a id='n161' href='#n161'>161</a> <a id='n162' href='#n162'>162</a> <a id='n163' href='#n163'>163</a> <a id='n164' href='#n164'>164</a> <a id='n165' href='#n165'>165</a> <a id='n166' href='#n166'>166</a> <a id='n167' href='#n167'>167</a> <a id='n168' href='#n168'>168</a> <a id='n169' href='#n169'>169</a> <a id='n170' href='#n170'>170</a> <a id='n171' href='#n171'>171</a> <a id='n172' href='#n172'>172</a> <a id='n173' href='#n173'>173</a> <a id='n174' href='#n174'>174</a> <a id='n175' href='#n175'>175</a> <a id='n176' href='#n176'>176</a> <a id='n177' href='#n177'>177</a> <a id='n178' href='#n178'>178</a> <a id='n179' href='#n179'>179</a> <a id='n180' href='#n180'>180</a> <a id='n181' href='#n181'>181</a> <a id='n182' href='#n182'>182</a> <a id='n183' href='#n183'>183</a> <a id='n184' href='#n184'>184</a> <a id='n185' href='#n185'>185</a> <a id='n186' href='#n186'>186</a> <a id='n187' href='#n187'>187</a> <a id='n188' href='#n188'>188</a> <a id='n189' href='#n189'>189</a> <a id='n190' href='#n190'>190</a> <a id='n191' href='#n191'>191</a> <a id='n192' href='#n192'>192</a> <a id='n193' href='#n193'>193</a> <a id='n194' href='#n194'>194</a> <a id='n195' href='#n195'>195</a> <a id='n196' href='#n196'>196</a> <a id='n197' href='#n197'>197</a> <a id='n198' href='#n198'>198</a> <a id='n199' href='#n199'>199</a> <a id='n200' href='#n200'>200</a> <a id='n201' href='#n201'>201</a> <a id='n202' href='#n202'>202</a> <a id='n203' href='#n203'>203</a> <a id='n204' href='#n204'>204</a> <a id='n205' href='#n205'>205</a> <a id='n206' href='#n206'>206</a> <a id='n207' href='#n207'>207</a> <a id='n208' href='#n208'>208</a> <a id='n209' href='#n209'>209</a> <a id='n210' href='#n210'>210</a> <a id='n211' href='#n211'>211</a> <a id='n212' href='#n212'>212</a> <a id='n213' href='#n213'>213</a> <a id='n214' href='#n214'>214</a> <a id='n215' href='#n215'>215</a> <a id='n216' href='#n216'>216</a> <a id='n217' href='#n217'>217</a> <a id='n218' href='#n218'>218</a> <a id='n219' href='#n219'>219</a> <a id='n220' href='#n220'>220</a> <a id='n221' href='#n221'>221</a> <a id='n222' href='#n222'>222</a> <a id='n223' href='#n223'>223</a> <a id='n224' href='#n224'>224</a> <a id='n225' href='#n225'>225</a> <a id='n226' href='#n226'>226</a> <a id='n227' href='#n227'>227</a> <a id='n228' href='#n228'>228</a> <a id='n229' href='#n229'>229</a> <a id='n230' href='#n230'>230</a> <a id='n231' href='#n231'>231</a> <a id='n232' href='#n232'>232</a> <a id='n233' href='#n233'>233</a> <a id='n234' href='#n234'>234</a> <a id='n235' href='#n235'>235</a> <a id='n236' href='#n236'>236</a> <a id='n237' href='#n237'>237</a> <a id='n238' href='#n238'>238</a> <a id='n239' href='#n239'>239</a> <a id='n240' href='#n240'>240</a> <a id='n241' href='#n241'>241</a> <a id='n242' href='#n242'>242</a> <a id='n243' href='#n243'>243</a> <a id='n244' href='#n244'>244</a> <a id='n245' href='#n245'>245</a> <a id='n246' href='#n246'>246</a> <a id='n247' href='#n247'>247</a> <a id='n248' href='#n248'>248</a> <a id='n249' href='#n249'>249</a> <a id='n250' href='#n250'>250</a> <a id='n251' href='#n251'>251</a> <a id='n252' href='#n252'>252</a> <a id='n253' href='#n253'>253</a> <a id='n254' href='#n254'>254</a> <a id='n255' href='#n255'>255</a> <a id='n256' href='#n256'>256</a> <a id='n257' href='#n257'>257</a> <a id='n258' href='#n258'>258</a> <a id='n259' href='#n259'>259</a> <a id='n260' href='#n260'>260</a> <a id='n261' href='#n261'>261</a> <a id='n262' href='#n262'>262</a> <a id='n263' href='#n263'>263</a> <a id='n264' href='#n264'>264</a> <a id='n265' href='#n265'>265</a> <a id='n266' href='#n266'>266</a> <a id='n267' href='#n267'>267</a> <a id='n268' href='#n268'>268</a> <a id='n269' href='#n269'>269</a> <a id='n270' href='#n270'>270</a> <a id='n271' href='#n271'>271</a> <a id='n272' href='#n272'>272</a> <a id='n273' href='#n273'>273</a> <a id='n274' href='#n274'>274</a> <a id='n275' href='#n275'>275</a> <a id='n276' href='#n276'>276</a> <a id='n277' href='#n277'>277</a> <a id='n278' href='#n278'>278</a> <a id='n279' href='#n279'>279</a> <a id='n280' href='#n280'>280</a> <a id='n281' href='#n281'>281</a> <a id='n282' href='#n282'>282</a> <a id='n283' href='#n283'>283</a> <a id='n284' href='#n284'>284</a> <a id='n285' href='#n285'>285</a> <a id='n286' href='#n286'>286</a> <a id='n287' href='#n287'>287</a> <a id='n288' href='#n288'>288</a> <a id='n289' href='#n289'>289</a> <a id='n290' href='#n290'>290</a> <a id='n291' href='#n291'>291</a> <a id='n292' href='#n292'>292</a> <a id='n293' href='#n293'>293</a> <a id='n294' href='#n294'>294</a> <a id='n295' href='#n295'>295</a> <a id='n296' href='#n296'>296</a> <a id='n297' href='#n297'>297</a> <a id='n298' href='#n298'>298</a> <a id='n299' href='#n299'>299</a> <a id='n300' href='#n300'>300</a> <a id='n301' href='#n301'>301</a> <a id='n302' href='#n302'>302</a> <a id='n303' href='#n303'>303</a> <a id='n304' href='#n304'>304</a> <a id='n305' href='#n305'>305</a> <a id='n306' href='#n306'>306</a> <a id='n307' href='#n307'>307</a> <a id='n308' href='#n308'>308</a> <a id='n309' href='#n309'>309</a> <a id='n310' href='#n310'>310</a> <a id='n311' href='#n311'>311</a> <a id='n312' href='#n312'>312</a> <a id='n313' href='#n313'>313</a> <a id='n314' href='#n314'>314</a> <a id='n315' href='#n315'>315</a> <a id='n316' href='#n316'>316</a> <a id='n317' href='#n317'>317</a> <a id='n318' href='#n318'>318</a> <a id='n319' href='#n319'>319</a> <a id='n320' href='#n320'>320</a> <a id='n321' href='#n321'>321</a> <a id='n322' href='#n322'>322</a> <a id='n323' href='#n323'>323</a> <a id='n324' href='#n324'>324</a> <a id='n325' href='#n325'>325</a> <a id='n326' href='#n326'>326</a> <a id='n327' href='#n327'>327</a> <a id='n328' href='#n328'>328</a> <a id='n329' href='#n329'>329</a> <a id='n330' href='#n330'>330</a> <a id='n331' href='#n331'>331</a> <a id='n332' href='#n332'>332</a> <a id='n333' href='#n333'>333</a> <a id='n334' href='#n334'>334</a> <a id='n335' href='#n335'>335</a> <a id='n336' href='#n336'>336</a> <a id='n337' href='#n337'>337</a> <a id='n338' href='#n338'>338</a> <a id='n339' href='#n339'>339</a> <a id='n340' href='#n340'>340</a> <a id='n341' href='#n341'>341</a> <a id='n342' href='#n342'>342</a> <a id='n343' href='#n343'>343</a> <a id='n344' href='#n344'>344</a> <a id='n345' href='#n345'>345</a> <a id='n346' href='#n346'>346</a> <a id='n347' href='#n347'>347</a> <a id='n348' href='#n348'>348</a> <a id='n349' href='#n349'>349</a> <a id='n350' href='#n350'>350</a> <a id='n351' href='#n351'>351</a> <a id='n352' href='#n352'>352</a> <a id='n353' href='#n353'>353</a> <a id='n354' href='#n354'>354</a> <a id='n355' href='#n355'>355</a> <a id='n356' href='#n356'>356</a> <a id='n357' href='#n357'>357</a> <a id='n358' href='#n358'>358</a> <a id='n359' href='#n359'>359</a> <a id='n360' href='#n360'>360</a> <a id='n361' href='#n361'>361</a> <a id='n362' href='#n362'>362</a> <a id='n363' href='#n363'>363</a> <a id='n364' href='#n364'>364</a> <a id='n365' href='#n365'>365</a> <a id='n366' href='#n366'>366</a> <a id='n367' href='#n367'>367</a> <a id='n368' href='#n368'>368</a> <a id='n369' href='#n369'>369</a> <a id='n370' href='#n370'>370</a> <a id='n371' href='#n371'>371</a> <a id='n372' href='#n372'>372</a> <a id='n373' href='#n373'>373</a> <a id='n374' href='#n374'>374</a> <a id='n375' href='#n375'>375</a> <a id='n376' href='#n376'>376</a> <a id='n377' href='#n377'>377</a> <a id='n378' href='#n378'>378</a> <a id='n379' href='#n379'>379</a> <a id='n380' href='#n380'>380</a> <a id='n381' href='#n381'>381</a> <a id='n382' href='#n382'>382</a> <a id='n383' href='#n383'>383</a> <a id='n384' href='#n384'>384</a> <a id='n385' href='#n385'>385</a> <a id='n386' href='#n386'>386</a> <a id='n387' href='#n387'>387</a> <a id='n388' href='#n388'>388</a> <a id='n389' href='#n389'>389</a> <a id='n390' href='#n390'>390</a> <a id='n391' href='#n391'>391</a> <a id='n392' href='#n392'>392</a> <a id='n393' href='#n393'>393</a> <a id='n394' href='#n394'>394</a> <a id='n395' href='#n395'>395</a> <a id='n396' href='#n396'>396</a> <a id='n397' href='#n397'>397</a> <a id='n398' href='#n398'>398</a> <a id='n399' href='#n399'>399</a> <a id='n400' href='#n400'>400</a> <a id='n401' href='#n401'>401</a> <a id='n402' href='#n402'>402</a> <a id='n403' href='#n403'>403</a> <a id='n404' href='#n404'>404</a> <a id='n405' href='#n405'>405</a> <a id='n406' href='#n406'>406</a> <a id='n407' href='#n407'>407</a> <a id='n408' href='#n408'>408</a> <a id='n409' href='#n409'>409</a> <a id='n410' href='#n410'>410</a> <a id='n411' href='#n411'>411</a> <a id='n412' href='#n412'>412</a> <a id='n413' href='#n413'>413</a> <a id='n414' href='#n414'>414</a> <a id='n415' href='#n415'>415</a> <a id='n416' href='#n416'>416</a> <a id='n417' href='#n417'>417</a> <a id='n418' href='#n418'>418</a> <a id='n419' href='#n419'>419</a> <a id='n420' href='#n420'>420</a> <a id='n421' href='#n421'>421</a> <a id='n422' href='#n422'>422</a> <a id='n423' href='#n423'>423</a> <a id='n424' href='#n424'>424</a> <a id='n425' href='#n425'>425</a> <a id='n426' href='#n426'>426</a> <a id='n427' href='#n427'>427</a> <a id='n428' href='#n428'>428</a> <a id='n429' href='#n429'>429</a> <a id='n430' href='#n430'>430</a> <a id='n431' href='#n431'>431</a> <a id='n432' href='#n432'>432</a> <a id='n433' href='#n433'>433</a> <a id='n434' href='#n434'>434</a> <a id='n435' href='#n435'>435</a> <a id='n436' href='#n436'>436</a> <a id='n437' href='#n437'>437</a> <a id='n438' href='#n438'>438</a> <a id='n439' href='#n439'>439</a> <a id='n440' href='#n440'>440</a> <a id='n441' href='#n441'>441</a> <a id='n442' href='#n442'>442</a> <a id='n443' href='#n443'>443</a> <a id='n444' href='#n444'>444</a> <a id='n445' href='#n445'>445</a> <a id='n446' href='#n446'>446</a> <a id='n447' href='#n447'>447</a> <a id='n448' href='#n448'>448</a> <a id='n449' href='#n449'>449</a> <a id='n450' href='#n450'>450</a> <a id='n451' href='#n451'>451</a> <a id='n452' href='#n452'>452</a> <a id='n453' href='#n453'>453</a> <a id='n454' href='#n454'>454</a> <a id='n455' href='#n455'>455</a> <a id='n456' href='#n456'>456</a> <a id='n457' href='#n457'>457</a> <a id='n458' href='#n458'>458</a> <a id='n459' href='#n459'>459</a> <a id='n460' href='#n460'>460</a> <a id='n461' href='#n461'>461</a> <a id='n462' href='#n462'>462</a> <a id='n463' href='#n463'>463</a> <a id='n464' href='#n464'>464</a> <a id='n465' href='#n465'>465</a> <a id='n466' href='#n466'>466</a> <a id='n467' href='#n467'>467</a> <a id='n468' href='#n468'>468</a> <a id='n469' href='#n469'>469</a> <a id='n470' href='#n470'>470</a> <a id='n471' href='#n471'>471</a> <a id='n472' href='#n472'>472</a> <a id='n473' href='#n473'>473</a> <a id='n474' href='#n474'>474</a> <a id='n475' href='#n475'>475</a> <a id='n476' href='#n476'>476</a> <a id='n477' href='#n477'>477</a> <a id='n478' href='#n478'>478</a> <a id='n479' href='#n479'>479</a> <a id='n480' href='#n480'>480</a> <a id='n481' href='#n481'>481</a> <a id='n482' href='#n482'>482</a> <a id='n483' href='#n483'>483</a> <a id='n484' href='#n484'>484</a> <a id='n485' href='#n485'>485</a> <a id='n486' href='#n486'>486</a> <a id='n487' href='#n487'>487</a> <a id='n488' href='#n488'>488</a> <a id='n489' href='#n489'>489</a> <a id='n490' href='#n490'>490</a> <a id='n491' href='#n491'>491</a> <a id='n492' href='#n492'>492</a> <a id='n493' href='#n493'>493</a> <a id='n494' href='#n494'>494</a> <a id='n495' href='#n495'>495</a> <a id='n496' href='#n496'>496</a> <a id='n497' href='#n497'>497</a> <a id='n498' href='#n498'>498</a> <a id='n499' href='#n499'>499</a> <a id='n500' href='#n500'>500</a> <a id='n501' href='#n501'>501</a> <a id='n502' href='#n502'>502</a> <a id='n503' href='#n503'>503</a> <a id='n504' href='#n504'>504</a> <a id='n505' href='#n505'>505</a> <a id='n506' href='#n506'>506</a> <a id='n507' href='#n507'>507</a> <a id='n508' href='#n508'>508</a> <a id='n509' href='#n509'>509</a> <a id='n510' href='#n510'>510</a> <a id='n511' href='#n511'>511</a> <a id='n512' href='#n512'>512</a> <a id='n513' href='#n513'>513</a> <a id='n514' href='#n514'>514</a> <a id='n515' href='#n515'>515</a> <a id='n516' href='#n516'>516</a> <a id='n517' href='#n517'>517</a> <a id='n518' href='#n518'>518</a> <a id='n519' href='#n519'>519</a> <a id='n520' href='#n520'>520</a> <a id='n521' href='#n521'>521</a> <a id='n522' href='#n522'>522</a> <a id='n523' href='#n523'>523</a> <a id='n524' href='#n524'>524</a> <a id='n525' href='#n525'>525</a> <a id='n526' href='#n526'>526</a> <a id='n527' href='#n527'>527</a> <a id='n528' href='#n528'>528</a> <a id='n529' href='#n529'>529</a> <a id='n530' href='#n530'>530</a> <a id='n531' href='#n531'>531</a> <a id='n532' href='#n532'>532</a> <a id='n533' href='#n533'>533</a> <a id='n534' href='#n534'>534</a> <a id='n535' href='#n535'>535</a> <a id='n536' href='#n536'>536</a> <a id='n537' href='#n537'>537</a> <a id='n538' href='#n538'>538</a> <a id='n539' href='#n539'>539</a> <a id='n540' href='#n540'>540</a> <a id='n541' href='#n541'>541</a> <a id='n542' href='#n542'>542</a> <a id='n543' href='#n543'>543</a> <a id='n544' href='#n544'>544</a> <a id='n545' href='#n545'>545</a> <a id='n546' href='#n546'>546</a> <a id='n547' href='#n547'>547</a> <a id='n548' href='#n548'>548</a> <a id='n549' href='#n549'>549</a> <a id='n550' href='#n550'>550</a> <a id='n551' href='#n551'>551</a> <a id='n552' href='#n552'>552</a> <a id='n553' href='#n553'>553</a> <a id='n554' href='#n554'>554</a> <a id='n555' href='#n555'>555</a> <a id='n556' href='#n556'>556</a> <a id='n557' href='#n557'>557</a> <a id='n558' href='#n558'>558</a> <a id='n559' href='#n559'>559</a> <a id='n560' href='#n560'>560</a> <a id='n561' href='#n561'>561</a> <a id='n562' href='#n562'>562</a> <a id='n563' href='#n563'>563</a> <a id='n564' href='#n564'>564</a> <a id='n565' href='#n565'>565</a> <a id='n566' href='#n566'>566</a> <a id='n567' href='#n567'>567</a> <a id='n568' href='#n568'>568</a> <a id='n569' href='#n569'>569</a> <a id='n570' href='#n570'>570</a> <a id='n571' href='#n571'>571</a> <a id='n572' href='#n572'>572</a> <a id='n573' href='#n573'>573</a> <a id='n574' href='#n574'>574</a> <a id='n575' href='#n575'>575</a> <a id='n576' href='#n576'>576</a> <a id='n577' href='#n577'>577</a> <a id='n578' href='#n578'>578</a> <a id='n579' href='#n579'>579</a> <a id='n580' href='#n580'>580</a> <a id='n581' href='#n581'>581</a> <a id='n582' href='#n582'>582</a> <a id='n583' href='#n583'>583</a> <a id='n584' href='#n584'>584</a> <a id='n585' href='#n585'>585</a> <a id='n586' href='#n586'>586</a> <a id='n587' href='#n587'>587</a> <a id='n588' href='#n588'>588</a> <a id='n589' href='#n589'>589</a> <a id='n590' href='#n590'>590</a> <a id='n591' href='#n591'>591</a> <a id='n592' href='#n592'>592</a> <a id='n593' href='#n593'>593</a> <a id='n594' href='#n594'>594</a> <a id='n595' href='#n595'>595</a> <a id='n596' href='#n596'>596</a> <a id='n597' href='#n597'>597</a> <a id='n598' href='#n598'>598</a> <a id='n599' href='#n599'>599</a> <a id='n600' href='#n600'>600</a> <a id='n601' href='#n601'>601</a> <a id='n602' href='#n602'>602</a> <a id='n603' href='#n603'>603</a> <a id='n604' href='#n604'>604</a> <a id='n605' href='#n605'>605</a> <a id='n606' href='#n606'>606</a> <a id='n607' href='#n607'>607</a> <a id='n608' href='#n608'>608</a> <a id='n609' href='#n609'>609</a> <a id='n610' href='#n610'>610</a> <a id='n611' href='#n611'>611</a> <a id='n612' href='#n612'>612</a> <a id='n613' href='#n613'>613</a> <a id='n614' href='#n614'>614</a> <a id='n615' href='#n615'>615</a> <a id='n616' href='#n616'>616</a> <a id='n617' href='#n617'>617</a> <a id='n618' href='#n618'>618</a> <a id='n619' href='#n619'>619</a> <a id='n620' href='#n620'>620</a> <a id='n621' href='#n621'>621</a> <a id='n622' href='#n622'>622</a> <a id='n623' href='#n623'>623</a> <a id='n624' href='#n624'>624</a> <a id='n625' href='#n625'>625</a> <a id='n626' href='#n626'>626</a> <a id='n627' href='#n627'>627</a> <a id='n628' href='#n628'>628</a> <a id='n629' href='#n629'>629</a> <a id='n630' href='#n630'>630</a> <a id='n631' href='#n631'>631</a> <a id='n632' href='#n632'>632</a> <a id='n633' href='#n633'>633</a> <a id='n634' href='#n634'>634</a> <a id='n635' href='#n635'>635</a> <a id='n636' href='#n636'>636</a> <a id='n637' href='#n637'>637</a> <a id='n638' href='#n638'>638</a> <a id='n639' href='#n639'>639</a> <a id='n640' href='#n640'>640</a> <a id='n641' href='#n641'>641</a> <a id='n642' href='#n642'>642</a> <a id='n643' href='#n643'>643</a> <a id='n644' href='#n644'>644</a> <a id='n645' href='#n645'>645</a> <a id='n646' href='#n646'>646</a> <a id='n647' href='#n647'>647</a> <a id='n648' href='#n648'>648</a> <a id='n649' href='#n649'>649</a> <a id='n650' href='#n650'>650</a> <a id='n651' href='#n651'>651</a> <a id='n652' href='#n652'>652</a> <a id='n653' href='#n653'>653</a> <a id='n654' href='#n654'>654</a> <a id='n655' href='#n655'>655</a> <a id='n656' href='#n656'>656</a> <a id='n657' href='#n657'>657</a> <a id='n658' href='#n658'>658</a> <a id='n659' href='#n659'>659</a> <a id='n660' href='#n660'>660</a> <a id='n661' href='#n661'>661</a> <a id='n662' href='#n662'>662</a> <a id='n663' href='#n663'>663</a> <a id='n664' href='#n664'>664</a> <a id='n665' href='#n665'>665</a> <a id='n666' href='#n666'>666</a> <a id='n667' href='#n667'>667</a> <a id='n668' href='#n668'>668</a> <a id='n669' href='#n669'>669</a> <a id='n670' href='#n670'>670</a> <a id='n671' href='#n671'>671</a> <a id='n672' href='#n672'>672</a> <a id='n673' href='#n673'>673</a> <a id='n674' href='#n674'>674</a> <a id='n675' href='#n675'>675</a> <a id='n676' href='#n676'>676</a> <a id='n677' href='#n677'>677</a> <a id='n678' href='#n678'>678</a> <a id='n679' href='#n679'>679</a> <a id='n680' href='#n680'>680</a> <a id='n681' href='#n681'>681</a> <a id='n682' href='#n682'>682</a> <a id='n683' href='#n683'>683</a> <a id='n684' href='#n684'>684</a> <a id='n685' href='#n685'>685</a> <a id='n686' href='#n686'>686</a> <a id='n687' href='#n687'>687</a> <a id='n688' href='#n688'>688</a> <a id='n689' href='#n689'>689</a> <a id='n690' href='#n690'>690</a> <a id='n691' href='#n691'>691</a> <a id='n692' href='#n692'>692</a> <a id='n693' href='#n693'>693</a> <a id='n694' href='#n694'>694</a> <a id='n695' href='#n695'>695</a> <a id='n696' href='#n696'>696</a> <a id='n697' href='#n697'>697</a> <a id='n698' href='#n698'>698</a> <a id='n699' href='#n699'>699</a> <a id='n700' href='#n700'>700</a> <a id='n701' href='#n701'>701</a> <a id='n702' href='#n702'>702</a> <a id='n703' href='#n703'>703</a> <a id='n704' href='#n704'>704</a> <a id='n705' href='#n705'>705</a> <a id='n706' href='#n706'>706</a> <a id='n707' href='#n707'>707</a> <a id='n708' href='#n708'>708</a> <a id='n709' href='#n709'>709</a> <a id='n710' href='#n710'>710</a> <a id='n711' href='#n711'>711</a> <a id='n712' href='#n712'>712</a> <a id='n713' href='#n713'>713</a> <a id='n714' href='#n714'>714</a> <a id='n715' href='#n715'>715</a> <a id='n716' href='#n716'>716</a> <a id='n717' href='#n717'>717</a> <a id='n718' href='#n718'>718</a> <a id='n719' href='#n719'>719</a> <a id='n720' href='#n720'>720</a> <a id='n721' href='#n721'>721</a> <a id='n722' href='#n722'>722</a> <a id='n723' href='#n723'>723</a> <a id='n724' href='#n724'>724</a> <a id='n725' href='#n725'>725</a> <a id='n726' href='#n726'>726</a> <a id='n727' href='#n727'>727</a> <a id='n728' href='#n728'>728</a> <a id='n729' href='#n729'>729</a> <a id='n730' href='#n730'>730</a> <a id='n731' href='#n731'>731</a> <a id='n732' href='#n732'>732</a> <a id='n733' href='#n733'>733</a> <a id='n734' href='#n734'>734</a> <a id='n735' href='#n735'>735</a> <a id='n736' href='#n736'>736</a> <a id='n737' href='#n737'>737</a> <a id='n738' href='#n738'>738</a> <a id='n739' href='#n739'>739</a> <a id='n740' href='#n740'>740</a> <a id='n741' href='#n741'>741</a> <a id='n742' href='#n742'>742</a> <a id='n743' href='#n743'>743</a> <a id='n744' href='#n744'>744</a> <a id='n745' href='#n745'>745</a> <a id='n746' href='#n746'>746</a> <a id='n747' href='#n747'>747</a> <a id='n748' href='#n748'>748</a> <a id='n749' href='#n749'>749</a> <a id='n750' href='#n750'>750</a> <a id='n751' href='#n751'>751</a> <a id='n752' href='#n752'>752</a> <a id='n753' href='#n753'>753</a> <a id='n754' href='#n754'>754</a> <a id='n755' href='#n755'>755</a> <a id='n756' href='#n756'>756</a> <a id='n757' href='#n757'>757</a> <a id='n758' href='#n758'>758</a> <a id='n759' href='#n759'>759</a> <a id='n760' href='#n760'>760</a> <a id='n761' href='#n761'>761</a> <a id='n762' href='#n762'>762</a> <a id='n763' href='#n763'>763</a> <a id='n764' href='#n764'>764</a> <a id='n765' href='#n765'>765</a> <a id='n766' href='#n766'>766</a> <a id='n767' href='#n767'>767</a> <a id='n768' href='#n768'>768</a> <a id='n769' href='#n769'>769</a> <a id='n770' href='#n770'>770</a> <a id='n771' href='#n771'>771</a> <a id='n772' href='#n772'>772</a> <a id='n773' href='#n773'>773</a> <a id='n774' href='#n774'>774</a> <a id='n775' href='#n775'>775</a> <a id='n776' href='#n776'>776</a> <a id='n777' href='#n777'>777</a> <a id='n778' href='#n778'>778</a> <a id='n779' href='#n779'>779</a> <a id='n780' href='#n780'>780</a> <a id='n781' href='#n781'>781</a> <a id='n782' href='#n782'>782</a> <a id='n783' href='#n783'>783</a> <a id='n784' href='#n784'>784</a> <a id='n785' href='#n785'>785</a> <a id='n786' href='#n786'>786</a> <a id='n787' href='#n787'>787</a> <a id='n788' href='#n788'>788</a> <a id='n789' href='#n789'>789</a> <a id='n790' href='#n790'>790</a> <a id='n791' href='#n791'>791</a> <a id='n792' href='#n792'>792</a> <a id='n793' href='#n793'>793</a> <a id='n794' href='#n794'>794</a> <a id='n795' href='#n795'>795</a> <a id='n796' href='#n796'>796</a> <a id='n797' href='#n797'>797</a> <a id='n798' href='#n798'>798</a> <a id='n799' href='#n799'>799</a> <a id='n800' href='#n800'>800</a> <a id='n801' href='#n801'>801</a> <a id='n802' href='#n802'>802</a> <a id='n803' href='#n803'>803</a> <a id='n804' href='#n804'>804</a> <a id='n805' href='#n805'>805</a> <a id='n806' href='#n806'>806</a> <a id='n807' href='#n807'>807</a> <a id='n808' href='#n808'>808</a> <a id='n809' href='#n809'>809</a> <a id='n810' href='#n810'>810</a> <a id='n811' href='#n811'>811</a> <a id='n812' href='#n812'>812</a> <a id='n813' href='#n813'>813</a> <a id='n814' href='#n814'>814</a> <a id='n815' href='#n815'>815</a> <a id='n816' href='#n816'>816</a> <a id='n817' href='#n817'>817</a> <a id='n818' href='#n818'>818</a> <a id='n819' href='#n819'>819</a> <a id='n820' href='#n820'>820</a> <a id='n821' href='#n821'>821</a> <a id='n822' href='#n822'>822</a> <a id='n823' href='#n823'>823</a> <a id='n824' href='#n824'>824</a> <a id='n825' href='#n825'>825</a> <a id='n826' href='#n826'>826</a> <a id='n827' href='#n827'>827</a> <a id='n828' href='#n828'>828</a> <a id='n829' href='#n829'>829</a> <a id='n830' href='#n830'>830</a> <a id='n831' href='#n831'>831</a> <a id='n832' href='#n832'>832</a> <a id='n833' href='#n833'>833</a> <a id='n834' href='#n834'>834</a> <a id='n835' href='#n835'>835</a> <a id='n836' href='#n836'>836</a> <a id='n837' href='#n837'>837</a> <a id='n838' href='#n838'>838</a> <a id='n839' href='#n839'>839</a> <a id='n840' href='#n840'>840</a> <a id='n841' href='#n841'>841</a> <a id='n842' href='#n842'>842</a> <a id='n843' href='#n843'>843</a> <a id='n844' href='#n844'>844</a> <a id='n845' href='#n845'>845</a> <a id='n846' href='#n846'>846</a> <a id='n847' href='#n847'>847</a> <a id='n848' href='#n848'>848</a> <a id='n849' href='#n849'>849</a> <a id='n850' href='#n850'>850</a> <a id='n851' href='#n851'>851</a> <a id='n852' href='#n852'>852</a> <a id='n853' href='#n853'>853</a> <a id='n854' href='#n854'>854</a> <a id='n855' href='#n855'>855</a> <a id='n856' href='#n856'>856</a> <a id='n857' href='#n857'>857</a> <a id='n858' href='#n858'>858</a> <a id='n859' href='#n859'>859</a> <a id='n860' href='#n860'>860</a> <a id='n861' href='#n861'>861</a> <a id='n862' href='#n862'>862</a> <a id='n863' href='#n863'>863</a> <a id='n864' href='#n864'>864</a> <a id='n865' href='#n865'>865</a> <a id='n866' href='#n866'>866</a> <a id='n867' href='#n867'>867</a> <a id='n868' href='#n868'>868</a> <a id='n869' href='#n869'>869</a> <a id='n870' href='#n870'>870</a> <a id='n871' href='#n871'>871</a> <a id='n872' href='#n872'>872</a> <a id='n873' href='#n873'>873</a> <a id='n874' href='#n874'>874</a> <a id='n875' href='#n875'>875</a> <a id='n876' href='#n876'>876</a> <a id='n877' href='#n877'>877</a> <a id='n878' href='#n878'>878</a> <a id='n879' href='#n879'>879</a> <a id='n880' href='#n880'>880</a> <a id='n881' href='#n881'>881</a> <a id='n882' href='#n882'>882</a> <a id='n883' href='#n883'>883</a> <a id='n884' href='#n884'>884</a> <a id='n885' href='#n885'>885</a> <a id='n886' href='#n886'>886</a> <a id='n887' href='#n887'>887</a> <a id='n888' href='#n888'>888</a> <a id='n889' href='#n889'>889</a> <a id='n890' href='#n890'>890</a> <a id='n891' href='#n891'>891</a> <a id='n892' href='#n892'>892</a> <a id='n893' href='#n893'>893</a> <a id='n894' href='#n894'>894</a> <a id='n895' href='#n895'>895</a> <a id='n896' href='#n896'>896</a> <a id='n897' href='#n897'>897</a> <a id='n898' href='#n898'>898</a> <a id='n899' href='#n899'>899</a> <a id='n900' href='#n900'>900</a> <a id='n901' href='#n901'>901</a> <a id='n902' href='#n902'>902</a> <a id='n903' href='#n903'>903</a> <a id='n904' href='#n904'>904</a> <a id='n905' href='#n905'>905</a> <a id='n906' href='#n906'>906</a> <a id='n907' href='#n907'>907</a> <a id='n908' href='#n908'>908</a> <a id='n909' href='#n909'>909</a> <a id='n910' href='#n910'>910</a> <a id='n911' href='#n911'>911</a> <a id='n912' href='#n912'>912</a> <a id='n913' href='#n913'>913</a> <a id='n914' href='#n914'>914</a> <a id='n915' href='#n915'>915</a> <a id='n916' href='#n916'>916</a> <a id='n917' href='#n917'>917</a> <a id='n918' href='#n918'>918</a> <a id='n919' href='#n919'>919</a> <a id='n920' href='#n920'>920</a> <a id='n921' href='#n921'>921</a> <a id='n922' href='#n922'>922</a> <a id='n923' href='#n923'>923</a> <a id='n924' href='#n924'>924</a> <a id='n925' href='#n925'>925</a> <a id='n926' href='#n926'>926</a> <a id='n927' href='#n927'>927</a> <a id='n928' href='#n928'>928</a> <a id='n929' href='#n929'>929</a> <a id='n930' href='#n930'>930</a> <a id='n931' href='#n931'>931</a> <a id='n932' href='#n932'>932</a> <a id='n933' href='#n933'>933</a> <a id='n934' href='#n934'>934</a> <a id='n935' href='#n935'>935</a> <a id='n936' href='#n936'>936</a> <a id='n937' href='#n937'>937</a> <a id='n938' href='#n938'>938</a> <a id='n939' href='#n939'>939</a> <a id='n940' href='#n940'>940</a> <a id='n941' href='#n941'>941</a> <a id='n942' href='#n942'>942</a> <a id='n943' href='#n943'>943</a> <a id='n944' href='#n944'>944</a> <a id='n945' href='#n945'>945</a> <a id='n946' href='#n946'>946</a> <a id='n947' href='#n947'>947</a> <a id='n948' href='#n948'>948</a> <a id='n949' href='#n949'>949</a> <a id='n950' href='#n950'>950</a> <a id='n951' href='#n951'>951</a> <a id='n952' href='#n952'>952</a> <a id='n953' href='#n953'>953</a> <a id='n954' href='#n954'>954</a> <a id='n955' href='#n955'>955</a> <a id='n956' href='#n956'>956</a> <a id='n957' href='#n957'>957</a> <a id='n958' href='#n958'>958</a> <a id='n959' href='#n959'>959</a> <a id='n960' href='#n960'>960</a> <a id='n961' href='#n961'>961</a> <a id='n962' href='#n962'>962</a> <a id='n963' href='#n963'>963</a> <a id='n964' href='#n964'>964</a> <a id='n965' href='#n965'>965</a> <a id='n966' href='#n966'>966</a> <a id='n967' href='#n967'>967</a> <a id='n968' href='#n968'>968</a> <a id='n969' href='#n969'>969</a> <a id='n970' href='#n970'>970</a> <a id='n971' href='#n971'>971</a> <a id='n972' href='#n972'>972</a> <a id='n973' href='#n973'>973</a> <a id='n974' href='#n974'>974</a> <a id='n975' href='#n975'>975</a> <a id='n976' href='#n976'>976</a> <a id='n977' href='#n977'>977</a> <a id='n978' href='#n978'>978</a> <a id='n979' href='#n979'>979</a> <a id='n980' href='#n980'>980</a> <a id='n981' href='#n981'>981</a> <a id='n982' href='#n982'>982</a> <a id='n983' href='#n983'>983</a> <a id='n984' href='#n984'>984</a> <a id='n985' href='#n985'>985</a> <a id='n986' href='#n986'>986</a> <a id='n987' href='#n987'>987</a> <a id='n988' href='#n988'>988</a> <a id='n989' href='#n989'>989</a> <a id='n990' href='#n990'>990</a> <a id='n991' href='#n991'>991</a> <a id='n992' href='#n992'>992</a> <a id='n993' href='#n993'>993</a> <a id='n994' href='#n994'>994</a> <a id='n995' href='#n995'>995</a> <a id='n996' href='#n996'>996</a> <a id='n997' href='#n997'>997</a> <a id='n998' href='#n998'>998</a> <a id='n999' href='#n999'>999</a> <a id='n1000' href='#n1000'>1000</a> <a id='n1001' href='#n1001'>1001</a> <a id='n1002' href='#n1002'>1002</a> <a id='n1003' href='#n1003'>1003</a> <a id='n1004' href='#n1004'>1004</a> <a id='n1005' href='#n1005'>1005</a> <a id='n1006' href='#n1006'>1006</a> <a id='n1007' href='#n1007'>1007</a> <a id='n1008' href='#n1008'>1008</a> <a id='n1009' href='#n1009'>1009</a> <a id='n1010' href='#n1010'>1010</a> <a id='n1011' href='#n1011'>1011</a> <a id='n1012' href='#n1012'>1012</a> <a id='n1013' href='#n1013'>1013</a> <a id='n1014' href='#n1014'>1014</a> <a id='n1015' href='#n1015'>1015</a> <a id='n1016' href='#n1016'>1016</a> <a id='n1017' href='#n1017'>1017</a> <a id='n1018' href='#n1018'>1018</a> <a id='n1019' href='#n1019'>1019</a> <a id='n1020' href='#n1020'>1020</a> <a id='n1021' href='#n1021'>1021</a> <a id='n1022' href='#n1022'>1022</a> <a id='n1023' href='#n1023'>1023</a> <a id='n1024' href='#n1024'>1024</a> <a id='n1025' href='#n1025'>1025</a> <a id='n1026' href='#n1026'>1026</a> <a id='n1027' href='#n1027'>1027</a> <a id='n1028' href='#n1028'>1028</a> <a id='n1029' href='#n1029'>1029</a> <a id='n1030' href='#n1030'>1030</a> <a id='n1031' href='#n1031'>1031</a> <a id='n1032' href='#n1032'>1032</a> <a id='n1033' href='#n1033'>1033</a> <a id='n1034' href='#n1034'>1034</a> <a id='n1035' href='#n1035'>1035</a> <a id='n1036' href='#n1036'>1036</a> <a id='n1037' href='#n1037'>1037</a> <a id='n1038' href='#n1038'>1038</a> <a id='n1039' href='#n1039'>1039</a> <a id='n1040' href='#n1040'>1040</a> <a id='n1041' href='#n1041'>1041</a> <a id='n1042' href='#n1042'>1042</a> <a id='n1043' href='#n1043'>1043</a> <a id='n1044' href='#n1044'>1044</a> <a id='n1045' href='#n1045'>1045</a> <a id='n1046' href='#n1046'>1046</a> <a id='n1047' href='#n1047'>1047</a> <a id='n1048' href='#n1048'>1048</a> <a id='n1049' href='#n1049'>1049</a> <a id='n1050' href='#n1050'>1050</a> <a id='n1051' href='#n1051'>1051</a> <a id='n1052' href='#n1052'>1052</a> <a id='n1053' href='#n1053'>1053</a> <a id='n1054' href='#n1054'>1054</a> <a id='n1055' href='#n1055'>1055</a> <a id='n1056' href='#n1056'>1056</a> <a id='n1057' href='#n1057'>1057</a> <a id='n1058' href='#n1058'>1058</a> <a id='n1059' href='#n1059'>1059</a> <a id='n1060' href='#n1060'>1060</a> <a id='n1061' href='#n1061'>1061</a> <a id='n1062' href='#n1062'>1062</a> <a id='n1063' href='#n1063'>1063</a> <a id='n1064' href='#n1064'>1064</a> <a id='n1065' href='#n1065'>1065</a> <a id='n1066' href='#n1066'>1066</a> <a id='n1067' href='#n1067'>1067</a> <a id='n1068' href='#n1068'>1068</a> <a id='n1069' href='#n1069'>1069</a> <a id='n1070' href='#n1070'>1070</a> <a id='n1071' href='#n1071'>1071</a> <a id='n1072' href='#n1072'>1072</a> <a id='n1073' href='#n1073'>1073</a> <a id='n1074' href='#n1074'>1074</a> <a id='n1075' href='#n1075'>1075</a> <a id='n1076' href='#n1076'>1076</a> <a id='n1077' href='#n1077'>1077</a> <a id='n1078' href='#n1078'>1078</a> <a id='n1079' href='#n1079'>1079</a> <a id='n1080' href='#n1080'>1080</a> <a id='n1081' href='#n1081'>1081</a> <a id='n1082' href='#n1082'>1082</a> <a id='n1083' href='#n1083'>1083</a> <a id='n1084' href='#n1084'>1084</a> <a id='n1085' href='#n1085'>1085</a> <a id='n1086' href='#n1086'>1086</a> <a id='n1087' href='#n1087'>1087</a> <a id='n1088' href='#n1088'>1088</a> <a id='n1089' href='#n1089'>1089</a> <a id='n1090' href='#n1090'>1090</a> <a id='n1091' href='#n1091'>1091</a> <a id='n1092' href='#n1092'>1092</a> <a id='n1093' href='#n1093'>1093</a> <a id='n1094' href='#n1094'>1094</a> <a id='n1095' href='#n1095'>1095</a> <a id='n1096' href='#n1096'>1096</a> <a id='n1097' href='#n1097'>1097</a> </pre></td> <td class='lines'><pre><code>Installation instructions for Android Copyright (C) 2023-2024 Free Software Foundation, Inc. See the end of the file for license conditions."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:9
+msgid "OVERVIEW OF JAVA"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:12
+msgid "Emacs developers do not know Java, and there is no reason they should have to.  Thus, the code in this directory is confined to what is strictly necessary to support Emacs, and only uses a subset of Java written in a way that is easily understandable to C programmers."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:16
+msgid "Java is required because the entire Android runtime is based around Java, and there is no way to write an Android program which runs without Java.  This text exists to prime other Emacs developers, already familiar with C, on the basic architecture of the Android port, and to teach them how to read and write the Java code found in this directory.  Java is an object oriented language with automatic memory management compiled down to bytecode, which is then subject to interpretation by a Java virtual machine."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:18
+msgid "What that means, is that:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:21
+#, no-wrap
+msgid "struct emacs_window {   int some_fields;   int of_emacs_window; };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:24
+#, no-wrap
+msgid "static void do_something_with_emacs_window (struct emacs_window *a, int n) {   a-&gt;some_fields = a-&gt;of_emacs_window + n; }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:27
+msgid "would be written:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:30
+#, no-wrap
+msgid "public class EmacsWindow {   public int someFields;   public int ofEmacsWindow;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:33
+#, no-wrap
+msgid "  public void   doSomething (int n)   {     someFields = ofEmacsWindow + n;   } }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:36
+msgid "and instead of doing:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:39
+msgid "do_something_with_emacs_window (my_window, 1);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:42 emacs-30/admin/notes/java_nowrap:75
+msgid "you say:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:45
+msgid "myWindow.doSomething (1);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:48
+msgid "In addition to functions associated with an object of a given class (such as EmacsWindow), Java also has two other kinds of functions."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:51
+msgid "The first are so-called ``static&apos;&apos; functions (the static means something entirely different from what it does in C.)"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:54
+msgid "A static function, while still having to be defined within a class, can be called without any object.  Instead of the object, you write the name of the Java class within which it is defined.\tFor example, the following C code:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:57
+#, no-wrap
+msgid "int multiply_a_with_b_and_then_add_c (int a, int b, int c) {   return a * b + c; }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:60
+msgid "would be:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:63
+#, no-wrap
+msgid "public class EmacsSomething {   public static int   multiplyAWithBAndThenAddC (int a, int b, int c)   {     return a * b + c;   } };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:66
+msgid "Then, instead of calling:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:69 emacs-30/admin/notes/java_nowrap:78
+msgid "int foo;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:72
+msgid "foo = multiply_a_with_b_then_add_c (1, 2, 3);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:81
+msgid "foo = EmacsSomething.multiplyAWithBAndThenAddC (1, 2, 3);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:83
+msgid "In Java, ``static&apos;&apos; does not mean that the function is only used within its compilation unit! Instead, the ``private&apos;&apos; qualifier is used to mean more or less the same thing:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:85
+#, no-wrap
+msgid "static void this_procedure_is_only_used_within_this_file (void) {   do_something (); }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:88
+msgid "becomes"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:91
+#, no-wrap
+msgid "public class EmacsSomething {   private static void   thisProcedureIsOnlyUsedWithinThisClass ()   {\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:94
+#, no-wrap
+msgid "  } }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:97
+msgid "the other kind are called ``constructors&apos;&apos;.  They are functions that must be called to allocate memory to hold a class:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:99
+#, no-wrap
+msgid "public class EmacsFoo {   int bar;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:101
+#, no-wrap
+msgid "  public   EmacsFoo (int tokenA, int tokenB)   {     bar = tokenA + tokenB;   } }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:104
+msgid "now, the following statement:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:107
+msgid "EmacsFoo foo;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:110
+msgid "foo = new EmacsFoo (1, 2);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:113
+msgid "becomes more or less equivalent to the following C code:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:116
+#, no-wrap
+msgid "struct emacs_foo {   int bar; };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:119
+#, no-wrap
+msgid "struct emacs_foo * make_emacs_foo (int token_a, int token_b) {   struct emacs_foo *foo;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:122
+#, no-wrap
+msgid "  foo = xmalloc (sizeof *foo);   foo-&gt;bar = token_a + token_b;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:125
+#, no-wrap
+msgid "  return foo; }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:128
+msgid "/* ... */"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:131
+msgid "struct emacs_foo *foo;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:134
+msgid "foo = make_emacs_foo (1, 2);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:137
+msgid "A class may have any number of constructors, or no constructors at all, in which case the compiler inserts an empty constructor."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:143
+msgid "Sometimes, you will see Java code that looks like this:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:146
+#, no-wrap
+msgid "    allFiles = filesDirectory.listFiles (new FileFilter () { \t&#64;Override \tpublic boolean \taccept (File file) \t{ \t  return (!file.isDirectory () \t\t  &amp;&amp; file.getName ().endsWith (&quot;.pdmp&quot;)); \t}       });\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:149
+msgid "This is Java&apos;s version of GCC&apos;s nested function extension.  The major difference is that the nested function may still be called even after it goes out of scope, and always retains a reference to the class and local variables around where it was called."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:152
+msgid "Being an object-oriented language, Java also allows defining that a class ``extends&apos;&apos; another class.  The following C code:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:155
+#, no-wrap
+msgid "struct a {   long thirty_two; };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:158
+#, no-wrap
+msgid "struct b {   struct a a;   long long sixty_four; };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:161
+msgid "extern void do_something (struct a *);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:164
+#, no-wrap
+msgid "void my_function (struct b *b) {   do_something (&amp;b-&gt;a); }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:167
+msgid "is roughly equivalent to the following Java code, split into two files:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:170
+#, no-wrap
+msgid "  A.java\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:172
+#, no-wrap
+msgid "public class A {   int thirtyTwo;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:174
+#, no-wrap
+msgid "  public void   doSomething ()   {     etcEtcEtc ();   } };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:177
+#, no-wrap
+msgid "  B.java\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:179 emacs-30/admin/notes/java_nowrap:189
+#, no-wrap
+msgid "public class B extends A {   long sixty_four;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:181
+#, no-wrap
+msgid "  public static void   myFunction (B b)   {     b.doSomething ();   } }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:184
+msgid "the Java runtime has transformed the call to ``b.doSomething&apos;&apos; to ``((A) b).doSomething&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:187
+msgid "However, Java also allows overriding this behavior, by specifying the &#64;Override keyword:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:191
+#, no-wrap
+msgid "  &#64;Override   public void   doSomething ()   {     Something.doSomethingTwo ();     super.doSomething ();   } }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:194
+msgid "now, any call to ``doSomething&apos;&apos; on a ``B&apos;&apos; created using ``new B ()&apos;&apos; will end up calling ``Something.doSomethingTwo&apos;&apos;, before calling back to ``A.doSomething&apos;&apos;.  This override also applies in reverse; that is to say, even if you write:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:197
+#, no-wrap
+msgid "  ((A) b).doSomething ();\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:200
+msgid "B&apos;s version of doSomething will still be called, if ``b&apos;&apos; was created using ``new B ()&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:203
+msgid "This mechanism is used extensively throughout the Java language and Android windowing APIs."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:206
+msgid "Elsewhere, you will encounter Java code that defines arrays:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:209
+#, no-wrap
+msgid "public class EmacsFrobinicator {   public static void   emacsFrobinicate (int something)   {     int[] primesFromSomething;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:212
+#, no-wrap
+msgid "    primesFromSomething = new int[numberOfPrimes];     /* ... */   } }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:215
+msgid "Java arrays are similar to C arrays in that they can not grow.  But they are very much unlike C arrays in that they are always references (as opposed to decaying into pointers in only some situations), and contain information about their length."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:218
+msgid "If another function named ``frobinicate1&apos;&apos; takes an array as an argument, then it need not take the length of the array."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:221
+msgid "Instead, it may simply iterate over the array like so:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:224
+msgid "int i, k;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:226
+#, no-wrap
+msgid "for (i = 0; i &lt; array.length; ++i)   {     k = array[i];\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:228
+#, no-wrap
+msgid "    Whatever.doSomethingWithK (k);   }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:232
+#, no-wrap
+msgid ""
+"The syntax used to define arrays is also slightly different.  As arrays are always references, there is no way for you to tell the runtime to allocate an array of size N in a structure (class.)\n"
+"Instead, if you need an array of that size, you must declare a field with the type of the array, and allocate the array inside the class&apos;s constructor, like so:\n"
+"public class EmacsArrayContainer {   public int[] myArray;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:234
+#, no-wrap
+msgid "  public   EmacsArrayContainer ()   {     myArray = new array[10];   } }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:237
+msgid "while in C, you could just have written:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:240
+#, no-wrap
+msgid "struct emacs_array_container {   int my_array[10]; };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:243
+msgid "or, possibly even better,"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:246
+msgid "typedef int emacs_array_container[10];"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:249
+msgid "Alas, Java has no equivalent of `typedef&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:252
+msgid "Like in C, Java string literals are delimited by double quotes. Unlike C, however, strings are not NULL-terminated arrays of characters, but a distinct type named ``String&apos;&apos;.  They store their own length, characters in Java&apos;s 16-bit ``char&apos;&apos; type, and are capable of holding NULL bytes."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:255
+msgid "Instead of writing:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:257
+msgid "wchar_t character; extern char *s; size_t s;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:259
+#, no-wrap
+msgid "  for (/* determine n, s in a loop.  */)     s += mbstowc (&amp;character, s, n);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:262
+msgid "or:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:265
+msgid "const char *byte;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:268
+#, no-wrap
+msgid "for (byte = my_string; *byte; ++byte)   /* do something with *byte.  */;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:271
+msgid "or perhaps even:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:274
+msgid "size_t length, i; char foo;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:277
+msgid "length = strlen (my_string);"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:280
+#, no-wrap
+msgid "for (i = 0; i &lt; length; ++i)   foo = my_string[i];\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:283
+msgid "you write:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:286
+msgid "char foo; int i;"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:289
+#, no-wrap
+msgid "for (i = 0; i &lt; myString.length (); ++i)   foo = myString.charAt (0);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:291
+msgid "Java also has stricter rules on what can be used as a truth value in a conditional.  While in C, any non-zero value is true, Java requires that every truth value be of the boolean type ``boolean&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:293
+msgid "What this means is that instead of simply writing:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:296
+#, no-wrap
+msgid "  if (foo || bar)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:299
+msgid "where foo can either be 1 or 0, and bar can either be NULL or a pointer to something, you must explicitly write:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:302
+#, no-wrap
+msgid "  if (foo != 0 || bar != null)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:305
+msgid "in Java."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:308
+msgid "JAVA NATIVE INTERFACE"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:311
+msgid "Java also provides an interface for C code to interface with Java."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:314
+msgid "C functions exported from a shared library become static Java functions within a class, like so:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:317
+#, no-wrap
+msgid "public class EmacsNative {   /* Obtain the fingerprint of this build of Emacs.  The fingerprint      can be used to determine the dump file name.  */   public static native String getFingerprint ();\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:320
+#, no-wrap
+msgid "  /* Set certain parameters before initializing Emacs.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:322
+#, no-wrap
+msgid "     assetManager must be the asset manager associated with the      context that is loading Emacs.  It is saved and remains for the      remainder the lifetime of the Emacs process.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:324
+#, no-wrap
+msgid "     filesDir must be the package&apos;s data storage location for the      current Android user.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:327
+#, no-wrap
+msgid "     libDir must be the package&apos;s data storage location for native      libraries.\t It is used as PATH.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:330
+#, no-wrap
+msgid "     cacheDir must be the package&apos;s cache directory.  It is used as      the `temporary-file-directory&apos;.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:333
+#, no-wrap
+msgid "     pixelDensityX and pixelDensityY are the DPI values that will be      used by Emacs.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:336
+#, no-wrap
+msgid "     classPath must be the classpath of this app_process process, or      NULL.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:339
+#, no-wrap
+msgid "     emacsService must be the EmacsService singleton, or NULL.\t*/   public static native void setEmacsParams (AssetManager assetManager, \t\t\t\t\t    String filesDir, \t\t\t\t\t    String libDir, \t\t\t\t\t    String cacheDir, \t\t\t\t\t    float pixelDensityX, \t\t\t\t\t    float pixelDensityY, \t\t\t\t\t    String classPath, \t\t\t\t\t    EmacsService emacsService); }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:342
+msgid "Where the corresponding C functions are located in android.c, and loaded by the special invocation:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:345
+#, no-wrap
+msgid "  static   {     System.loadLibrary (&quot;emacs&quot;);   };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:348
+msgid "where ``static&apos;&apos; defines a section of code which will be run upon the object (containing class) being loaded.  This is like:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:351
+#, no-wrap
+msgid "  __attribute__ ((constructor))\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:354
+msgid "on systems where shared object constructors are supported."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:357
+msgid "See http://docs.oracle.com/en/java/javase/19/docs/specs/jni/intro.html for more details."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:363
+msgid "OVERVIEW OF ANDROID"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:365
+msgid "When the Android system starts an application, it does not actually call the application&apos;s ``main&apos;&apos; function.  It may not even start the application&apos;s process if one is already running."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:367
+msgid "Instead, Android is organized around components.  When the user opens the ``Emacs&apos;&apos; icon, the Android system looks up and starts the component associated with the ``Emacs&apos;&apos; icon.  In this case, the component is called an activity, and is declared in the AndroidManifest.xml in this directory:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:370
+#, no-wrap
+msgid "    &lt;activity android:name=&quot;org.gnu.emacs.EmacsActivity&quot; \t      android:launchMode=&quot;singleTop&quot; \t      android:windowSoftInputMode=&quot;adjustResize&quot; \t      android:exported=&quot;true&quot; \t      android:configChanges=&quot;orientation|screenSize|screenLayout|keyboardHidden&quot;&gt;       &lt;intent-filter&gt; \t&lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt; \t&lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt; \t&lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;       &lt;/intent-filter&gt;     &lt;/activity&gt;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:372
+msgid "This tells Android to start the activity defined in ``EmacsActivity&apos;&apos; (defined in org/gnu/emacs/EmacsActivity.java), a class extending the Android class ``Activity&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:374
+msgid "To do so, the Android system creates an instance of ``EmacsActivity&apos;&apos; and the window system window associated with it, and eventually calls:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:377
+#, no-wrap
+msgid "  Activity activity;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:380
+#, no-wrap
+msgid "  activity.onCreate (...);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:382
+msgid "But which ``onCreate&apos;&apos; is really called? It is actually the ``onCreate&apos;&apos; defined in EmacsActivity.java, as it overrides the ``onCreate&apos;&apos; defined in Android&apos;s own Activity class:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:384
+#, no-wrap
+msgid "  &#64;Override   public void   onCreate (Bundle savedInstanceState)   {     FrameLayout.LayoutParams params;     Intent intent;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:387
+msgid "Then, this is what happens step-by-step within the ``onCreate&apos;&apos; function:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:390
+#, no-wrap
+msgid "    /* See if Emacs should be started with -Q.\t*/     intent = getIntent ();     EmacsService.needDashQ       = intent.getBooleanExtra (&quot;org.gnu.emacs.START_DASH_Q&quot;, \t\t\t\tfalse);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:392
+msgid "Here, Emacs obtains the intent (a request to start a component) which was used to start Emacs, and sets a special flag if it contains a request for Emacs to start with the ``-Q&apos;&apos; command-line argument."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:394
+#, no-wrap
+msgid "    /* Set the theme to one without a title bar.  */\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:397
+#, no-wrap
+msgid "    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.ICE_CREAM_SANDWICH)       setTheme (android.R.style.Theme_DeviceDefault_NoActionBar);     else       setTheme (android.R.style.Theme_NoTitleBar);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:400
+msgid "Next, Emacs sets an appropriate theme for the activity&apos;s associated window decorations."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:403
+#, no-wrap
+msgid "    params = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT, \t\t\t\t\t   LayoutParams.MATCH_PARENT);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:405
+#, no-wrap
+msgid "    /* Make the frame layout.  */     layout = new FrameLayout (this);     layout.setLayoutParams (params);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:407
+#, no-wrap
+msgid "    /* Set it as the content view.  */     setContentView (layout);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:410
+msgid "Then, Emacs creates a ``FrameLayout&apos;&apos;, a widget that holds a single other widget, and makes it the activity&apos;s ``content view&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:413
+msgid "The activity itself is a ``FrameLayout&apos;&apos;, so the ``layout parameters&apos;&apos; here apply to the FrameLayout itself, and not its children."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:416
+#, no-wrap
+msgid "    /* Maybe start the Emacs service if necessary.  */     EmacsService.startEmacsService (this);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:418
+msgid "And after that, Emacs calls the static function ``startEmacsService&apos;&apos;, defined in the class ``EmacsService&apos;&apos;.\tThis starts the Emacs service component if necessary."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:420
+#, no-wrap
+msgid "    /* Add this activity to the list of available activities.  */     EmacsWindowAttachmentManager.MANAGER.registerWindowConsumer (this);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:423
+#, no-wrap
+msgid "    super.onCreate (savedInstanceState);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:426
+msgid "Finally, Emacs registers that this activity is now ready to receive top-level frames (windows) created from Lisp."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:428
+msgid "Activities come and go, but Emacs has to stay running in the mean time.  Thus, Emacs also defines a ``service&apos;&apos;, which is a long-running component that the Android system allows to run in the background."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:430
+msgid "Let us go back and review the definition of ``startEmacsService&apos;&apos;:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:433
+#, no-wrap
+msgid "  public static void   startEmacsService (Context context)   {     if (EmacsService.SERVICE == null)       { \tif (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.O) \t  /* Start the Emacs service now.  */ \t  context.startService (new Intent (context, \t\t\t\t\t    EmacsService.class)); \telse \t  /* Display the permanent notification and start Emacs as a \t     foreground service.  */ \t  context.startForegroundService (new Intent (context, \t\t\t\t\t\t      EmacsService.class));       }   }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:436
+msgid "If ``EmacsService.SERVICE&apos;&apos; does not yet exist, what this does is to tell the ``context&apos;&apos; (the equivalent of an Xlib Display *) to start a service defined by the class ``EmacsService&apos;&apos;.\tEventually, this results in ``EmacsService.onCreate&apos;&apos; being called:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:439
+#, no-wrap
+msgid "  &#64;Override   public void   onCreate ()   {     AssetManager manager;     Context app_context;     String filesDir, libDir, cacheDir, classPath;     double pixelDensityX;     double pixelDensityY;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:442
+msgid "Here is what this function does, step-by-step:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:445
+#, no-wrap
+msgid "    SERVICE = this;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:448
+msgid "First, it sets the special static variable ``SERVICE&apos;&apos; to ``this&apos;&apos;, which is a pointer to the ``EmacsService&apos; object that was created."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:451
+#, no-wrap
+msgid "    handler = new Handler (Looper.getMainLooper ());\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:453
+msgid "Next, it creates a ``Handler&apos;&apos; object for the ``main looper&apos;&apos;. This is a helper structure which allows executing code on the Android user interface thread."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:455
+#, no-wrap
+msgid "    manager = getAssets ();     app_context = getApplicationContext ();     metrics = getResources ().getDisplayMetrics ();     pixelDensityX = metrics.xdpi;     pixelDensityY = metrics.ydpi;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:458
+msgid "Finally, it obtains:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:461
+#, no-wrap
+msgid "  - the asset manager, which is used to retrieve assets packaged     into the Emacs application package.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:464
+#, no-wrap
+msgid "  - the application context, used to obtain application specific     information.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:467
+#, no-wrap
+msgid "  - the display metrics, and from them, the X and Y densities in dots     per inch.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:470
+msgid "Then, inside a ``try&apos;&apos; block:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:473
+#, no-wrap
+msgid "    try       { \t/* Configure Emacs with the asset manager and other necessary \t   parameters.\t*/ \tfilesDir = app_context.getFilesDir ().getCanonicalPath (); \tlibDir = getLibraryDirectory (); \tcacheDir = app_context.getCacheDir ().getCanonicalPath ();\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:476
+msgid "It obtains the names of the Emacs home, shared library, and temporary file directories."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:479
+#, no-wrap
+msgid "\t/* Now provide this application&apos;s apk file, so a recursive \t   invocation of app_process (through android-emacs) can \t   find EmacsNoninteractive.  */ \tclassPath = getApkFile ();\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:482
+msgid "The name of the Emacs application package."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:485
+#, no-wrap
+msgid "\tLog.d (TAG, &quot;Initializing Emacs, where filesDir = &quot; + filesDir \t       + &quot;, libDir = &quot; + libDir + &quot;, and classPath = &quot; + classPath);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:488
+msgid "Prints a debug message to the Android system log with this information."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:491
+#, no-wrap
+msgid "\tEmacsNative.setEmacsParams (manager, filesDir, libDir, \t\t\t\t    cacheDir, (float) pixelDensityX, \t\t\t\t    (float) pixelDensityY, \t\t\t\t    classPath, this);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:494
+msgid "And calls the native function ``setEmacsParams&apos;&apos; (defined in android.c) to configure Emacs with this information."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:496
+#, no-wrap
+msgid "\t/* Start the thread that runs Emacs.  */ \tthread = new EmacsThread (this, needDashQ); \tthread.start ();\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:498
+msgid "Then, it allocates an ``EmacsThread&apos;&apos; object, and starts that thread. Inside that thread is where Emacs&apos;s C code runs."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:501
+#, no-wrap
+msgid "      }     catch (IOException exception)       { \tEmacsNative.emacsAbort (); \treturn;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:504
+msgid "And here is the purpose of the ``try&apos;&apos; block.  Functions related to file names in Java will signal errors of various types upon failure."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:507
+msgid "This ``catch&apos;&apos; block means that the Java virtual machine will abort execution of the contents of the ``try&apos;&apos; block as soon as an error of type ``IOException&apos;&apos; is encountered, and begin executing the contents of the ``catch&apos;&apos; block."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:510
+#, no-wrap
+msgid "Any failure of that type here is a crash, and ``EmacsNative.emacsAbort&apos;&apos; is called to quickly abort the process to get a useful backtrace.       }   }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:513
+msgid "Now, let us look at the definition of the class ``EmacsThread&apos;&apos;, found in org/gnu/emacs/EmacsThread.java:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:516
+#, no-wrap
+msgid "public class EmacsThread extends Thread {   /* Whether or not Emacs should be started -Q.\t */   private boolean startDashQ;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:519
+#, no-wrap
+msgid "  public   EmacsThread (EmacsService service, boolean startDashQ)   {     super (&quot;Emacs main thread&quot;);     this.startDashQ = startDashQ;   }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:522
+#, no-wrap
+msgid "  &#64;Override   public void   run ()   {     String args[];\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:525
+#, no-wrap
+msgid "    if (!startDashQ)       args = new String[] { &quot;libandroid-emacs.so&quot;, };     else       args = new String[] { &quot;libandroid-emacs.so&quot;, &quot;-Q&quot;, };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:528
+#, no-wrap
+msgid "    /* Run the native code now.\t */     EmacsNative.initEmacs (args, EmacsApplication.dumpFileName);   } };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:531
+msgid "The class itself defines a single field, ``startDashQ&apos;&apos;, a constructor with an unused argument of the type ``EmacsService&apos;&apos; (which is useful while debugging) and a flag ``startDashQ&apos;&apos;, and a single function ``run&apos;&apos;, overriding the same function in the class ``Thread&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:534
+msgid "When ``thread.start&apos;&apos; is called, the Java virtual machine creates a new thread, and then calls the function ``run&apos;&apos; within that thread."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:536
+msgid "This function then computes a suitable argument vector, and calls ``EmacsNative.initEmacs&apos;&apos; (defined in android.c), which then calls a modified version of the regular Emacs ``main&apos;&apos; function."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:538
+msgid "At that point, Emacs initialization proceeds as usual: Vinitial_window_system is set, loadup.el calls `normal-top-level&apos;, which calls `command-line&apos;, and finally `window-system-initialization&apos;, which initializes the `android&apos; terminal interface as usual."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:540
+msgid "What happens here is the same as on other platforms.  Now, here is what happens when the initial frame is created: Fx_create_frame calls `android_create_frame_window&apos; to create a top level window:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:542
+#, no-wrap
+msgid "static void android_create_frame_window (struct frame *f) {   struct android_set_window_attributes attributes;   enum android_window_value_mask attribute_mask;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:545
+#, no-wrap
+msgid "  attributes.background_pixel = FRAME_BACKGROUND_PIXEL (f);   attribute_mask = ANDROID_CW_BACK_PIXEL;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:548
+#, no-wrap
+msgid "  block_input ();   FRAME_ANDROID_WINDOW (f)     = android_create_window (FRAME_DISPLAY_INFO (f)-&gt;root_window, \t\t\t     f-&gt;left_pos, \t\t\t     f-&gt;top_pos, \t\t\t     FRAME_PIXEL_WIDTH (f), \t\t\t     FRAME_PIXEL_HEIGHT (f), \t\t\t     attribute_mask, &amp;attributes);   unblock_input (); }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:551
+msgid "This calls the function `android_create_window&apos; with some arguments whose meanings are identical to the arguments to `XCreateWindow&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:554
+msgid "Here is the definition of `android_create_window&apos;, in android.c:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:557
+#, no-wrap
+msgid "android_window android_create_window (android_window parent, int x, int y, \t\t       int width, int height, \t\t       enum android_window_value_mask value_mask, \t\t       struct android_set_window_attributes *attrs) {   static jclass class;   static jmethodID constructor;   jobject object, parent_object, old;   android_window window;   android_handle prev_max_handle;   bool override_redirect;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:560
+msgid "What does it do? First, some context:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:563
+msgid "At any time, there can be at most 65535 Java objects referred to by the rest of Emacs through the Java native interface.  Each such object is assigned a ``handle&apos;&apos; (similar to an XID on X) and given a unique type.  The function `android_resolve_handle&apos; returns the JNI `jobject&apos; associated with a given handle."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:566
+#, no-wrap
+msgid "  parent_object = android_resolve_handle (parent, ANDROID_HANDLE_WINDOW);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:569
+msgid "Here, it is being used to look up the `jobject&apos; associated with the `parent&apos; handle."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:572
+#, no-wrap
+msgid "  prev_max_handle = max_handle;   window = android_alloc_id ();\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:575
+msgid "Next, `max_handle&apos; is saved, and a new handle is allocated for `window&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:578
+#, no-wrap
+msgid "  if (!window)     error (&quot;Out of window handles!&quot;);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:581
+msgid "An error is signaled if Emacs runs out of available handles."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:584
+#, no-wrap
+msgid "  if (!class)     {       class = (*android_java_env)-&gt;FindClass (android_java_env, \t\t\t\t\t      &quot;org/gnu/emacs/EmacsWindow&quot;);       assert (class != NULL);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:587
+msgid "Then, if this initialization has not yet been completed, Emacs proceeds to find the Java class named ``EmacsWindow&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:590
+#, no-wrap
+msgid "      constructor \t= (*android_java_env)-&gt;GetMethodID (android_java_env, class, &quot;&lt;init&gt;&quot;, \t\t\t\t\t    &quot;(SLorg/gnu/emacs/EmacsWindow;&quot; \t\t\t\t\t    &quot;IIIIZ)V&quot;);       assert (constructor != NULL);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:593
+msgid "And it tries to look up the constructor, which should take seven arguments:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:596
+#, no-wrap
+msgid "  S\t\t\t\t\t- a short.  (the handle ID)   Lorg/gnu/Emacs/EmacsWindow;\t\t- an instance of the EmacsWindow \t\t\t\t\t  class.  (the parent)   IIII\t\t\t\t\t- four ints.  (the window geometry.)   Z\t\t\t\t\t- a boolean.  (whether or not the \t\t\t\t\t  window is override-redirect; see \t\t\t\t\t  XChangeWindowAttributes.)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:599
+#, no-wrap
+msgid "      old = class;       class = (*android_java_env)-&gt;NewGlobalRef (android_java_env, class);       (*android_java_env)-&gt;ExceptionClear (android_java_env);       ANDROID_DELETE_LOCAL_REF (old);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:602
+#, no-wrap
+msgid ""
+"Next, it saves a global reference to the class and deletes the local reference.  Global references will never be deallocated by the Java virtual machine as long as they still exist.\n"
+"      if (!class) \tmemory_full (0);     }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:604
+#, no-wrap
+msgid "  /* N.B. that ANDROID_CW_OVERRIDE_REDIRECT can only be set at window      creation time.  */   override_redirect = ((value_mask \t\t\t&amp; ANDROID_CW_OVERRIDE_REDIRECT) \t\t       &amp;&amp; attrs-&gt;override_redirect);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:607
+#, no-wrap
+msgid "  object = (*android_java_env)-&gt;NewObject (android_java_env, class, \t\t\t\t\t   constructor, (jshort) window, \t\t\t\t\t   parent_object, (jint) x, (jint) y, \t\t\t\t\t   (jint) width, (jint) height, \t\t\t\t\t   (jboolean) override_redirect);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:610
+msgid "Then, it creates an instance of the ``EmacsWindow&apos;&apos; class with the appropriate arguments and previously determined constructor."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:612
+#, no-wrap
+msgid "  if (!object)     {       (*android_java_env)-&gt;ExceptionClear (android_java_env);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:614
+#, no-wrap
+msgid "      max_handle = prev_max_handle;       memory_full (0);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:616
+#, no-wrap
+msgid "If creating the object fails, Emacs clears the ``pending exception&apos;&apos; and signals that it is out of memory.     }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:618
+#, no-wrap
+msgid "  android_handles[window].type = ANDROID_HANDLE_WINDOW;   android_handles[window].handle     = (*android_java_env)-&gt;NewGlobalRef (android_java_env, \t\t\t\t\t object);   (*android_java_env)-&gt;ExceptionClear (android_java_env);   ANDROID_DELETE_LOCAL_REF (object);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:620
+msgid "Otherwise, it associates a new global reference to the object with the handle, and deletes the local reference returned from the JNI NewObject function."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:622
+#, no-wrap
+msgid "  if (!android_handles[window].handle)     memory_full (0);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:625
+msgid "If allocating the global reference fails, Emacs signals that it is out of memory."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:628
+#, no-wrap
+msgid "  android_change_window_attributes (window, value_mask, attrs);   return window;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:630
+msgid "Otherwise, it applies the specified window attributes and returns the handle of the new window. }"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:635
+msgid "DRAWABLES, CURSORS AND HANDLES"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:638
+msgid "Each widget created by Emacs corresponds to a single ``window&apos;&apos;, which has its own backing store.  This arrangement is quite similar to X."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:641
+msgid "C code does not directly refer to the EmacsView widgets that implement the UI logic behind windows.  Instead, its handles refer to EmacsWindow structures, which contain the state necessary to interact with the widgets in an orderly and synchronized manner."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:644
+msgid "Like X, both pixmaps and windows are drawable resources, and the same graphics operations can be applied to both.  Thus, a separate EmacsPixmap structure is used to wrap around Android Bitmap resources, and the Java-level graphics operation functions are capable of operating on them both."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:647
+msgid "Finally, graphics contexts are maintained on both the C and Java levels; the C state recorded in `struct android_gc&apos; is kept in sync with the Java state in the GContext handle&apos;s corresponding EmacsGC structure, and cursors are used through handles that refer to EmacsCursor structures that hold system PointerIcons."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:650
+msgid "In all cases, the interfaces provided are identical to X."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:656
+msgid "EVENT LOOP"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:659
+msgid "In a typical Android application, the event loop is managed by the operating system, and callbacks (implemented through overriding separate functions in widgets) are run by the event loop wherever necessary.  The thread which runs the event loop is also the only thread capable of creating and manipulating widgets and activities, and is referred to as the ``UI thread&apos;&apos;."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:662
+msgid "These callbacks are used by Emacs to write representations of X-like events to a separate event queue, which are then read from Emacs&apos;s own event loop running in a separate thread.  This is accomplished through replacing `select&apos; by a function which waits for the event queue to be occupied, in addition to any file descriptors that `select&apos; would normally wait for."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:664
+msgid "Conversely, Emacs&apos;s event loop sometimes needs to send events to the UI thread.  These events are implemented as tiny fragments of code, which are run as they are received by the main thread."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:666
+msgid "A typical example is `displayToast&apos;, which is implemented in EmacsService.java:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:669
+#, no-wrap
+msgid "  public void   displayToast (final String string)   {     runOnUiThread (new Runnable () { \t&#64;Override \tpublic void \trun () \t{ \t  Toast toast;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:672
+#, no-wrap
+msgid "\t  toast = Toast.makeText (getApplicationContext (), \t\t\t\t  string, Toast.LENGTH_SHORT); \t  toast.show (); \t}       });   }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:675
+msgid "Here, the variable `string&apos; is used by a nested function.  This nested function contains a copy of that variable, and is run on the main thread using the function `runOnUiThread&apos;, in order to display a short status message on the display."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:678
+msgid "When Emacs needs to wait for the nested function to finish, it uses a mechanism implemented in `syncRunnable&apos;.  This mechanism first calls a deadlock avoidance mechanism, then runs a nested function on the UI thread, which is expected to signal itself as a condition variable upon completion.  It is typically used to allocate resources that can only be allocated from the UI thread, or to obtain non-thread-safe information.  The following function is an example; it returns a new EmacsView widget corresponding to the provided window:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:681
+#, no-wrap
+msgid "  public EmacsView   getEmacsView (final EmacsWindow window, final int visibility, \t\tfinal boolean isFocusedByDefault)   {     Runnable runnable;     final EmacsHolder&lt;EmacsView&gt; view;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:684
+#, no-wrap
+msgid "    view = new EmacsHolder&lt;EmacsView&gt; ();\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:687
+#, no-wrap
+msgid "    runnable = new Runnable () { \tpublic void \trun () \t{ \t  synchronized (this) \t    { \t      view.thing = new EmacsView (window); \t      view.thing.setVisibility (visibility);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:690
+#, no-wrap
+msgid "\t      /* The following function is only present on Android 26 \t\t or later.  */ \t      if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) \t\tview.thing.setFocusedByDefault (isFocusedByDefault);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:693
+#, no-wrap
+msgid "\t      notify (); \t    } \t}       };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:695
+#, no-wrap
+msgid "    syncRunnable (runnable);     return view.thing;   }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:697
+msgid "As no value can be directly returned from the nested function, a separate container object is used to hold the result after the function finishes execution.  Note the type name inside the angle brackets: this type is substituted into the class definition as it is used; a definition such as:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:700
+#, no-wrap
+msgid "public class Foo&lt;T&gt; {   T bar; };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:703
+msgid "can not be used alone:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:706
+#, no-wrap
+msgid "  Foo holder; /* Error! */\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:709
+msgid "but must have a type specified:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:712
+#, no-wrap
+msgid "  Foo&lt;Object&gt; holder;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:715
+msgid "in which case the effective definition is:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:718
+#, no-wrap
+msgid "public class Foo {   Object bar; };\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:724
+msgid "COMPATIBILITY"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:727
+msgid "There are three variables set within every Android application that extert influence over the set of Android systems it supports, and the measures it must take to function faithfully on each of those systems: the minimum API level, compile SDK version and target API level."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:730
+msgid "The minimum API level is the earliest version of Android that is permitted to install and run the application.  For Emacs, this is established by detecting the __ANDROID_API__ preprocessor macro defined within the Android C compiler."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:732
+msgid "Before Java code executes any Android API calls that are not present within Android 2.2 (API level 8), the lowest API level supported by Emacs as a whole, it must first check the value of the:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:734
+#, no-wrap
+msgid "  Build.VERSION.SDK_INT\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:737
+msgid "variable, which is always set to the API level of the system Emacs is presently installed within.  For example, before calling `dispatchKeyEventFromInputMethod&apos;, a function absent from Android 6.0 (API level 23) or earlier, check:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:740
+#, no-wrap
+msgid "    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N)       view.imManager.dispatchKeyEventFromInputMethod (view, key);     else       {\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:743
+msgid "where `N&apos; is a constant defined to 24."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:746
+msgid "The compile SDK version is the version of the Android SDK headers Java code is compiled against.  Because Java does not provide conditional compilation constructs, Emacs can&apos;t be compiled with any version of these headers other than the version mentioned in `java/INSTALL&apos;, but the headers used do not affect the set of supported systems provided that the version checks illustrated above are performed where necessary."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:749
+msgid "The target API level is a number within java/AndroidManifest.xml.in the system refers to when deciding whether to enable backwards-incompatible modifications to the behavior of various system APIs.  For any given Android version, backwards incompatible changes in that version will be disabled for applications whose target API levels don&apos;t exceed its own."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:752
+msgid "The target API should nevertheless be updated to match every major Android update, as Google has stated their intentions to prohibit users from installing applications targeting ``out-of-date&apos;&apos; versions of Android, though this threat has hitherto been made good on."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:758
+msgid "This file is part of GNU Emacs."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:761
+msgid "GNU Emacs is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:764
+msgid "GNU Emacs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/admin/notes/java_nowrap:767
+msgid "You should have received a copy of the GNU General Public License along with GNU Emacs.  If not, see &lt;https://www.gnu.org/licenses/&gt;. </code></pre></td></tr></table> </div> <!-- class=content --> <div class='footer'>generated by <a href='https://git.zx2c4.com/cgit/about/'>cgit v1.2.3-70-g09d2</a> (<a href='https://git-scm.com/'>git 2.46.0</a>) at 2024-11-03 20:01:10 +0000</div> </div> <!-- id=cgit --> </body> </html>"
+msgstr ""

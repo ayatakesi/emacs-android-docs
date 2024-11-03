@@ -1,0 +1,601 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2024-11-04 05:33+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: Plain text
+#: README_nowrap:3
+msgid "This directory holds several different installation packages, each intended for a different kind of Android machine."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:6
+#, no-wrap
+msgid "emacs-3*.0.*0-16-armeabi-v7a.apk \t - armv7 devices running \t\t\t\t\t   Android 4.1 or later. emacs-3*.0.*0-24-armeabi-v7a.apk \t - armv7 devices running \t\t\t\t\t   Android 7.0 or later. emacs-3*.0.*0-21-arm64-v8a.apk\t\t - aarch64 devices running \t\t\t\t\t   Android 5.0 or later. emacs-3*.0.*0-29-arm64-v8a.apk\t\t - aarch64 devices running \t\t\t\t\t   Android 10.0 or later. emacs-3*.0.*0-21-mips64.apk\t\t - mips64 devices running \t\t\t\t\t   Android 5.0 or later. emacs-3*.0.*0-21-x86_64.apk\t\t - x86_64 devices running \t\t\t\t\t   Android 5.0 or later. emacs-3*.0.*0-29-x86_64.apk\t\t - x86_64 devices running \t\t\t\t\t   Android 10.0 or later. emacs-3*.0.*0-9-armeabi.apk\t\t - armeabi devices running \t\t\t\t\t   Android 2.3 or later. emacs-3*.0.*0-9-mips.apk\t\t - mips devices running \t\t\t\t\t   Android 2.3 or later. emacs-3*.0.*0-9-x86.apk\t\t\t - x86 devices running \t\t\t\t\t   Android 2.3 or later. emacs-3*.0.*0-8-armeabi.apk\t\t - armeabi devices running \t\t\t\t\t   Android 2.2.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:9
+msgid "Always install the package for the CPU architecture used by your Android system; if you install any other compatible package (such as the x86 package on an x86_64 system), subprocess execution will fail."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:12
+msgid "Additionally, the directory `termux' contains copies of these installation packages built with their ``shared user ID'' set to `com.termux' and a version of the Termux terminal emulator signed with Emacs's signing keys.  Together, those packages enable Emacs to make use of the Termux package repositories."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:15
+msgid "To install Emacs with Termux support, first remove any existing copy of Emacs (this will remove all data within Emacs's home directory, so make a backup beforehand!) and Termux, to avoid signature or user ID conflicts.  Next, install Termux _first_, then install Emacs.  Once both packages are installed, open Termux, and at the shell prompt displayed therein, type:"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:18
+#, no-wrap
+msgid "  $ pkg update && pkg upgrade\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:21
+#, no-wrap
+msgid "confirming each of the inquiries made by the dpkg package manager. Once all applications have been installed and updated, open Emacs, and introduce the following code to `early-init.el': (setenv \"PATH\" (format \"%s:%s\" \"/data/data/com.termux/files/usr/bin\" \t\t       (getenv \"PATH\"))) (push \"/data/data/com.termux/files/usr/bin\" exec-path)\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:24
+msgid "after which programs installed through Termux will be made accessible to Emacs."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:27
+msgid "This section of the FAQ previously provided incorrect advice stating that setting the environment variable `LD_LIBRARY_PATH' was required to execute binaries from Termux.  In truth, Termux embeds the path to its shared libraries within its executables, and providing a separate `LD_LIBRARY_PATH' causes system libraries with conflicting names to be interposed into the set of libraries imported during the linking process when Termux binaries are being executed (and vice versa with Termux libraries and system binaries), yielding various bizarre errors."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:30
+msgid "Please bear in mind that Termux (and the copies of Emacs built to use it) can only be installed on Android 7.0 and later."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:33
+msgid "FREQUENTLY ANSWERED QUESTIONS"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:36
+msgid "The answers to most questions frequently asked by users of this Emacs port can be found in the Emacs and/or Lisp Reference manuals that it is distributed alongside.  Nevertheless, a list of very frequently answered questions has been compiled, for the benefit of individuals who are unaware of the previously mentioned documentation."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:39
+#, no-wrap
+msgid "1. Which package do I download?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:42
+msgid "Probably `emacs-3*.0.*0-29-arm64-v8a.apk' or its counterpart in the `termux' directory.  If your phone or tablet runs a 32-bit OS, then most likely `emacs-3*.0.*0-16-armeabi-v7a.apk'."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:45
+#, no-wrap
+msgid "2. Which version(s) of Emacs do I install, and which do these packages    correspond to?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:48
+msgid "Packages labeled `emacs-30.0.90' are produced from the `emacs-30' branch of Emacs that will ultimately become the Emacs 30.1 release, while those labeled `emacs-31.0.50' are produced from the development branch that will not be released in the immediate future."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:51
+msgid "Although the versions in the package names and reported by emacs-version correspond to one pretest or another, they are built from Git repository sources, which is to say that there is no guarantee that they will actually be produced from the same sources as the pretests bearing the same versions."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:54
+#, no-wrap
+msgid "3. Where do I get help?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:57
+msgid "help-gnu-emacs@gnu.org."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:60
+#, no-wrap
+msgid "4. Where do I report bugs/submit patches?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:63
+msgid "bug-gnu-emacs@gnu.org."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:66
+#, no-wrap
+msgid "5. How do I access my documents/source code/etc?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:69
+msgid "Android apps can be granted access to three different kinds of storage."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:72
+msgid "The first is the app data directory, which also serves as the app's Unix home directory, and is only accessible to Emacs itself."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:75
+msgid "The second is the external storage directory (located at /sdcard), which Emacs must explicitly request permission to access.  This directory is what shows up as the ``internal storage'' in your file manager app."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:78
+msgid "Prior to Android 11, granting Emacs rights to access this directory can be performed from the Permissions menu in the App Info settings panel, by enabling the option labeled Storage; after Android 11, the path to the setting has changed, and must instead be granted from the Special App Access menu in Settings."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:81
+msgid "Contrary to several descriptions being circulated online, it is not necessary to install the Termux variant for access to external storage.  That being said, either application will gain any permissions granted to the other (of which the right to access external storage is one) as a consequence of their shared user ID."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:84
+msgid "The third is storage provided by other applications (Nextcloud, for example) through the Storage Access Framework -- this storage is extremely slow (thanks in part to Google's botched implementation of document provider IPC), and is located within subdirectories of /content/storage.  Before any of these directories become available, you must run `M-x android-request-directory-access', and select the directory you want from the file selection panel displayed."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:87
+msgid "Because the /content directory is implemented entirely within Emacs's own file input/output primitives, subprocess cannot access any files it contains.  If you attempt to create a subprocess inside that directory, its working directory will actually be set to Emacs's home directory.  This additionally applies to the /assets directory holding Lisp and ancillary files distributed with Emacs."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:90
+msgid "Refer to (emacs)Android Filesystem and (emacs)Android Document Providers within the Emacs manual for more details."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:93
+#, no-wrap
+msgid "6. Where is my .emacs/.emacs.d/init.el?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:96
+msgid "~/.emacs, of course."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:99
+msgid "You cannot copy an Emacs configuration to the so-called internal storage on your phone and make it immediately available to Emacs. This is because, being subject to Android's security model, Emacs is the only app with permission to access its home directory."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:102
+msgid "Instead, follow the procedures outlined in the previous answer to grant Emacs access to that internal storage, and copy your configuration files from there to your home directory."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:105
+msgid "Android doesn't guarantee that Emacs's home directory will be located at any predetermined location, but it is normally placed at /data/data/org.gnu.emacs/files.  On systems with multiple users (Android users, not Unix users), it may instead be located somewhere within /data/user/ if Emacs is installed for a user other than the device owner."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:108
+#, no-wrap
+msgid "7. Where are binaries like emacs, emacsclient, and movemail?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:111
+msgid "Short answer: ~/../lib."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:114
+msgid "Long answer: because Android restricts both the locations from where executable files can be loaded and the names of the executables that it will extract from installation packages, Emacs files all of its ancillary executables under names resembling shared libraries.  When Emacs is installed, Android extracts these executables to a private directory that Emacs symlinks at startup to `lib' within the parent directory of its home directory.  Refer to (elisp)Subprocess Creation and (emacs)Android Environment for more details."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:117
+msgid "While the names of these executables are stable (and will be so for the forseeable future), it is better to use the variables that are specifically defined to provide their names: `emacsclient-program-name', `movemail-program-name' and so on, in place of hard-coded names such as `libemacsclient.so' and `libmovemail.so'.  Following this advice will guarantee that your code continues to run faithfully in the future and on non-Android systems."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:120
+msgid "The location of `emacs' is more involved: the `libemacs.so' is actually a real shared library containing all of the Emacs C code. This code is not functional until it is linked to a bundle of Java code implementing the Android filesystem and GUI interfaces, which is automatically performed by the Android JVM at run-time when you open Emacs from the app icon."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:123
+msgid "`libandroid-emacs.so' is a binary that tries to invoke the JVM with the right arguments for starting Emacs on the command line.  While it is true that Emacs cannot create a display connection when started in this manner, the greatest difficulty posed by this approach is rather its reliance on Android internals that are subject to change without notice.  Because of this unfortunate dependency, it does not work reliably on all versions of Android, and must be revised after each major change to the OS."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:126
+msgid "The true solution to this conundrum is to avoid running Emacs inside itself, obviating the need for that binary in the first place."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:129
+#, no-wrap
+msgid "8. Where do I get more software?  (clang, git, python, etc.)\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:132
+msgid "See (emacs)Android Software.  The `termux' directory holds versions of both Termux and Emacs that share the same user ID and signing key."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:135
+#, no-wrap
+msgid "9. The on-screen keyboard isn't displayed!  You must only use Emacs    with a physical keyboard!\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:138
+msgid "The author of this port does not use a physical keyboard under Android.  He uses AnySoftKeyboard for English input, and Fcitx"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:141
+#, no-wrap
+msgid "  https://github.com/fcitx5-android/fcitx5-android/\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:144
+msgid "for CJK input.  With that misconception out of the way, there are at least two reasons for asking this question."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:147
+msgid "The first is that you may have unthinkingly disabled the menu bar or tool bar in keeping with an online Emacs introductory text, and now want to perform operations which are then impossible without a keyboard.  This is a very unwise decision on Android: any operation performed from a keyboard can also be performed from the menu bar or tool bar (including M-x, which is Edit -> Execute Command), making the use of a keyboard unnecessary."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:150
+msgid "With that in mind, and to save screen space, the keyboard is normally hidden when the current window has selected a read-only buffer.  The second reason for asking this question is wanting to always display the on-screen keyboard; to do so, simply customize the option `touch-screen-display-keyboard' to a non-nil value.  (Options -> Customize Emacs, hint, hint.)"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:153
+msgid "For more details and an in depth explanation of how Emacs treats touch screen and on-screen-keyboard input, refer to (emacs)Touchscreens, (emacs)On-Screen Keyboards, (elisp)Misc Events, and (elisp)Touchscreen Events."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:156
+#, no-wrap
+msgid "10. My package X that relies on reading raw key events / binding keys     globally doesn't work with an on screen keyboard!\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:159
+msgid "This is because Android input methods rely on directly invoking Emacs's buffer editing primitives, which is dubbed text conversion. Emacs tries to implement features such as electric-indent, electric-pair and Auto-Fill through analyzing the course of their edits after they take place."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:162
+msgid "Consequentially, Emacs doesn't receive raw key press events as you type into the input method, your package doesn't work, and the text you type is inserted directly into the current buffer in lieu of the events you meant to send."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:165
+msgid "You can either fix these packages to disable text conversion through the variable `overriding-text-conversion-style' or the buffer-local variable `text-conversion-style', or disable text conversion globally by setting the first variable."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:168
+msgid "See (elisp)Misc Events for further elucidations on the subject of text conversion."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:171
+#, no-wrap
+msgid "11. Point jumps to the start of the text after I type an opening     paren!  (And other problems with IMEs in Text or Prog Mode     derivatives.) This is probably a bug in your IME.  Emacs implements the Android input method interfaces to the letter, but Android's own implementation leaves much to be desired.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:174
+msgid "One extremely common transgression committed by input methods is to assume that the `getExtractedText' IME request will always reply with the entire contents of the buffer regardless of the number of characters the IME requests, which is indeed the case when the editor is the Android TextView widget.  In contrast, Emacs respects the size specified in the request, in adherence with the documented behavior for that request."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:177
+msgid "An additional transgression is assuming that, since the result of that request is always the entirety of the text buffer's contents, the caret offset returned by the input method is the position of the insertion point.  In reality, the base of this offset is the start of the text returned."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:180
+msgid "Together, these two implementation mistakes result in many problematic input methods misleading themselves into thinking that point is at the start of the buffer.  After inserting a closing paren as part of their own electric-pair features, such input methods often try to obtain the location of the point and move to the last character prior to the closing paren.  But what they think is the position of that character is actually the very beginning of the buffer."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:183
+msgid "If the situation illustrated above does not appear consistent with the behavior you witness from your IME, however, please send a bug report (with M-x report-emacs-bug.)  In that report, mention the name and version number of the IME you are using."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:186
+#, no-wrap
+msgid "12. When I type in fundamental mode / a Custom buffer, the input     method goes haywire!\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:189
+msgid "This is a bug in the IME.  Input methods don't just settle for implementing text conversion incorrectly, they sometimes also forget to implement the `TYPE_NULL' input mode that requires them to behave as plain keyboard devices."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:192
+msgid "These bugs typically manifest as no text being inserted (since Emacs doesn't provide an input connection when text conversion is disabled), as the Delete key not working, or in any number of other ways.  Get a better input method, and exhort your friends to do the same."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:195
+#, no-wrap
+msgid "13. How do I display modifier keys in the tool bar?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:198
+msgid "Enable `modifier-bar-mode' and `tool-bar-mode'.  A small secondary tool bar will be displayed together with the tool bar containing buttons that read and modify subsequent events with each of the modifier keys understood by Emacs."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:201
+msgid "When you tap one of these buttons, Emacs also displays the on-screen keyboard and momentarily disables text conversion.  This enables you to type key sequences containing modifier keys even in a Text or Prog Mode buffer where text conversion is enabled."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:204
+#, no-wrap
+msgid "14. How do I display the tool bar on the bottom of its frame?  I want     the buttons and modifier bar to be near my fingers as I type.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:207
+msgid "Although not specific to the Android port, the implementation of this feature on non-GTK systems was motivated by one such request from an Android port user."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:210
+msgid "Customize `tool-bar-position' to `bottom'."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:213
+#, no-wrap
+msgid "15. How do I quit?  I can't type C-g.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:216
+msgid "Click the volume down button in rapid succession, which acts as a regular C-g."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:219
+#, no-wrap
+msgid "16. How do I open other files in Emacs?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:222
+msgid "Run `M-x server-start' (or better yet, place it in your initialization files.)"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:225
+msgid "When you try to open a text file, the system will display a dialog asking for a program to run.  Select Emacs: emacsclient will be called to open the file in question, or Emacs will be started with that file as an argument if it's not already running."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:228
+#, no-wrap
+msgid "17. What is the difference between this app and Emacs from Termux?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:231
+msgid "This app runs as a native Android GUI program, enabling it to take advantage of input methods, document provider programs and suchlike, and its support for touch screen input is superior, with most common gestures recognized and/or transparently translated into mouse events."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:234
+msgid "Distributed Lisp and auxiliary files are stored entirely within the application package itself, avoiding the need to use a separate package manager to install Emacs updates.  These files are also loaded directly from the app package, and so do not require a time-consuming extraction procedure every time Emacs is updated before they can be used."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:237
+msgid "This app is also capable of employing ported Unix software from Termux as well; see the top of this file, and moreover supports old Android releases before 7.0, which Termux does not."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:240
+#, no-wrap
+msgid "18. What's the difference between the builds provided here and those     offered by F-Droid?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:243
+msgid "F-Droid's version is an old snapshot of the Android port from Februrary; although it has witnessed substantial improvement by comparison with the version from February they previously distributed, it remains incomplete and will always be absent bug fixes and new features present in the packages housed here."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:246
+msgid "Their versions are also missing many of the dependencies packaged within the builds provided here: GnuTLS, image libraries, tree-sitter, and so on."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:249
+#, no-wrap
+msgid "19. Why can't I update from the F-Droid build to this one?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:252
+msgid "Because Android requires package updates to be signed with the same key used to sign the existing installation, and F-Droid uses a signing key distinct from the one included in the Emacs repository."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:255
+msgid "Back up your configuration and uninstall the F-Droid build prior to installing any of the packages in this directory."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:258
+#, no-wrap
+msgid "20. ``Set Default Font'' in the Options menu does not list the     fonts I have installed.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:261
+msgid "That menu is in truth a vestige from the early days of Emacs's graphics support, when the only font ``backend'' was X, and programs could get away with listing merely the fonts common to most X servers. When invoked under Android, it produces a litany of fonts that are seldom really present on Android.  Fonts should be configured through Customize or the `set-frame-font' command instead."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:264
+#, no-wrap
+msgid "21. Glyphs within Microsoft core fonts (Arial, Tahoma, and the like)     are misshapen or blurry.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:267
+msgid "Antiquated versions of these fonts exploit extensions and implementation-specific behavior unique to the Microsoft Windows font scaler that Emacs does not supply, as a result of which various glyph programs they define go awry as they are executed to fit glyphs to the pixel grid.  The solution is to update them to their latest revisions, as distributed with recent releases of MS Windows."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:270
+msgid "In particular, such fonts expect the interpreter to grant them leave to address nonexistent glyph points.  The MS scaler ignores offending instructions, while Emacs terminates the program entirely."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:273
+#, no-wrap
+msgid "22. Tool bar buttons are undersized.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:276
+msgid "Tool bar button margins do not increase to match the display density, which produces buttons that appear smaller than expected on high-density output devices, as featured by most Android phones today. Adjust the variable `tool-bar-button-margin' to compensate."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:279
+#, no-wrap
+msgid "23. B/W or grayscale displays are not detected, with the result that     colors applied by the likes of font-lock lack contrast.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:282
+msgid "This entry is relevant on tablets featuring \"digital paper\" displays, monochromatic or grayscale displays being virtually unknown elsewhere."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:285
+msgid "Android not being designed for such applications, the display's visual class is not reported to programs, and consequently you the user are responsible for informing Emacs of the display color depth by means of the variable `android-display-depth'; for a grayscale display, the optimal value is anywhere between 2 and 8, where greater values correspond to more supported grays, while the proper value for a monochrome display is 1."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:288
+msgid "Though this value controls color allocation choices, the display capabilities reported to Lisp, and by extension colors selected during the realization of faces, yet it does not affect font anti-aliasing or the display of images, as the underlying surface provided to Emacs is always color, with the driver converting anti-aliased text and color graphics into grayscale or monochrome data for the glass instead.  Its purpose is rather to enable users to activate the carefully curated palette for displays wanting in color space or depth."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:291
+#, no-wrap
+msgid "24. How/where do I obtain the corresponding source code to which I am     entitled under the terms of the GNU GPL?\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:294
+msgid "Type:"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:297
+#, no-wrap
+msgid "  M-x describe-variable RET emacs-repository-version RET\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:300
+msgid "within Emacs.  Next, download that revision from the Emacs Git repository at:"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:303
+#, no-wrap
+msgid "  https://git.savannah.gnu.org/git/emacs.git\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:306
+msgid "I also retain source code tarballs produced from the repository for the binaries that are currently present on SourceForge.  Please contact me if you require those."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:309
+#, no-wrap
+msgid "25. Termux, its add-ons (or Emacs) won't install.\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:312
+msgid "If you have downloaded and installed either the Termux-enabled Emacs, or Termux itself, from this site, installation of upstream Termux app packages will fail with a nondescript error message, as their signature will disagree with those of the packages already installed."
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:315
+msgid "You must either resign the packages you wish to install with the upstream Emacs signing key:"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:318
+#, no-wrap
+msgid "  https://git.savannah.gnu.org/cgit/emacs.git/tree/java/emacs.keystore\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:321
+msgid "or modify Android to disable its draconian signature verification, as with an XPosed module such as:"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:324
+#, no-wrap
+msgid "  https://github.com/LSPosed/CorePatch\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:327
+#, no-wrap
+msgid "26. Something's missing from this FAQ!\n"
+msgstr ""
+
+#. type: Plain text
+#: README_nowrap:330
+msgid "If it's a subject not covered by the Android or Input nodes in the Emacs manual, or the relevant portions of the Lisp reference manual, please report a bug.  I will then update the manual and this FAQ as I see fit."
+msgstr ""
