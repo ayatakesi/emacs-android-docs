@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: 2024-11-04 13:02+0900\n"
+"PO-Revision-Date: 2024-11-04 15:42+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: ja\n"
 "Language: ja\n"
@@ -234,33 +234,33 @@ msgstr "NDKAndroid 2.2には非常に厄介なバグがあり、そのために�
 #: emacs-30/java/INSTALL_nowrap:106
 #, no-wrap
 msgid "\f BUILDING C++ DEPENDENCIES\n"
-msgstr ""
+msgstr "\f BUILDING C++ DEPENDENCIES\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:108
 msgid "In normal circumstances, Emacs should automatically detect and configure one of the C++ standard libraries part of the NDK when such a library is required to build a dependency specified under `--with-ndk-path'."
-msgstr ""
+msgstr "普通の状況下であれば、`--with-ndk-path'で指定された依存関係のビルドにNDKに同梱されているC++ライブラリーのいずれか1つが必要であれば、Emacsが自動的に検知してそれを構成するべきだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:110
 msgid "Nevertheless, this process is not infallible, and with certain versions of the NDK is liable to fail to locate a C++ compiler, requiring that you run the `make_standalone_toolchain.py' script in the NDK distribution to create a ``standalone toolchain'' and substitute the same for the regular compiler toolchain.  See https://developer.android.com/ndk/guides/standalone_toolchain for further details."
-msgstr ""
+msgstr "そうであってもなおこのプロセスに間違いがない訳ではないし、NDKがC++コンパイラーの検索に失敗しがちな特定バージョンも存在するので、``スタンドアローンツールチェーン(standalone toolchain)''を生成して通常のコンパイラーツールチェーンと同じものに置き換えるために、NDKディストリビューションに同梱されている`make_standalone_toolchain.py'スクリプトの実行が必要である。詳細についてはhttps://developer.android.com/ndk/guides/standalone_toolchainを参照して欲しい。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:112
 msgid "Some versions of the NDK that ship GCC 4.9.x exhibit a bug where the compiler cannot locate `stddef.h' after being copied to a standalone toolchain.  To work around this problem, add:"
-msgstr ""
+msgstr "一部のNDKバージョンに同梱されているGCC 4.9.xにはスタンドアローンツールチェーンにコピーされた後に`stddef.h'を見つけられないというバグが発生する。この問題を回避するには:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:114
 #, no-wrap
 msgid "   -isystem /path/to/toolchain/include/c++/4.9.x\n"
-msgstr ""
+msgstr "   -isystem /path/to/toolchain/include/c++/4.9.x\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:117
 msgid "to ANDROID_CFLAGS."
-msgstr ""
+msgstr "上記をANDROID_CFLAGSに追加すればよい。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:120
