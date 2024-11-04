@@ -184,46 +184,31 @@ ID変更はシステムが禁止しているので、すでに別のshared user 
  BUILDING WITH THIRD PARTY LIBRARIES
 
 
-The Android NDK does not support the usual ways of locating third party
-libraries, especially not via `pkg-config'.  Instead, it uses its own system
-called `ndk-build'.  The one exception to this rule is zlib, which is
-considered a part of the Android OS itself and is available on all devices
-running Android.
+Android
+NDKは通常の方法によるサードパーティライブラリーの配置は特にサポートしておらず、特に`pkg-config'を通じたライブラリー配置はサポートしない。そのかわりに用いるのが`ndk-build'と呼ばれる独自のシステムだ。このルールの例外の1つ、zlibはAndroid
+OS自体の一部とみなされているので、Androidを実行するすべてのデバイスで利用可能になっている。
 
-Android also requires that each application include its own dependencies, as
-the system makes no guarantee about the existence of any particular library.
+Androidではどのような特定ライブラリーの存在について保証されていないので、アプリケーションにはそれぞれ自身の依存関係が含まれていることが要求される。
 
-Emacs is not built with the `ndk-build' system.	 Instead, it is built with
-Autoconf and Make.
+Emacsは`ndk-build'システムではビルドされず、AutoconfとMakeによってビルドされる。
 
 
-However, it supports building and including dependencies which use the
-similarly Make-based `ndk-build' system.
+とはいえMakeをベースにする点では似ている`ndk-build'システムを使用する、ビルドは依存関係を含めてサポートしている。
 
-To use dependencies built through `ndk-build', you must specify a list of
-directories within which Emacs will search for ``Android.mk'' files, like
-so:
+`ndk-build'を通じてビルドされた依存関係を使用するには、以下のようにEmacsが``Android.mk''ファイルが検索するディレクトリーのリストを指定しなければならない:
 
   ./configure "--with-ndk-path=directory1 directory2"
 
-If `configure' complains about not being able to find ``libc++_shared.so'',
-then you must locate that file in your copy of the NDK, and specify it like
-so:
+``libc++_shared.so''が見つからないことに関して`configure'が告げるようであれば、NDKのコピーにそのファイルを配置して、以下のように指定しなければならない:
 
   ./configure --with-ndk-cxx-shared=/path/to/sysroot/libc++_shared.so
 
 
-Emacs will then read the ``Android.mk'' file in each directory, and
-automatically build and use those modules.
+そうすればEmacsはそれぞれのディレクトリーにある``Android.mk''を読み込んで自動的にビルド、それらのモジュールを使用するだろう。
 
-When building for Intel systems, some ``ndk-build'' modules require the
-Netwide Assembler, usually installed under ``nasm'', to be present on the
-system that is building Emacs.
+Intelシステム向けにビルドする際には一部の``ndk-build''モジュール用に、EシステムにNetwideアセンブラーが存在する必要があるが、これは通常だと``nasm''配下にインストールされている筈だ。
 
-Google has adapted several Emacs dependencies to use the `ndk-build' system,
-many of which require patches to function under an Emacs environment.  As
-such, it is generally the wiser choice to use our ports in their place, but
-the following list and patches are still provided for reference.
+GoogleはEmacsの依存関係いくつかにたいして`ndk-build'システムを使用するよう調整話施したが、その多くはEmacs環境で動作させるためのpatchが必要となる。したがって一般的にはわたしたちが提供するポートを用いるのが賢明な選択ではあるものの、参考用に以下のリストとpatchの提供は継続する。
 
 
   libpng	- https://android.googlesource.com/platform/external/libpng   giflib	- https://android.googlesource.com/platform/external/giflib      (You must add LOCAL_EXPORT_CFLAGS := -I$(LOCAL_PATH) before       its Android.mk includes $(BUILD_STATIC_LIBRARY))   libjpeg-turbo - https://android.googlesource.com/platform/external/libjpeg-turbo      (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH) before       its Android.mk includes $(BUILD_SHARED_LIBRARY))   libxml2	- https://android.googlesource.com/platform/external/libxml2/      (You must also place the dependency icu4c in ``--with-ndk-path'',       and apply the patch at the end of this file.)   icu4c		- https://android.googlesource.com/platform/external/icu/      (You must apply the patch at the end of this file.)   sqlite3	- https://android.googlesource.com/platform/external/sqlite/      (You must apply the patch at the end of this file, and add the `dist'       directory to ``--with-ndk-path''.)   libselinux	- https://android.googlesource.com/platform/external/libselinux      (You must apply the patches at the end of the file, and obtain       the following three dependencies.)   libpackagelistparser     https://android.googlesource.com/platform/system/core/+/refs/heads/nougat-mr1-dev/libpackagelistparser/     (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include before       its Android.mk includes $(BUILD_SHARED_LIBRARY))   libpcre	- https://android.googlesource.com/platform/external/pcre   libcrypto	- https://android.googlesource.com/platform/external/boringssl      (You must apply the patch at the end of this file when building for       ARM systems.)

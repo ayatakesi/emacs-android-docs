@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: 2024-11-04 16:32+0900\n"
+"PO-Revision-Date: 2024-11-04 21:05+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: ja\n"
 "Language: ja\n"
@@ -336,64 +336,64 @@ msgstr "これにより`/data/data/com.termux/files'ディレクトリーに配�
 #: emacs-30/java/INSTALL_nowrap:158
 #, no-wrap
 msgid "\f BUILDING WITH THIRD PARTY LIBRARIES\n"
-msgstr ""
+msgstr "\f BUILDING WITH THIRD PARTY LIBRARIES\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:161
 msgid "The Android NDK does not support the usual ways of locating third party libraries, especially not via `pkg-config'.  Instead, it uses its own system called `ndk-build'.  The one exception to this rule is zlib, which is considered a part of the Android OS itself and is available on all devices running Android."
-msgstr ""
+msgstr "Android NDKは通常の方法によるサードパーティライブラリーの配置は特にサポートしておらず、特に`pkg-config'を通じたライブラリー配置はサポートしない。そのかわりに用いるのが`ndk-build'と呼ばれる独自のシステムだ。このルールの例外の1つ、zlibはAndroid OS自体の一部とみなされているので、Androidを実行するすべてのデバイスで利用可能になっている。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:163
 msgid "Android also requires that each application include its own dependencies, as the system makes no guarantee about the existence of any particular library."
-msgstr ""
+msgstr "Androidではどのような特定ライブラリーの存在について保証されていないので、アプリケーションにはそれぞれ自身の依存関係が含まれていることが要求される。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:165
 msgid "Emacs is not built with the `ndk-build' system.\t Instead, it is built with Autoconf and Make."
-msgstr ""
+msgstr "Emacsは`ndk-build'システムではビルドされず、AutoconfとMakeによってビルドされる。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:168
 msgid "However, it supports building and including dependencies which use the similarly Make-based `ndk-build' system."
-msgstr ""
+msgstr "とはいえMakeをベースにする点では似ている`ndk-build'システムを使用する、ビルドは依存関係を含めてサポートしている。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:170
 msgid "To use dependencies built through `ndk-build', you must specify a list of directories within which Emacs will search for ``Android.mk'' files, like so:"
-msgstr ""
+msgstr "`ndk-build'を通じてビルドされた依存関係を使用するには、以下のようにEmacsが``Android.mk''ファイルが検索するディレクトリーのリストを指定しなければならない:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:172
 #, no-wrap
 msgid "  ./configure \"--with-ndk-path=directory1 directory2\"\n"
-msgstr ""
+msgstr "  ./configure \"--with-ndk-path=directory1 directory2\"\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:174
 msgid "If `configure' complains about not being able to find ``libc++_shared.so'', then you must locate that file in your copy of the NDK, and specify it like so:"
-msgstr ""
+msgstr "``libc++_shared.so''が見つからないことに関して`configure'が告げるようであれば、NDKのコピーにそのファイルを配置して、以下のように指定しなければならない:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:176
 #, no-wrap
 msgid "  ./configure --with-ndk-cxx-shared=/path/to/sysroot/libc++_shared.so\n"
-msgstr ""
+msgstr "  ./configure --with-ndk-cxx-shared=/path/to/sysroot/libc++_shared.so\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:179
 msgid "Emacs will then read the ``Android.mk'' file in each directory, and automatically build and use those modules."
-msgstr ""
+msgstr "そうすればEmacsはそれぞれのディレクトリーにある``Android.mk''を読み込んで自動的にビルド、それらのモジュールを使用するだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:181
 msgid "When building for Intel systems, some ``ndk-build'' modules require the Netwide Assembler, usually installed under ``nasm'', to be present on the system that is building Emacs."
-msgstr ""
+msgstr "Intelシステム向けにビルドする際には一部の``ndk-build''モジュール用に、EシステムにNetwideアセンブラーが存在する必要があるが、これは通常だと``nasm''配下にインストールされている筈だ。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:183
 msgid "Google has adapted several Emacs dependencies to use the `ndk-build' system, many of which require patches to function under an Emacs environment.  As such, it is generally the wiser choice to use our ports in their place, but the following list and patches are still provided for reference."
-msgstr ""
+msgstr "GoogleはEmacsの依存関係いくつかにたいして`ndk-build'システムを使用するよう調整話施したが、その多くはEmacs環境で動作させるためのpatchが必要となる。したがって一般的にはわたしたちが提供するポートを用いるのが賢明な選択ではあるものの、参考用に以下のリストとpatchの提供は継続する。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:186
