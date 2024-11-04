@@ -23,8 +23,8 @@ OSでも動作するし他のUnixシステムでも同様に動作するだろ�
 これらのツールが入手できたら、以下のように`configure'スクリプトを呼び出せるだろう:
 
   ./configure --with-android=/path/to/android.jar \
-    ANDROID_CC=/path/to/android/ndk/cc  \
-    SDK_BUILD_TOOLS=/path/to/sdk/build/tools
+      ANDROID_CC=/path/to/android/ndk/cc  \
+      SDK_BUILD_TOOLS=/path/to/sdk/build/tools
 
 上記コマンドラインのパスは以下のように置き換えること:
 
@@ -85,51 +85,45 @@ build-toolsディレクトリーにJavaコンパイラーが出力するclassフ
 
  BUILDING WITH OLD NDK VERSIONS
 
-Building Emacs with an old version of the Android NDK requires special
-setup.	This is because there is no separate C compiler binary for each
-version of Android in those versions of the NDK.
+古いバージョンのAndroid
+NDKでEmacsをビルドするには特別なセットアップを要する。それらのNDKバージョンには、Androidバージョンごとに個別のCコンパイラーのバイナリが存在しないからだ。
 
-Before running `configure', you must identify three variables:
-
-
-  - What kind of Android system you are building Emacs for.
+`configure'を実行する前に、3つの変数決定する必要がある:
 
 
-  - The minimum API version of Android you want to build Emacs for.
+  - どのタイプのAndroidシステム向けにEmacsをビルドするか
 
 
-  - The locations of the system root and include files for that     version of Android in the NDK.
+  - ビルドするEmacsが対象とするAndroidの最小APIレベルは
 
 
-That information must then be specified as arguments to the NDK C compiler.
-For example:
+  - システムのルート位置、NDKのそのAndroidバージョン用インクルードファイルの位置
 
 
-  ./configure [...] \      ANDROID_CC="i686-linux-android-gcc \ 		 --sysroot=/path/to/ndk/platforms/android-14/arch-x86/ 		 -isystem /path/to/ndk/sysroot/usr/include \ 		 -isystem /path/to/ndk/sysroot/usr/include/i686-linux-android \ 		 -D__ANDROID_API__=14"
+この情報をNDKのCコンパイラーの引数として指定しなければならない。たとえば:
 
 
-Where __ANDROID_API__ and the version identifier in "platforms/android-14"
-defines the version of Android you are building for, and the include
-directories specify the paths to the relevant Android headers.  In addition,
-it may be necessary to specify "-gdwarf-2", due to a bug in the Android NDK.
+  ./configure [...] \
+      ANDROID_CC="i686-linux-android-gcc \
+      --sysroot=/path/to/ndk/platforms/android-14/arch-x86/
+      -isystem /path/to/ndk/sysroot/usr/include \
+      -isystem /path/to/ndk/sysroot/usr/include/i686-linux-android \
+      -D__ANDROID_API__=14"
 
 
-Even older versions of the Android SDK do not require the extra `-isystem'
-directives.
+__ANDROID_API__と"platforms/android-14"に含まれるバージョン識別によってビルド対象とするAndroidバージョンを定義、インクルードディレクトリーでは関連するAndroidヘッダーへのパスを指定する。加えてAndroid
+NDKのバグのために、"-gdwarf-2"の指定が必要かもしれない。
 
 
-Emacs is known to run on Android 2.2 (API version 8) or later, with the NDK
-r10b or later.  We wanted to make Emacs work on even older versions of
-Android, but they are missing the required JNI graphics library that allows
-Emacs to display text from C code.
+古いバージョンのAndroid SDKであっても、`-isystem'ディレクティブを追加する必要はない。
 
 
-There is an extremely nasty bug in the Android 2.2 system, the upshot of
-which is that large files within the generated Emacs package cannot be
-compressed in builds for Android 2.2, so that the Emacs package will be
-approximately 15 megabytes larger than a compressed package for a newer
-version of Android.  For such systems the `zip' utility is also required to
-produce packages that will not be misinterpreted by the package manager.
+EmacsはAndroid 2.2(API
+バージョン8)以降、NDKのr10b以降で実行できることが判っている。さらに古いバージョンのAndroidでもEmacsを動作させたいと考えているが、EmacsがCコードからテキストを表示するために必要となるJNIグラフィックライブラリーが欠落している。
+
+
+NDKAndroid 2.2には非常に厄介なバグがあり、そのために生成されたEmacs内の大容量ファイルをAndroid
+2.2用のビルドでは圧縮できないことから、新たなバージョン用のEmacsパッケージよりもおよそ15MBサイズが大きくなる。園山システムにおいては、パッケージマネージャーによって誤認されないパッケージを生成するために、`zip'ユーティリティーも必要になる。
 
 
  BUILDING C++ DEPENDENCIES
