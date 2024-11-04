@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: 2024-11-04 16:07+0900\n"
+"PO-Revision-Date: 2024-11-04 16:32+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: ja\n"
 "Language: ja\n"
@@ -298,39 +298,39 @@ msgstr "再配布用にEmacsパッケージをビルドする場合には、debu
 #: emacs-30/java/INSTALL_nowrap:138
 #, no-wrap
 msgid "\f BUILDING WITH A SHARED USER ID\n"
-msgstr ""
+msgstr "\f BUILDING WITH A SHARED USER ID\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:141
 msgid "Sometimes it may be desirable to build Emacs so that it is able to access executables and application data from another program.  To achieve this, that other program must have a ``shared user ID'', and be signed with the same signing key used to sign Emacs (normally `emacs.keystore'.)"
-msgstr ""
+msgstr "他のプログラムから実行可能ファイルやアプリケーションデータにアクセスできるようにEmacsをビルドしたいと思う場合もあるかもしれない。これを成すためには他のプログラムが``shared user ID''をもっていて、Emacsの署名に用いたのと同じキー(通常は`emacs.keystore')で署名されていなければならない。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:144
 msgid "Once you have both that signing key and its ``shared user ID'', you can give it to configure:"
-msgstr ""
+msgstr "この署名きーで両方に署名してそのプログラムの``shared user ID''を入手したら、以下のようにconfigureに指定できる:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:147
 #, no-wrap
 msgid "    ./configure --with-shared-user-id=MY.SHARED.USER.ID\n"
-msgstr ""
+msgstr "    ./configure --with-shared-user-id=MY.SHARED.USER.ID\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:150
 msgid "For instance,"
-msgstr ""
+msgstr "たとえば、"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:153
 #, no-wrap
 msgid "    ./configure --with-shared-user-id=com.termux\n"
-msgstr ""
+msgstr "    ./configure --with-shared-user-id=com.termux\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:156
 msgid "will result in Termux (https://termux.dev)'s application data being accessible to Emacs, within its own application data directory located at `/data/data/com.termux/files'.  Don't do this if you already have Emacs installed with a different shared user ID, as the system does not allow programs to change their user IDs after being installed."
-msgstr ""
+msgstr "これにより`/data/data/com.termux/files'ディレクトリーに配置されているTermux(https://termux.dev)のアプリケーションデータに、Emacsがアクセスできるようになる。インストール後のuser ID変更はシステムが禁止しているので、すでに別のshared user IDでEmacsをインストール済みならこれを行ってはならない。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:158
