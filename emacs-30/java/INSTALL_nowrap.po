@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: 2024-11-04 09:53+0900\n"
+"PO-Revision-Date: 2024-11-04 13:02+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: ja\n"
 "Language: ja\n"
@@ -51,8 +51,8 @@ msgstr "これらのツールが入手できたら、以下のように`configur
 msgid "  ./configure --with-android=/path/to/android.jar \\ \t      ANDROID_CC=/path/to/android/ndk/cc  \\ \t      SDK_BUILD_TOOLS=/path/to/sdk/build/tools\n"
 msgstr ""
 "  ./configure --with-android=/path/to/android.jar \\\n"
-"    ANDROID_CC=/path/to/android/ndk/cc  \\\n"
-"    SDK_BUILD_TOOLS=/path/to/sdk/build/tools\n"
+"      ANDROID_CC=/path/to/android/ndk/cc  \\\n"
+"      SDK_BUILD_TOOLS=/path/to/sdk/build/tools\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:21
@@ -163,66 +163,72 @@ msgstr "build-toolsディレクトリーにJavaコンパイラーが出力する
 #: emacs-30/java/INSTALL_nowrap:72
 #, no-wrap
 msgid "\f BUILDING WITH OLD NDK VERSIONS\n"
-msgstr ""
+msgstr "\f BUILDING WITH OLD NDK VERSIONS\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:74
 msgid "Building Emacs with an old version of the Android NDK requires special setup.\tThis is because there is no separate C compiler binary for each version of Android in those versions of the NDK."
-msgstr ""
+msgstr "古いバージョンのAndroid NDKでEmacsをビルドするには特別なセットアップを要する。それらのNDKバージョンには、Androidバージョンごとに個別のCコンパイラーのバイナリが存在しないからだ。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:76
 msgid "Before running `configure', you must identify three variables:"
-msgstr ""
+msgstr "`configure'を実行する前に、3つの変数決定する必要がある:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:79
 #, no-wrap
 msgid "  - What kind of Android system you are building Emacs for.\n"
-msgstr ""
+msgstr "  - どのタイプのAndroidシステム向けにEmacsをビルドするか\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:82
 #, no-wrap
 msgid "  - The minimum API version of Android you want to build Emacs for.\n"
-msgstr ""
+msgstr "  - ビルドするEmacsが対象とするAndroidの最小APIレベルは\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:85
 #, no-wrap
 msgid "  - The locations of the system root and include files for that     version of Android in the NDK.\n"
-msgstr ""
+msgstr "  - システムのルート位置、NDKのそのAndroidバージョン用インクルードファイルの位置\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:88
 msgid "That information must then be specified as arguments to the NDK C compiler.  For example:"
-msgstr ""
+msgstr "この情報をNDKのCコンパイラーの引数として指定しなければならない。たとえば:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:91
 #, no-wrap
 msgid "  ./configure [...] \\      ANDROID_CC=\"i686-linux-android-gcc \\ \t\t --sysroot=/path/to/ndk/platforms/android-14/arch-x86/ \t\t -isystem /path/to/ndk/sysroot/usr/include \\ \t\t -isystem /path/to/ndk/sysroot/usr/include/i686-linux-android \\ \t\t -D__ANDROID_API__=14\"\n"
 msgstr ""
+"  ./configure [...] \\\n"
+"      ANDROID_CC=\"i686-linux-android-gcc \\\n"
+"      --sysroot=/path/to/ndk/platforms/android-14/arch-x86/\n"
+"      -isystem /path/to/ndk/sysroot/usr/include \\\n"
+"      -isystem /path/to/ndk/sysroot/usr/include/i686-linux-android \\\n"
+"      -D__ANDROID_API__=14\"\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:94
 msgid "Where __ANDROID_API__ and the version identifier in \"platforms/android-14\" defines the version of Android you are building for, and the include directories specify the paths to the relevant Android headers.  In addition, it may be necessary to specify \"-gdwarf-2\", due to a bug in the Android NDK."
-msgstr ""
+msgstr "__ANDROID_API__と\"platforms/android-14\"に含まれるバージョン識別によってビルド対象とするAndroidバージョンを定義、インクルードディレクトリーでは関連するAndroidヘッダーへのパスを指定する。加えてAndroid NDKのバグのために、\"-gdwarf-2\"の指定が必要かもしれない。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:97
 msgid "Even older versions of the Android SDK do not require the extra `-isystem' directives."
-msgstr ""
+msgstr "古いバージョンのAndroid SDKであっても、`-isystem'ディレクティブを追加する必要はない。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:100
 msgid "Emacs is known to run on Android 2.2 (API version 8) or later, with the NDK r10b or later.  We wanted to make Emacs work on even older versions of Android, but they are missing the required JNI graphics library that allows Emacs to display text from C code."
-msgstr ""
+msgstr "EmacsはAndroid 2.2(API バージョン8)以降、NDKのr10b以降で実行できることが判っている。さらに古いバージョンのAndroidでもEmacsを動作させたいと考えているが、EmacsがCコードからテキストを表示するために必要となるJNIグラフィックライブラリーが欠落している。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:103
 msgid "There is an extremely nasty bug in the Android 2.2 system, the upshot of which is that large files within the generated Emacs package cannot be compressed in builds for Android 2.2, so that the Emacs package will be approximately 15 megabytes larger than a compressed package for a newer version of Android.  For such systems the `zip' utility is also required to produce packages that will not be misinterpreted by the package manager."
-msgstr ""
+msgstr "NDKAndroid 2.2には非常に厄介なバグがあり、そのために生成されたEmacs内の大容量ファイルをAndroid 2.2用のビルドでは圧縮できないことから、新たなバージョン用のEmacsパッケージよりもおよそ15MBサイズが大きくなる。園山システムにおいては、パッケージマネージャーによって誤認されないパッケージを生成するために、`zip'ユーティリティーも必要になる。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:106
