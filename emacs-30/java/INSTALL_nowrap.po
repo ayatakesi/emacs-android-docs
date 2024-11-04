@@ -3,15 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-11-04 09:53+0900\n"
+"Last-Translator: ayatakesi\n"
+"Language-Team: ja\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,140 +18,146 @@ msgstr ""
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:2
 msgid "Installation instructions for Android Copyright (C) 2023-2024 Free Software Foundation, Inc. See the end of the file for license conditions."
-msgstr ""
+msgstr "Android用インストール手順 Copyright (C) 2023-2024 Free Software Foundation, Inc. See the end of the file for license conditions."
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:4
 msgid "Please read the entirety of this file before attempting to build Emacs as an application package which can run on Android devices."
-msgstr ""
+msgstr "EmacsをAndroidデバイスで実行可能なアプリケーションパッケージとしてビルドする前に、どうかこのファイル全体を読んで欲しい。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:6
 msgid "When building from the source repository (as opposed to from a release tarball), make sure to read INSTALL.REPO in the top-level directory as well."
-msgstr ""
+msgstr "(リリースtarballではなく)ソースレポジトリからビルドする際には、トップレベルにあるINSTALL.REPOも確認して欲しい。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:11
 msgid "Android is an unusual operating system in that program binaries cannot be produced on computers running Android themselves.  Instead, they must be built on some other computer using a set of tools known as the ``Android SDK'' (Software Development Kit) and the ``Android NDK'' (Native Development Kit.)  Appropriate versions of both must be obtained to build GNU Emacs; after being built, the generated binaries will work on almost all Android devices.  This document does not elaborate on how both sets of tools can be obtained.  However, for your freedom's sake, you should use the Android SDK provided by the Debian project."
-msgstr ""
+msgstr "AndroidはAndroid自体が実行されるコンピューターではプログラムのバイナリファイルを生成できないという点において、通常のオペレーティングシステムとは異なる。そのかわりにプログラムのバイナリファイルは``Android SDK(Android Software Development Kit)''、および``Android NDK(Android Native Development Kit)''と呼ばれる一連のツールセットを用いて別のコンピューターでビルドしなければならない。GNU Emacs をビルドするためにはどちらも適切なバージョンを入手しなければならない。ビルド後に生成されるバイナリは、ほとんどすべてのAndroidデバイスで機能するだろう。このドキュメントではこれら2つのツールセットをどのように入手できるかについての詳細には触れない。ただしあなたの自由のためにも、Debianプロジェクト提供のAndroid SDKを使用するべきだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:14
 msgid "In addition to the Android SDK and Android NDK, Emacs also requires the Java compiler from OpenJDK 1.7.0 to be installed on your system, along with a working `m4' macro processor.  Building on GNU systems is all that is officially supported.  We are told that Mac OS works too, and other Unix systems will likely work as well, but MS Windows and Cygwin will not."
-msgstr ""
+msgstr "Android SDKとAndroid NDKに加えて、EmacsのビルドにはシステムにOpenJDK 1.7.0のJavaコンパイラー、および動作するm4プロセッサーがインストールされていることが必要だ。公式にサポートされているのはGNUシステム上でのビルドだけだ。Mac OSでも動作するし他のUnixシステムでも同様に動作するだろうと言われているが、MS WindowsとCygwinでは動作しないだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:17
 msgid "Once all of those tools are obtained, you may invoke the `configure' script like so:"
-msgstr ""
+msgstr "これらのツールが入手できたら、以下のように`configure'スクリプトを呼び出せるだろう:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:19
 #, no-wrap
 msgid "  ./configure --with-android=/path/to/android.jar \\ \t      ANDROID_CC=/path/to/android/ndk/cc  \\ \t      SDK_BUILD_TOOLS=/path/to/sdk/build/tools\n"
 msgstr ""
+"  ./configure --with-android=/path/to/android.jar \\\n"
+"    ANDROID_CC=/path/to/android/ndk/cc  \\\n"
+"    SDK_BUILD_TOOLS=/path/to/sdk/build/tools\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:21
 msgid "Replacing the paths in the command line above with:"
-msgstr ""
+msgstr "上記コマンドラインのパスは以下のように置き換えること:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:24
 #, no-wrap
 msgid "  - the path to the `android.jar' headers which come with the Android     SDK.  They must correspond to Android version 14 (API level 34).\n"
-msgstr ""
+msgstr "  - Android SDK付属の`android.jar'ヘッダーへのパス。Androidバージョン14(API level 34)に対応していなければならない。\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:27
 #, no-wrap
 msgid "  - the path to the C compiler in the Android NDK, for the kind of CPU     you are building Emacs to run on.\n"
-msgstr ""
+msgstr "  - ビルドしたEmacsを実行するCPU向けの、Android NDKに付属するCコンパイラーへのパス。\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:29
 #, no-wrap
 msgid "  - the path to the directory in the Android SDK containing binaries     such as `aapt', `apksigner', and `d8'.  These are used to build     the application package.\n"
-msgstr ""
+msgstr "  - Android SDKの`aapt'、`apksigner'、`d8'といったバイナリを含むディレクトリーへのパス。アプリケーションパッケージをビルドするために使用する。\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:31
 msgid "Where the type of CPU can either be `armeabi', `armv7*', `i686', `x86_64', `mips', or `mips64'."
-msgstr ""
+msgstr "CPUの種類は`armeabi'、`armv7*'、`i686'、`x86_64'、`mips'、`mips64'のいずれか。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:34
 msgid "After the configuration process completes, you may run:"
-msgstr ""
+msgstr "configureによる構成プロセスが終われば、以下を実行できるだろう:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:37
 #, no-wrap
 msgid "  make all\n"
-msgstr ""
+msgstr "  make all\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:40
 msgid "Once `make' finishes, there should be a file in the `java' directory named along the lines of:"
-msgstr ""
+msgstr "`make'が終われば`java'ディレクトリーに以下のような名前のファイルだできている筈だ:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:43
 #, no-wrap
 msgid "  emacs-<version>-<api-version>-<abi>.apk\n"
-msgstr ""
+msgstr "  emacs-<version>-<api-version>-<abi>.apk\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:45
 msgid "where <api-version> is the oldest version of Android that the package will run on, and <abi> is the type of Android machine the package was built for."
-msgstr ""
+msgstr "ここで<api-version>はそのパッケージが実行可能なAndroidの最低バージョン、<abi>はビルドされたパッケージが対象とするAndroidマシンのタイプ。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:47
 msgid "The generated package can be uploaded onto an SD card (or similar medium) and installed on-device."
-msgstr ""
+msgstr "生成されたパッケージをSDカード(または類似メディア)にアップロードして、デバイス上にインストールできる。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:50
 #, no-wrap
 msgid "\f LOCATING NECESSARY FILES\n"
-msgstr ""
+msgstr "\f 必要なファイルの配置\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:53
 msgid "As illustrated above, building Emacs for Android requires the presence three separate components of the Android SDK and NDK.  Subsequent to their installation, the contents of the Android development tools are organized into several directories, of which those pertinent to the Emacs compilation process are:"
-msgstr ""
+msgstr "上で述べたようにAndroid向けにEmacsをビルドするためには、Android SDKとAndroid NDKという個別のコンポーネントが存在する必要がある。これらツールのインストールによって、Android開発ツールのコンテンツは複数のディレクトリーに編成される。これらのうち、Emacsのコンパイルプロセスに関係があるのは以下のとおり:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:55
 #, no-wrap
 msgid "  platforms   ndk   build-tools\n"
 msgstr ""
+"  platforms\n"
+"  ndk\n"
+"  build-tools\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:57
 msgid "The platforms directory contains one subdirectory for each API level whose headers have been installed.  Each of these directories in turn includes the android.jar archive for that version of Android, also necessary for compiling Emacs."
-msgstr ""
+msgstr "platformsディレクトリーにはAPIレベルごとに1つのサブディレクトリーがあり、そのレベル用のヘッダーがインストールされている。これらのディレクトリーそれぞれには、Emacsのコンパイルにも必要なそのAndroidバージョン用のandroid.jarアーカイブが含まれている。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:60
 msgid "It is imperative that Emacs is compiled using the headers for the exact API level that it is written for.  This is currently API level 34, so the correct android.jar archive is located within a directory whose name begins with `android-34'.  Minor revisions to the headers are inconsequential towards the Emacs compilation process; if there is a directory named `android-34-extN' (where N represents a revision to the Android SDK), whether you provide `configure' with that directory's android.jar or the android.jar contained within the directory named `android-34' is of no special importance."
-msgstr ""
+msgstr "Emacsをコンパイルするには正しいAPIレベル向けに記述されたヘッダーを用いることが不可欠である。これは現在のところAPI level 34なので、名前が`android-34'で始まるディレクトリー内に配置されているandroid.jarが正しいアーカイブである。Emacsのコンパイルプロセスにとっては、ヘッダーのマイナーリビジョンは重要ではない。`android-34-extN'(NはAndroid SDKのリビジョンを表す)という名前のディレクトリーがある場合に、`configure'にそのディレクトリーのandroid.jarを指定するか、それとも`android-34'という名前のディレクトリーにあるandroid.jarを指定するかはさほど重要ではないのだ。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:63
 msgid "The ndk directory contains one subdirectory for each version of the Android NDK installed.  This directory in turn contains the C and C++ compilation system.  In contrast to the Java headers mentioned within the previous paragraph, the version of the NDK used does not affect Emacs to the extent the version of android.jar does.  Having said that, each version of the NDK only supports a limited range of API levels; your choice of C compiler binary (or __ANDROID_API__) bears upon the earliest version of Android the compiled package will support."
-msgstr ""
+msgstr "ndkディレクトリーにはインストールされているAndroid NDKのバージョンごとに1つのサブディレクトリーが含まれている。このディレクトリーにはCおよびC++のコンパイルシステムが含まれている。前段で述べたJavaヘッダーとは対照的に使用するNDKのバージョンは、android.jarのバージョンほどにはEmacsに影響しない。とはいえNDKのバージョンはそれぞれ、限られた範囲のAPIレベルだけをサポートしている。lCコンパイラーのバイナリ(あるいは__ANDROID_API__)にどれを選択するかは、コンパイルするパッケージがサポート対象とするAndroidの最低バージョンに応じて決まる。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:66
 msgid "In most cases, each subdirectory contains a folder named `toolchains', holding an `llvm' directory and one directory for each GCC toolchain supplied by the NDK.  The C compiler is then positioned within `prebuilt/*/bin' inside that directory."
-msgstr ""
+msgstr "ほとんどの場合においてサブディレクトリーにはそれぞれ`toolchains'という名前のフォルダーが含まれており、そこには`llvm'というディレクトリーとNDK提供のGCCツールチェーンごとにディレクトリーが保持されている。そのディレクトリー内の`prebuilt/*/bin'の中にCコンパイラーが配置されているだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:69
 msgid "The build-tools directory holds subdirectories containing the utility programs used to convert class files output by the Java compiler to the DEX format employed by Android.  There is one subdirectory for each version of the build tools, but the version you opt for is not of paramount significance: if your version does not work, configure will protest, so install a newer one.  We anticipate that most recent releases will work, such as those from the 33.0.x and 34.0.x series."
-msgstr ""
+msgstr "build-toolsディレクトリーにJavaコンパイラーが出力するclassファイルから、Androidが用いるDEX形式への変換に使用するユーティリティープログラムが保持されている。ビルドツールごとに1つのサブディレクトリーがあるが、もっとも重要なのはバージョンの選択ではない。選択したバージョンが機能しないとコンパイラーが文句をいうので、新しいバージョンをインストールすること。33.0.xや34.0.xのような最新リリースであれば動作する見込みがある。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:72
