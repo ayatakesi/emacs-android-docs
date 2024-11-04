@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: 2024-11-04 15:42+0900\n"
+"PO-Revision-Date: 2024-11-04 16:07+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: ja\n"
 "Language: ja\n"
@@ -266,33 +266,33 @@ msgstr "上記をANDROID_CFLAGSに追加すればよい。"
 #: emacs-30/java/INSTALL_nowrap:120
 #, no-wrap
 msgid "\f DEBUG AND RELEASE BUILDS\n"
-msgstr ""
+msgstr "\f DEBUG AND RELEASE BUILDS\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:123
 msgid "Android makes a distinction between ``debug'' and ``release'' builds of applications.  With ``release'' builds, the system will apply stronger optimizations to the application at the cost of being unable to debug them with the steps in etc/DEBUG."
-msgstr ""
+msgstr "Androidはアプリケーションのビルドにたいして``debug''と``release''の区別を設けている。``release''ビルドではetc/DEBUG記載のステップによるデバッグが不可能という代償を払って、システムがアプリケーションに強力な最適化を施すだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:126
 msgid "Emacs is built as a debuggable package by default, but:"
-msgstr ""
+msgstr "Emacsはデフォルトではデバッグ可能なしパッケージとしてビルドされるが:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:129
 #, no-wrap
 msgid "      ./configure --without-android-debug\n"
-msgstr ""
+msgstr "      ./configure --without-android-debug\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:132
 msgid "will create a release build of Emacs instead.  This may be useful when running Emacs on resource constrained machines."
-msgstr ""
+msgstr "上記のように指定すればかわりにリリースビルドが作成される。リソースが限られたマシンでEmacsを実行する際には役に立つかもしれない。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:135
 msgid "If you are building an Emacs package for redistribution, we urge you to provide both debug and release versions."
-msgstr ""
+msgstr "再配布用にEmacsパッケージをビルドする場合には、debug版とrelease版の両方を提供するよう強く推奨する。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:138

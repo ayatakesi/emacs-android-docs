@@ -145,24 +145,19 @@ toolchain)''を生成して通常のコンパイラーツールチェーンと�
  DEBUG AND RELEASE BUILDS
 
 
-Android makes a distinction between ``debug'' and ``release'' builds of
-applications.  With ``release'' builds, the system will apply stronger
-optimizations to the application at the cost of being unable to debug them
-with the steps in etc/DEBUG.
+Androidはアプリケーションのビルドにたいして``debug''と``release''の区別を設けている。``release''ビルドではetc/DEBUG記載のステップによるデバッグが不可能という代償を払って、システムがアプリケーションに強力な最適化を施すだろう。
 
 
-Emacs is built as a debuggable package by default, but:
+Emacsはデフォルトではデバッグ可能なしパッケージとしてビルドされるが:
 
 
       ./configure --without-android-debug
 
 
-will create a release build of Emacs instead.  This may be useful when
-running Emacs on resource constrained machines.
+上記のように指定すればかわりにリリースビルドが作成される。リソースが限られたマシンでEmacsを実行する際には役に立つかもしれない。
 
 
-If you are building an Emacs package for redistribution, we urge you to
-provide both debug and release versions.
+再配布用にEmacsパッケージをビルドする場合には、debug版とrelease版の両方を提供するよう強く推奨する。
 
 
  BUILDING WITH A SHARED USER ID
