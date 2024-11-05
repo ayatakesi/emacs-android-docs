@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: 2024-11-04 21:05+0900\n"
+"PO-Revision-Date: 2024-11-05 21:13+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: ja\n"
 "Language: ja\n"
@@ -400,27 +400,56 @@ msgstr "GoogleはEmacsの依存関係いくつかにたいして`ndk-build'シ�
 #, no-wrap
 msgid "  libpng\t- https://android.googlesource.com/platform/external/libpng   giflib\t- https://android.googlesource.com/platform/external/giflib      (You must add LOCAL_EXPORT_CFLAGS := -I$(LOCAL_PATH) before       its Android.mk includes $(BUILD_STATIC_LIBRARY))   libjpeg-turbo - https://android.googlesource.com/platform/external/libjpeg-turbo      (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH) before       its Android.mk includes $(BUILD_SHARED_LIBRARY))   libxml2\t- https://android.googlesource.com/platform/external/libxml2/      (You must also place the dependency icu4c in ``--with-ndk-path'',       and apply the patch at the end of this file.)   icu4c\t\t- https://android.googlesource.com/platform/external/icu/      (You must apply the patch at the end of this file.)   sqlite3\t- https://android.googlesource.com/platform/external/sqlite/      (You must apply the patch at the end of this file, and add the `dist'       directory to ``--with-ndk-path''.)   libselinux\t- https://android.googlesource.com/platform/external/libselinux      (You must apply the patches at the end of the file, and obtain       the following three dependencies.)   libpackagelistparser     https://android.googlesource.com/platform/system/core/+/refs/heads/nougat-mr1-dev/libpackagelistparser/     (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include before       its Android.mk includes $(BUILD_SHARED_LIBRARY))   libpcre\t- https://android.googlesource.com/platform/external/pcre   libcrypto\t- https://android.googlesource.com/platform/external/boringssl      (You must apply the patch at the end of this file when building for       ARM systems.)\n"
 msgstr ""
+"libpng - https://android.googlesource.com/platform/external/libpng\n"
+"\n"
+"giflib - https://android.googlesource.com/platform/external/giflib\n"
+"(これのAndroid.mkで$(BUILD_STATIC_LIBRARY)をincludeする前にLOCAL_EXPORT_CFLAGS := -I$(LOCAL_PATH)を追加しなければならない)\n"
+"\n"
+"libjpeg-turbo - https://android.googlesource.com/platform/external/libjpeg-turbo\n"
+"(これのAndroid.mkで$(BUILD_SHARED_LIBRARY)をincludeする前にLOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)を追加しなければならない)\n"
+"\n"
+"libxml2 - https://android.googlesource.com/platform/external/libxml2/\n"
+"(``--with-ndk-path''にicu4cの依存関係を追加、さらにこのファイルの最後にあるpatchも適用しなければならない)\n"
+"\n"
+"icu4c - https://android.googlesource.com/platform/external/icu/\n"
+"(このファイルの最後にあるpatchも適用しなければならない)\n"
+"\n"
+"sqlite3 - https://android.googlesource.com/platform/external/sqlite/\n"
+"(このファイルの最後にあるpatchを適用、さらに``--with-ndk-path''に`dist'ディレクトリーを追加しなければならない)\n"
+"\n"
+"libselinux - https://android.googlesource.com/platform/external/libselinux\n"
+"(このファイルの最後にあるpatchを適用、さらに以下の3つの依存関係を入手しなければならない)\n"
+"\n"
+"libpackagelistparser - https://android.googlesource.com/platform/system/core/+/refs/heads/nougat-mr1-dev/libpackagelistparser/\n"
+"(これのAndroid.mkで$(BUILD_SHARED_LIBRARY)をincludeする前にLOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/includeを追加しなければならない)\n"
+"\n"
+"libpcre - https://android.googlesource.com/platform/external/pcre\n"
+"\n"
+"libcrypto - https://android.googlesource.com/platform/external/boringssl\n"
+"(ARMシステム向けにビルドする場合にはこのファイルの最後にあるpatchを適用しなければならない)\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:189
 msgid "Many of these dependencies have been migrated over to the ``Android.bp'' build system now used to build Android itself. However, the old ``Android.mk'' Makefiles are still present in older branches, and can be easily adapted to newer versions."
-msgstr ""
+msgstr "これらの依存関係の多くは、現在Android自体のビルドにも使用されている``Android.bp''に以降されている。しかし古いブランチでは未だに以前の``Android.mk''がMakefileとして提供されているので、新たなバージョンに容易に調整できるだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:192
 msgid "In addition, some Emacs dependencies provide `ndk-build' support themselves:"
-msgstr ""
+msgstr "さらにEmacsの一部の依存関係には、それ自体が`ndk-build'のサポートを提供するものもある。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:194
 #, no-wrap
 msgid "  libwebp\t- https://android.googlesource.com/platform/external/webp      (You must apply the patch at the end of this file for the resulting       binary to work on armv7 devices.)\n"
 msgstr ""
+"libwebp - https://android.googlesource.com/platform/external/webp\n"
+"(armv7デバイスで動作するバイナリを得るには、このファイルの最後にあるpatchを適用しなければならない)\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:196
 msgid "Emacs developers have ported the following dependencies to ARM Android systems:"
-msgstr ""
+msgstr "Emacs開発者によって以下の依存関係についてはARMのAndroidシステムにポートされている:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:199

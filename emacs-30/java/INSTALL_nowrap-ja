@@ -211,21 +211,44 @@ Intelシステム向けにビルドする際には一部の``ndk-build''モジ�
 GoogleはEmacsの依存関係いくつかにたいして`ndk-build'システムを使用するよう調整話施したが、その多くはEmacs環境で動作させるためのpatchが必要となる。したがって一般的にはわたしたちが提供するポートを用いるのが賢明な選択ではあるものの、参考用に以下のリストとpatchの提供は継続する。
 
 
-  libpng	- https://android.googlesource.com/platform/external/libpng   giflib	- https://android.googlesource.com/platform/external/giflib      (You must add LOCAL_EXPORT_CFLAGS := -I$(LOCAL_PATH) before       its Android.mk includes $(BUILD_STATIC_LIBRARY))   libjpeg-turbo - https://android.googlesource.com/platform/external/libjpeg-turbo      (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH) before       its Android.mk includes $(BUILD_SHARED_LIBRARY))   libxml2	- https://android.googlesource.com/platform/external/libxml2/      (You must also place the dependency icu4c in ``--with-ndk-path'',       and apply the patch at the end of this file.)   icu4c		- https://android.googlesource.com/platform/external/icu/      (You must apply the patch at the end of this file.)   sqlite3	- https://android.googlesource.com/platform/external/sqlite/      (You must apply the patch at the end of this file, and add the `dist'       directory to ``--with-ndk-path''.)   libselinux	- https://android.googlesource.com/platform/external/libselinux      (You must apply the patches at the end of the file, and obtain       the following three dependencies.)   libpackagelistparser     https://android.googlesource.com/platform/system/core/+/refs/heads/nougat-mr1-dev/libpackagelistparser/     (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include before       its Android.mk includes $(BUILD_SHARED_LIBRARY))   libpcre	- https://android.googlesource.com/platform/external/pcre   libcrypto	- https://android.googlesource.com/platform/external/boringssl      (You must apply the patch at the end of this file when building for       ARM systems.)
+libpng - https://android.googlesource.com/platform/external/libpng
+
+giflib - https://android.googlesource.com/platform/external/giflib
+(これのAndroid.mkで$(BUILD_STATIC_LIBRARY)をincludeする前にLOCAL_EXPORT_CFLAGS := -I$(LOCAL_PATH)を追加しなければならない)
+
+libjpeg-turbo - https://android.googlesource.com/platform/external/libjpeg-turbo
+(これのAndroid.mkで$(BUILD_SHARED_LIBRARY)をincludeする前にLOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)を追加しなければならない)
+
+libxml2 - https://android.googlesource.com/platform/external/libxml2/
+(``--with-ndk-path''にicu4cの依存関係を追加、さらにこのファイルの最後にあるpatchも適用しなければならない)
+
+icu4c - https://android.googlesource.com/platform/external/icu/
+(このファイルの最後にあるpatchも適用しなければならない)
+
+sqlite3 - https://android.googlesource.com/platform/external/sqlite/
+(このファイルの最後にあるpatchを適用、さらに``--with-ndk-path''に`dist'ディレクトリーを追加しなければならない)
+
+libselinux - https://android.googlesource.com/platform/external/libselinux
+(このファイルの最後にあるpatchを適用、さらに以下の3つの依存関係を入手しなければならない)
+
+libpackagelistparser - https://android.googlesource.com/platform/system/core/+/refs/heads/nougat-mr1-dev/libpackagelistparser/
+(これのAndroid.mkで$(BUILD_SHARED_LIBRARY)をincludeする前にLOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/includeを追加しなければならない)
+
+libpcre - https://android.googlesource.com/platform/external/pcre
+
+libcrypto - https://android.googlesource.com/platform/external/boringssl
+(ARMシステム向けにビルドする場合にはこのファイルの最後にあるpatchを適用しなければならない)
 
 
-Many of these dependencies have been migrated over to the ``Android.bp''
-build system now used to build Android itself. However, the old
-``Android.mk'' Makefiles are still present in older branches, and can be
-easily adapted to newer versions.
+これらの依存関係の多くは、現在Android自体のビルドにも使用されている``Android.bp''に以降されている。しかし古いブランチでは未だに以前の``Android.mk''がMakefileとして提供されているので、新たなバージョンに容易に調整できるだろう。
 
 
-In addition, some Emacs dependencies provide `ndk-build' support themselves:
+さらにEmacsの一部の依存関係には、それ自体が`ndk-build'のサポートを提供するものもある。
 
-  libwebp	- https://android.googlesource.com/platform/external/webp      (You must apply the patch at the end of this file for the resulting       binary to work on armv7 devices.)
+libwebp - https://android.googlesource.com/platform/external/webp
+(armv7デバイスで動作するバイナリを得るには、このファイルの最後にあるpatchを適用しなければならない)
 
-Emacs developers have ported the following dependencies to ARM Android
-systems:
+Emacs開発者によって以下の依存関係についてはARMのAndroidシステムにポートされている:
 
 
   gnutls, gmp	- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section GNUTLS near the end of this file.)   libtiff    	- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Extract and point ``--with-ndk-path'' to tiff-4.5.0-emacs.tar.gz.)   tree-sitter	- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section TREE-SITTER near the end of this file.)   harfbuzz  	- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section HARFBUZZ near the end of this file.)   libxml2       - https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section LIBXML2 near the end of this file.)   libjpeg-turbo - https://sourceforge.net/projects/android-ports-for-gnu-emacs   giflib        - https://sourceforge.net/projects/android-ports-for-gnu-emacs   libtiff       - https://sourceforge.net/projects/android-ports-for-gnu-emacs   libpng        - https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section IMAGE LIBRARIES near the end of this file.)   libselinux - https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section SELINUX near the end of this file.)
