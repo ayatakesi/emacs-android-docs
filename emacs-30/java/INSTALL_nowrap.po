@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-04 05:33+0900\n"
-"PO-Revision-Date: 2024-11-05 21:13+0900\n"
+"PO-Revision-Date: 2024-11-06 00:55+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: ja\n"
 "Language: ja\n"
@@ -456,163 +456,215 @@ msgstr "Emacs開発者によって以下の依存関係についてはARMのAndr
 #, no-wrap
 msgid "  gnutls, gmp\t- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section GNUTLS near the end of this file.)   libtiff    \t- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Extract and point ``--with-ndk-path'' to tiff-4.5.0-emacs.tar.gz.)   tree-sitter\t- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section TREE-SITTER near the end of this file.)   harfbuzz  \t- https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section HARFBUZZ near the end of this file.)   libxml2       - https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section LIBXML2 near the end of this file.)   libjpeg-turbo - https://sourceforge.net/projects/android-ports-for-gnu-emacs   giflib        - https://sourceforge.net/projects/android-ports-for-gnu-emacs   libtiff       - https://sourceforge.net/projects/android-ports-for-gnu-emacs   libpng        - https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section IMAGE LIBRARIES near the end of this file.)   libselinux - https://sourceforge.net/projects/android-ports-for-gnu-emacs     (Please see the section SELINUX near the end of this file.)\n"
 msgstr ""
+"gnutls, gmp - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"(このファイルの最後の方にあるGNUTLSセクションを参考にして欲しい)\n"
+"\n"
+"libtiff\t- https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"(tiff-4.5.0-emacs.tar.gzを解凍したらそこを``--with-ndk-path''に指定)\n"
+"\n"
+"tree-sitter - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"(このファイルの最後の方にあるTREE-SITTERセクションを参考にして欲しい)\n"
+"\n"
+"harfbuzz - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"(このファイルの最後の方にあるARFBUZZセクションを参考にして欲しい)\n"
+"\n"
+"libxml2 - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"(このファイルの最後の方にあるLIBXML2セクションを参考にして欲しい)\n"
+"\n"
+"libjpeg-turbo - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"\n"
+"giflib - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"\n"
+"libtiff - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"\n"
+"libpng - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"(このファイルの最後の方にあるIMAGE LIBRARIESを参考にして欲しい)\n"
+"\n"
+"libselinux - https://sourceforge.net/projects/android-ports-for-gnu-emacs\n"
+"(このファイルの最後の方にあるSELINUXセクションを参考にして欲しい)\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:202
 msgid "And other developers have ported the following dependencies to Android systems:"
-msgstr ""
+msgstr "さらに他の開発者によって以下の依存関係がAndroid システムにポートされている:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:205
 #, no-wrap
 msgid "  ImageMagick, lcms2 - https://github.com/MolotovCherry/Android-ImageMagick7     (Please see the section IMAGEMAGICK near the end of this file.)\n"
 msgstr ""
+"ImageMagick, lcms2 - https://github.com/MolotovCherry/Android-ImageMagick7\n"
+"(このファイルの最後の方にあるIMAGEMAGICKセクションを参考にして欲しい)\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:207
 msgid "We anticipate that most untested non-trivial ndk-build dependencies will need adjustments in Emacs to work, as the Emacs build system which emulates ndk-build is in an extremely early state."
-msgstr ""
+msgstr "Emacsビルドシステムによるndk-buildのエミュレートは非常に初期段階にあるので、未テストかつ些細な変更とは言えないndk-buildを使った依存関係をEmacsで動作させるためには調整を要することだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:209
 #, no-wrap
 msgid "\f GNUTLS\n"
-msgstr ""
+msgstr "\f GNUTLS\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:211
 msgid "Modified copies of GnuTLS and its dependencies (such as libgmp, libtasn1, p11-kit) which can be built with the ndk-build system can be found at https://sourceforge.net/projects/android-ports-for-gnu-emacs."
-msgstr ""
+msgstr "ndk-buildシステムでビルドできるGnuTLSとそれの依存関係(libgmp、libtasn1、p11-kitなど)の修正済みのコピーはhttps://sourceforge.net/projects/android-ports-for-gnu-emacsで入手できる。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:213
 msgid "They have only been tested on arm64 Android systems running Android 5.0 or later, and armv7l systems running Android 13 or later, so your mileage may vary, especially if you are trying to build Emacs for another kind of machine."
-msgstr ""
+msgstr "これらはAndroid 5.0以降を実行するarm64のAndroidシステム、およびAndroid 13以降を実行するarmv7lシステムでしかテストされていないので、他のタイプのマシン向けにビルドした結果は人それぞれだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:216
 msgid "To build Emacs with GnuTLS, you must unpack each of the following tar archives in that site:"
-msgstr ""
+msgstr "GnuTLSとともにEmacsをビルドするためには、上記サイトの以下のアーカイブそれぞれを解凍しなければならない:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:219
 #, no-wrap
 msgid "  gmp-6.2.1-emacs.tgz   gnutls-3.8.5-emacs.tar.gz     (or gnutls-3.8.5-emacs-armv7a.tar.gz on 32-bit systems)   libtasn1-4.19.0-emacs.tar.gz   p11-kit-0.24.1-emacs.tar.gz   nettle-3.8-emacs.tar.gz\n"
 msgstr ""
+"gmp-6.2.1-emacs.tgz\n"
+"gnutls-3.8.5-emacs.tar.gz\n"
+"(32ビットシステムはgnutls-3.8.5-emacs-armv7a.tar.gz)\n"
+"\n"
+"libtasn1-4.19.0-emacs.tar.gz\n"
+"p11-kit-0.24.1-emacs.tar.gz\n"
+"nettle-3.8-emacs.tar.gz\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:221
 msgid "and add the resulting folders to ``--with-ndk-path''.  Do not attempt to build these packages separately by means of `configure' scripts or Makefiles inside."
-msgstr ""
+msgstr "解凍したらそのフォルダーを``--with-ndk-path''に追加する。フォルダー内の`configure'やMakefileを使ってパッケージの個別ビルドを試みてはならない。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:223
 #, no-wrap
 msgid "\f LIBXML2\n"
-msgstr ""
+msgstr "\f LIBXML2\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:226
 msgid "A copy of libxml2 adapted for the same build system is provided under the name:"
-msgstr ""
+msgstr "同じビルドシステム用に調整したlibxml2のコピーは以下の名前で提供されている:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:229
 #, no-wrap
 msgid "  libxml2-2.12.4-emacs.tar.gz\n"
-msgstr ""
+msgstr "libxml2-2.12.4-emacs.tar.gz\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:231
 msgid "In contrast to the version distributed by Google, internationalization is disabled, which eliminates the dependency on icu4c (and by extension a C++ compiler)."
-msgstr ""
+msgstr "Googleで配布されているバージョンとは対照的に、icu4c(およびC++コンパイラー拡張)への依存関係を削除するために国際化は無効になっている。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:233
 #, no-wrap
 msgid "\f IMAGE LIBRARIES\n"
-msgstr ""
+msgstr "\f IMAGE LIBRARIES\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:236
 msgid "ndk-build enabled versions of image libraries required by Emacs are also provided as:"
-msgstr ""
+msgstr "以下のようにEmacsが必要とするndk-buildが有効なバージョンのイメージライブラリーも提供されている:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:239
 #, no-wrap
 msgid "  giflib-5.2.1-emacs.tar.gz   libjpeg-turbo-3.0.2-emacs.tar.gz   libpng-1.6.41-emacs.tar.gz   tiff-4.5.1-emacs.tar.gz\n"
 msgstr ""
+"giflib-5.2.1-emacs.tar.gz\n"
+"libjpeg-turbo-3.0.2-emacs.tar.gz\n"
+"libpng-1.6.41-emacs.tar.gz\n"
+"tiff-4.5.1-emacs.tar.gz\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:242
 msgid "Of which all but libjpeg-turbo-3.0.2-emacs.tar.gz should compile on every supported Android system and toolchain; where the latter does not compile, i.e. old armeabi toolchains, Google's version is a suitable substitute."
-msgstr ""
+msgstr "サポートされているすべてのAndroidシステムとツールチェーンにおいて、libjpeg-turbo-3.0.2-emacs.tar.gz以外はコンパイルできる筈だ。古いarmabiのツールチェーンのようにツールチェーンが原因でコンパイルできなければ、Googleバージョンがよい代替えとなるだろう。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:244
 msgid "Of the three remaining image-related dependencies, libwebp provides upstream support for ndk-build, ImageMagick has been ported by interested third-party developers, and librsvg is addressed below."
-msgstr ""
+msgstr "残りの3つのイメージ関連の依存関係だがlibwebpはアップストリームにおいてndk-buildをサポートしている。ImageMagickは有志によるサードパーティ開発者によってポートされているし、librsvgについては次に述べる。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:246
 #, no-wrap
 msgid "\f LIBRSVG\n"
-msgstr ""
+msgstr "\f LIBRSVG\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:249
 msgid "Librsvg 2.40.21, the final release in the librsvg 2.40.x series, the last to be implemented in C, is provided as:"
-msgstr ""
+msgstr "librsvgの2.40.xの最終リリースであるLibrsvg 2.40.21,は、Cで実装された最終リリースでもあり、これは以下の名前で提供されている:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:252
 #, no-wrap
 msgid "  librsvg-2.40.21-emacs.tar.gz\n"
-msgstr ""
+msgstr "librsvg-2.40.21-emacs.tar.gz\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:255
 msgid "and has been lightly edited for compatibility with environments where Pango cannot provide fonts, with the obvious caveat that text cannot be displayed with the resulting librsvg binary.  Among numerous dependencies are PCRE, and:"
-msgstr ""
+msgstr "Pangoがフォントを提供できない環境にたいする互換性のために若干の修正を施してあるものの、結果として得られるlibrsvgバイナリにはテキストを表示できないというという但し書きがつく。PCRE以外にも多くの依存関係が存在する:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:258
 #, no-wrap
 msgid "  libiconv-1.17-emacs.tar.gz   libffi-3.4.5-emacs.tar.gz   pango-1.38.1-emacs.tar.gz   glib-2.33.14-emacs.tar.gz   libcroco-0.6.13-emacs.tar.gz   pixman-0.38.4-emacs.tar.gz   libxml2-2.12.4-emacs.tar.gz   gdk-pixbuf-2.22.1-emacs.tar.gz   giflib-5.2.1-emacs.tar.gz   libjpeg-turbo-3.0.2-emacs.tar.gz   libpng-1.6.41-emacs.tar.gz   tiff-4.5.1-emacs.tar.gz   cairo-1.16.0-emacs.tar.gz\n"
 msgstr ""
+"libiconv-1.17-emacs.tar.gz\n"
+"libffi-3.4.5-emacs.tar.gz\n"
+"pango-1.38.1-emacs.tar.gz\n"
+"glib-2.33.14-emacs.tar.gz\n"
+"libcroco-0.6.13-emacs.tar.gz\n"
+"pixman-0.38.4-emacs.tar.gz\n"
+"libxml2-2.12.4-emacs.tar.gz\n"
+"gdk-pixbuf-2.22.1-emacs.tar.gz\n"
+"giflib-5.2.1-emacs.tar.gz\n"
+"libjpeg-turbo-3.0.2-emacs.tar.gz\n"
+"libpng-1.6.41-emacs.tar.gz\n"
+"tiff-4.5.1-emacs.tar.gz\n"
+"cairo-1.16.0-emacs.tar.gz\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:261
 msgid "which must be individually unpacked and their contents provided on the command line, as with other dependencies.  They will introduce approximately 8 MiB's worth of shared libraries into the finished application package.  It is unlikely that later releases of librsvg will ever be ported, as they have migrated to a different implementation language."
-msgstr ""
+msgstr "これらは他の依存関係と同じように個別に解凍して、それらが提供する内容をコマンドラインで指定しなければならない。これらは最終的なアプリケーションにおよそ8MBの共有ライブラリーとして編入される。librsvgは異なる言語実装に移行されたので、今後のリリースでポートされる可能性は低い。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:264
 msgid "No effort has been expended on providing the latest and greatest of these dependencies either; rather, the versions chosen are often the earliest versions required by their dependents, these being the smaller of all available versions, and generally more straightforward to port."
-msgstr ""
+msgstr "これらの依存関係にたいして最新で素晴らしいものを提供する努力は何も費やされていない。むしろ依存関係を満足するために利用できるバージョンの中でも古いバージョン、一般的にはポートがより容易なもっとも古いバージョンが選ばれているからだ。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:267
 #, no-wrap
 msgid "\f SELINUX\n"
-msgstr ""
+msgstr "\f SELINUX\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:270
 msgid "The upstream version of libselinux is available as:"
-msgstr ""
+msgstr "libselinuxのアップストリーム版は以下の名前で提供されている:"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:273
 #, no-wrap
 msgid "  libselinux-3.6-emacs.tar.gz\n"
-msgstr ""
+msgstr "libselinux-3.6-emacs.tar.gz\n"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:276
 msgid "and compiles on toolchains configured for Android 4.3 and later, which are the earliest Android releases to support SELinux.  Its principal advantage over Google's edition is the absence of Android-specific modifications that create dependencies on libpackagelistparser and libcrypto; Google's pcre remains a requirement."
-msgstr ""
+msgstr "そしてSELinuxをサポートする最古のAndroidであるAndroid 4.3以降向けに構成されたツールチェーンでコンパイルする。Googleバージョンに勝る主な利点として、libpackagelistparserとlibcryptoへの依存関係をもたらすGoogle固有の変更がなくなることである。Googleのpcreにはまだその要件が残ったままだ。"
 
 #. type: Plain text
 #: emacs-30/java/INSTALL_nowrap:279
