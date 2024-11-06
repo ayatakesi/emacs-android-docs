@@ -1,4 +1,5 @@
-# Installation instructions for Android  
+# Installation instructions for Android
+
 Copyright (C) 2023-2024 Free Software Foundation, Inc.
 See the end of the file for license conditions.
 
@@ -42,134 +43,76 @@ emacs-<version>-<api-version>-<abi>.apk
 生成されたパッケージをSDカード(または類似メディア)にアップロードして、デバイス上にインストールできる。  
 
 
-LOCATING NECESSARY FILES
+## LOCATING NECESSARY FILES
 
-As illustrated above, building Emacs for Android requires the presence
-three separate components of the Android SDK and NDK.  Subsequent to
-their installation, the contents of the Android development tools are
-organized into several directories, of which those pertinent to the
-Emacs compilation process are:
+上で述べたようにAndroid向けにEmacsをビルドするためには、Android SDKとAndroid NDKという個別のコンポーネントが存在する必要がある。これらツールのインストールによって、Android開発ツールのコンテンツは複数のディレクトリーに編成される。これらのうち、Emacsのコンパイルプロセスに関係があるのは以下のとおり:  
 
-  platforms
-  ndk
-  build-tools
+```text 
+platforms
+ndk
+build-tools
+```
 
-The platforms directory contains one subdirectory for each API level
-whose headers have been installed.  Each of these directories in turn
-includes the android.jar archive for that version of Android, also
-necessary for compiling Emacs.
+platformsディレクトリーにはAPIレベルごとに1つのサブディレクトリーがあり、そのレベル用のヘッダーがインストールされている。これらのディレクトリーそれぞれには、Emacsのコンパイルにも必要なそのAndroidバージョン用のandroid.jarアーカイブが含まれている。  
 
-It is imperative that Emacs is compiled using the headers for the
-exact API level that it is written for.  This is currently API level
-34, so the correct android.jar archive is located within a directory
-whose name begins with `android-34'.  Minor revisions to the headers
-are inconsequential towards the Emacs compilation process; if there is
-a directory named `android-34-extN' (where N represents a revision to
-the Android SDK), whether you provide `configure' with that
-directory's android.jar or the android.jar contained within the
-directory named `android-34' is of no special importance.
+Emacsをコンパイルするには正しいAPIレベル向けに記述されたヘッダーを用いることが不可欠である。これは現在のところAPI level 34なので、名前が`android-34`で始まるディレクトリー内に配置されているandroid.jarが正しいアーカイブである。Emacsのコンパイルプロセスにとっては、ヘッダーのマイナーリビジョンは重要ではない。`android-34-extN`(NはAndroid SDKのリビジョンを表す)という名前のディレクトリーがある場合に、`configure`にそのディレクトリーのandroid.jarを指定するか、それとも`android-34`という名前のディレクトリーにあるandroid.jarを指定するかはさほど重要ではないのだ。  
 
-The ndk directory contains one subdirectory for each version of the
-Android NDK installed.  This directory in turn contains the C and C++
-compilation system.  In contrast to the Java headers mentioned within
-the previous paragraph, the version of the NDK used does not affect
-Emacs to the extent the version of android.jar does.  Having said
-that, each version of the NDK only supports a limited range of API
-levels; your choice of C compiler binary (or __ANDROID_API__) bears
-upon the earliest version of Android the compiled package will
-support.
+ndkディレクトリーにはインストールされているAndroid NDKのバージョンごとに1つのサブディレクトリーが含まれている。このディレクトリーにはCおよびC++のコンパイルシステムが含まれている。前段で述べたJavaヘッダーとは対照的に使用するNDKのバージョンは、android.jarのバージョンほどにはEmacsに影響しない。とはいえNDKのバージョンはそれぞれ、限られた範囲のAPIレベルだけをサポートしている。lCコンパイラーのバイナリ(あるいは`__ANDROID_API__`)にどれを選択するかは、コンパイルするパッケージがサポート対象とするAndroidの最低バージョンに応じて決まる。  
 
-In most cases, each subdirectory contains a folder named `toolchains',
-holding an `llvm' directory and one directory for each GCC toolchain
-supplied by the NDK.  The C compiler is then positioned within
-`prebuilt/*/bin' inside that directory.
+ほとんどの場合においてサブディレクトリーにはそれぞれ`toolchains`という名前のフォルダーが含まれており、そこには`llvm`というディレクトリーとNDK提供のGCCツールチェーンごとにディレクトリーが保持されている。そのディレクトリー内の`prebuilt/*/bin`の中にCコンパイラーが配置されているだろう。  
 
-The build-tools directory holds subdirectories containing the utility
-programs used to convert class files output by the Java compiler to
-the DEX format employed by Android.  There is one subdirectory for
-each version of the build tools, but the version you opt for is not of
-paramount significance: if your version does not work, configure will
-protest, so install a newer one.  We anticipate that most recent
-releases will work, such as those from the 33.0.x and 34.0.x series.
+build-toolsディレクトリーにJavaコンパイラーが出力するclassファイルから、Androidが用いるDEX形式への変換に使用するユーティリティープログラムが保持されている。ビルドツールごとに1つのサブディレクトリーがあるが、もっとも重要なのはバージョンの選択ではない。選択したバージョンが機能しないとコンパイラーが文句をいうので、新しいバージョンをインストールすること。33.0.xや34.0.xのような最新リリースであれば動作する見込みがある。  
 
 
-BUILDING WITH OLD NDK VERSIONS
+## BUILDING WITH OLD NDK VERSIONS
 
-Building Emacs with an old version of the Android NDK requires special
-setup.	This is because there is no separate C compiler binary for
-each version of Android in those versions of the NDK.
+古いバージョンのAndroid NDKでEmacsをビルドするには特別なセットアップを要する。それらのNDKバージョンには、Androidバージョンごとに個別のCコンパイラーのバイナリが存在しないからだ。  
 
-Before running `configure', you must identify three variables:
+`configure`を実行する前に、3つの変数決定する必要がある:  
 
-  - What kind of Android system you are building Emacs for.
+- どのタイプのAndroidシステム向けにEmacsをビルドするか
+- ビルドするEmacsが対象とするAndroidの最小APIレベルは
+- システムのルート位置、NDKのそのAndroidバージョン用インクルードファイルの位置
 
-  - The minimum API version of Android you want to build Emacs for.
 
-  - The locations of the system root and include files for that
-    version of Android in the NDK.
+この情報をNDKのCコンパイラーの引数として指定しなければならない。たとえば:
 
-That information must then be specified as arguments to the NDK C
-compiler.  For example:
+```bash
+./configure [...] \
+    ANDROID_CC="i686-linux-android-gcc \
+    --sysroot=/path/to/ndk/platforms/android-14/arch-x86/
+	-isystem /path/to/ndk/sysroot/usr/include \
+	-isystem /path/to/ndk/sysroot/usr/include/i686-linux-android \
+	-D__ANDROID_API__=14"
+```
 
-  ./configure [...] \
-     ANDROID_CC="i686-linux-android-gcc \
-		 --sysroot=/path/to/ndk/platforms/android-14/arch-x86/
-		 -isystem /path/to/ndk/sysroot/usr/include \
-		 -isystem /path/to/ndk/sysroot/usr/include/i686-linux-android \
-		 -D__ANDROID_API__=14"
+`__ANDROID_API__`と"platforms/android-14"に含まれるバージョン識別によってビルド対象とするAndroidバージョンを定義、インクルードディレクトリーでは関連するAndroidヘッダーへのパスを指定する。加えてAndroid NDKのバグのために、"-gdwarf-2"の指定が必要かもしれない。  
 
-Where __ANDROID_API__ and the version identifier in
-"platforms/android-14" defines the version of Android you are building
-for, and the include directories specify the paths to the relevant
-Android headers.  In addition, it may be necessary to specify
-"-gdwarf-2", due to a bug in the Android NDK.
+古いバージョンのAndroid SDKであっても、`-isystem`ディレクティブを追加する必要はない。  
 
-Even older versions of the Android SDK do not require the extra
-`-isystem' directives.
+EmacsはAndroid 2.2(API バージョン8)以降、NDKのr10b以降で実行できることが判っている。さらに古いバージョンのAndroidでもEmacsを動作させたいと考えているが、EmacsがCコードからテキストを表示するために必要となるJNIグラフィックライブラリーが欠落している。  
 
-Emacs is known to run on Android 2.2 (API version 8) or later, with
-the NDK r10b or later.  We wanted to make Emacs work on even older
-versions of Android, but they are missing the required JNI graphics
-library that allows Emacs to display text from C code.
-
-There is an extremely nasty bug in the Android 2.2 system, the upshot of
-which is that large files within the generated Emacs package cannot be
-compressed in builds for Android 2.2, so that the Emacs package will be
-approximately 15 megabytes larger than a compressed package for a newer
-version of Android.  For such systems the `zip' utility is also required
-to produce packages that will not be misinterpreted by the package
-manager.
+NDKAndroid 2.2には非常に厄介なバグがあり、そのために生成されたEmacs内の大容量ファイルをAndroid 2.2用のビルドでは圧縮できないことから、新たなバージョン用のEmacsパッケージよりもおよそ15MBサイズが大きくなる。園山システムにおいては、パッケージマネージャーによって誤認されないパッケージを生成するために、`zip`ユーティリティーも必要になる。  
 
 
-BUILDING C++ DEPENDENCIES
+## BUILDING C++ DEPENDENCIES
 
-In normal circumstances, Emacs should automatically detect and configure
-one of the C++ standard libraries part of the NDK when such a library is
-required to build a dependency specified under `--with-ndk-path'.
+普通の状況下であれば、`--with-ndk-path`で指定された依存関係のビルドにNDKに同梱されているC++ライブラリーのいずれか1つが必要であれば、Emacsが自動的に検知してそれを構成するべきだろう。  
 
-Nevertheless, this process is not infallible, and with certain versions
-of the NDK is liable to fail to locate a C++ compiler, requiring that
-you run the `make_standalone_toolchain.py' script in the NDK
-distribution to create a ``standalone toolchain'' and substitute the
-same for the regular compiler toolchain.  See
-https://developer.android.com/ndk/guides/standalone_toolchain for
-further details.
+そうであってもなおこのプロセスに間違いがない訳ではないし、NDKがC++コンパイラーの検索に失敗しがちな特定バージョンも存在するので、スタンドアローンツールチェーン(standalone toolchain)を生成して通常のコンパイラーツールチェーンと同じものに置き換えるために、NDKディストリビューションに同梱されている`make_standalone_toolchain.py`スクリプトの実行が必要である。詳細についてはhttps://developer.android.com/ndk/guides/standalone_toolchainを参照して欲しい。  
 
-Some versions of the NDK that ship GCC 4.9.x exhibit a bug where the
-compiler cannot locate `stddef.h' after being copied to a standalone
-toolchain.  To work around this problem, add:
+一部のNDKバージョンに同梱されているGCC 4.9.xにはスタンドアローンツールチェーンにコピーされた後に`stddef.h`を見つけられないというバグが発生する。この問題を回避するには:  
 
-   -isystem /path/to/toolchain/include/c++/4.9.x
+```bash
+-isystem /path/to/toolchain/include/c++/4.9.x
+```
 
-to ANDROID_CFLAGS.
+これを`ANDROID_CFLAGS`に追加すればよい。  
 
 
-DEBUG AND RELEASE BUILDS
+## DEBUG AND RELEASE BUILDS
 
-Android makes a distinction between ``debug'' and ``release'' builds
-of applications.  With ``release'' builds, the system will apply
-stronger optimizations to the application at the cost of being unable
-to debug them with the steps in etc/DEBUG.
+Androidはアプリケーションのビルドにたいして`debug`と`release`の区別を設けている。`release`ビルドではetc/DEBUG記載のステップによるデバッグが不可能という代償を払って、システムがアプリケーションに強力な最適化を施すだろう。  
 
 Emacs is built as a debuggable package by default, but:
 
