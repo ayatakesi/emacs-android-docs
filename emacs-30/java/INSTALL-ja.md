@@ -114,307 +114,239 @@ NDKAndroid 2.2には非常に厄介なバグがあり、そのために生成さ
 
 Androidはアプリケーションのビルドにたいして`debug`と`release`の区別を設けている。`release`ビルドではetc/DEBUG記載のステップによるデバッグが不可能という代償を払って、システムがアプリケーションに強力な最適化を施すだろう。  
 
-Emacs is built as a debuggable package by default, but:
+Emacsはデフォルトではデバッグ可能なしパッケージとしてビルドされるが:  
 
-      ./configure --without-android-debug
+```bash
+./configure --without-android-debug
+```
 
-will create a release build of Emacs instead.  This may be useful when
-running Emacs on resource constrained machines.
+上記のように指定すればかわりにリリースビルドが作成される。リソースが限られたマシンでEmacsを実行する際には役に立つかもしれない。  
 
-If you are building an Emacs package for redistribution, we urge you
-to provide both debug and release versions.
-
-
-BUILDING WITH A SHARED USER ID
-
-Sometimes it may be desirable to build Emacs so that it is able to
-access executables and application data from another program.  To
-achieve this, that other program must have a ``shared user ID'', and
-be signed with the same signing key used to sign Emacs (normally
-`emacs.keystore'.)
-
-Once you have both that signing key and its ``shared user ID'', you
-can give it to configure:
-
-    ./configure --with-shared-user-id=MY.SHARED.USER.ID
-
-For instance,
-
-    ./configure --with-shared-user-id=com.termux
-
-will result in Termux (https://termux.dev)'s application data being
-accessible to Emacs, within its own application data directory located
-at `/data/data/com.termux/files'.
-
-Don't do this if you already have Emacs installed with a different
-shared user ID, as the system does not allow programs to change their
-user IDs after being installed.
+再配布用にEmacsパッケージをビルドする場合には、debug版とrelease版の両方を提供するよう強く推奨する。  
 
 
-BUILDING WITH THIRD PARTY LIBRARIES
+## BUILDING WITH A SHARED USER ID
 
-The Android NDK does not support the usual ways of locating third
-party libraries, especially not via `pkg-config'.  Instead, it uses
-its own system called `ndk-build'.  The one exception to this rule is
-zlib, which is considered a part of the Android OS itself and is
-available on all devices running Android.
+他のプログラムから実行可能ファイルやアプリケーションデータにアクセスできるようにEmacsをビルドしたいと思う場合もあるかもしれない。これを成すためには他のプログラムが`shared user ID`をもっていて、Emacsの署名に用いたのと同じキー(通常は`emacs.keystore`)で署名されていなければならない。  
 
-Android also requires that each application include its own
-dependencies, as the system makes no guarantee about the existence of
-any particular library.
+この署名キーで両方に署名してそのプログラムの`shared user ID`を入手したら、以下のようにconfigureに指定できる:  
 
-Emacs is not built with the `ndk-build' system.	 Instead, it is built
-with Autoconf and Make.
+```bash
+./configure --with-shared-user-id=MY.SHARED.USER.ID
+```
 
-However, it supports building and including dependencies which use the
-similarly Make-based `ndk-build' system.
+たとえば、  
 
-To use dependencies built through `ndk-build', you must specify a list
-of directories within which Emacs will search for ``Android.mk''
-files, like so:
+```bash
+./configure --with-shared-user-id=com.termux
+```
 
-  ./configure "--with-ndk-path=directory1 directory2"
+これにより`/data/data/com.termux/files`ディレクトリーに配置されている(Termux)[https://termux.dev]のアプリケーションデータに、Emacsがアクセスできるようになる。インストール後のuser ID変更はシステムが禁止しているので、すでに別のshared user IDでEmacsをインストール済みならこれを行ってはならない。  
 
-If `configure' complains about not being able to find
-``libc++_shared.so'', then you must locate that file in your copy of
-the NDK, and specify it like so:
+
+## BUILDING WITH THIRD PARTY LIBRARIES
+
+Android NDKは通常の方法によるサードパーティライブラリーの配置は特にサポートしておらず、特に`pkg-config`を通じたライブラリー配置はサポートしない。そのかわりに用いるのが`ndk-build`と呼ばれる独自のシステムだ。このルールの例外の1つ、zlibはAndroid OS自体の一部とみなされているので、Androidを実行するすべてのデバイスで利用可能になっている。  
+
+Androidではどのような特定ライブラリーの存在について保証されていないので、アプリケーションにはそれぞれ自身の依存関係が含まれていることが要求される。  
+
+Emacsは`ndk-build`システムではビルドされず、AutoconfとMakeによってビルドされる。  
+
+とはいえMakeをベースにする点では似ている`ndk-build`システムを使用する、ビルドは依存関係を含めてサポートしている。  
+
+`ndk-build`を通じてビルドされた依存関係を使用するには、以下のようにEmacsが``Android.mk``ファイルが検索するディレクトリーのリストを指定しなければならない:  
+
+```bash
+./configure "--with-ndk-path=directory1 directory2"
+```
+
+`libc++_shared.so`が見つからないことに関して`configure`が告げるようであれば、NDKのコピーにそのファイルを配置して、以下のように指定しなければならない:  
 
   ./configure --with-ndk-cxx-shared=/path/to/sysroot/libc++_shared.so
 
-Emacs will then read the ``Android.mk'' file in each directory, and
-automatically build and use those modules.
+そうすればEmacsはそれぞれのディレクトリーにある`Android.mk`を読み込んで自動的にビルド、それらのモジュールを使用するだろう。  
 
-When building for Intel systems, some ``ndk-build'' modules require
-the Netwide Assembler, usually installed under ``nasm'', to be present
-on the system that is building Emacs.
+Intelシステム向けにビルドする際には一部の`ndk-build`モジュール用に、EシステムにNetwideアセンブラーが存在する必要があるが、これは通常だと`nasm`配下にインストールされている筈だ。  
 
-Google has adapted several Emacs dependencies to use the `ndk-build'
-system, many of which require patches to function under an Emacs
-environment.  As such, it is generally the wiser choice to use our ports
-in their place, but the following list and patches are still provided
-for reference.
+GoogleはEmacsの依存関係いくつかにたいして`ndk-build`システムを使用するよう調整話施したが、その多くはEmacs環境で動作させるためのpatchが必要となる。したがって一般的にはわたしたちが提供するポートを用いるのが賢明な選択ではあるものの、参考用に以下のリストとpatchの提供は継続する。  
 
-  libpng	- https://android.googlesource.com/platform/external/libpng
-  giflib	- https://android.googlesource.com/platform/external/giflib
-     (You must add LOCAL_EXPORT_CFLAGS := -I$(LOCAL_PATH) before
-      its Android.mk includes $(BUILD_STATIC_LIBRARY))
-  libjpeg-turbo - https://android.googlesource.com/platform/external/libjpeg-turbo
-     (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH) before
-      its Android.mk includes $(BUILD_SHARED_LIBRARY))
-  libxml2	- https://android.googlesource.com/platform/external/libxml2/
-     (You must also place the dependency icu4c in ``--with-ndk-path'',
-      and apply the patch at the end of this file.)
-  icu4c		- https://android.googlesource.com/platform/external/icu/
-     (You must apply the patch at the end of this file.)
-  sqlite3	- https://android.googlesource.com/platform/external/sqlite/
-     (You must apply the patch at the end of this file, and add the `dist'
-      directory to ``--with-ndk-path''.)
-  libselinux	- https://android.googlesource.com/platform/external/libselinux
-     (You must apply the patches at the end of the file, and obtain
-      the following three dependencies.)
-  libpackagelistparser
-    https://android.googlesource.com/platform/system/core/+/refs/heads/nougat-mr1-dev/libpackagelistparser/
-    (You must add LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include before
-      its Android.mk includes $(BUILD_SHARED_LIBRARY))
-  libpcre	- https://android.googlesource.com/platform/external/pcre
-  libcrypto	- https://android.googlesource.com/platform/external/boringssl
-     (You must apply the patch at the end of this file when building for
-      ARM systems.)
+libpng	- https://android.googlesource.com/platform/external/libpng  
+giflib	- https://android.googlesource.com/platform/external/giflib  
+(これのAndroid.mkで`$(BUILD_STATIC_LIBRARY)`をincludeする前に`LOCAL_EXPORT_CFLAGS := -I$(LOCAL_PATH)`を追加しなければならない)  
 
-Many of these dependencies have been migrated over to the
-``Android.bp'' build system now used to build Android itself.
-However, the old ``Android.mk'' Makefiles are still present in older
-branches, and can be easily adapted to newer versions.
+libjpeg-turbo - https://android.googlesource.com/platform/external/libjpeg-turbo  
+(これのAndroid.mkで`$(BUILD_SHARED_LIBRARY)`をincludeする前に`LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)`を追加しなければならない)  
 
-In addition, some Emacs dependencies provide `ndk-build' support
-themselves:
+libxml2	- https://android.googlesource.com/platform/external/libxml2/  
+(`--with-ndk-path`にicu4cの依存関係を追加、さらにこのファイルの最後にあるpatchも適用しなければならない)  
 
-  libwebp	- https://android.googlesource.com/platform/external/webp
-     (You must apply the patch at the end of this file for the resulting
-      binary to work on armv7 devices.)
+icu4c - https://android.googlesource.com/platform/external/icu/  
+(このファイルの最後にあるpatchも適用しなければならない)  
 
-Emacs developers have ported the following dependencies to ARM Android
-systems:
+sqlite3	- https://android.googlesource.com/platform/external/sqlite/  
+(このファイルの最後にあるpatchを適用、さらに`--with-ndk-path`に`dist`ディレクトリーを追加しなければならない)  
 
-  gnutls, gmp	- https://sourceforge.net/projects/android-ports-for-gnu-emacs
-    (Please see the section GNUTLS near the end of this file.)
-  libtiff    	- https://sourceforge.net/projects/android-ports-for-gnu-emacs
-    (Extract and point ``--with-ndk-path'' to tiff-4.5.0-emacs.tar.gz.)
-  tree-sitter	- https://sourceforge.net/projects/android-ports-for-gnu-emacs
-    (Please see the section TREE-SITTER near the end of this file.)
-  harfbuzz  	- https://sourceforge.net/projects/android-ports-for-gnu-emacs
-    (Please see the section HARFBUZZ near the end of this file.)
-  libxml2       - https://sourceforge.net/projects/android-ports-for-gnu-emacs
-    (Please see the section LIBXML2 near the end of this file.)
-  libjpeg-turbo - https://sourceforge.net/projects/android-ports-for-gnu-emacs
-  giflib        - https://sourceforge.net/projects/android-ports-for-gnu-emacs
-  libtiff       - https://sourceforge.net/projects/android-ports-for-gnu-emacs
-  libpng        - https://sourceforge.net/projects/android-ports-for-gnu-emacs
-    (Please see the section IMAGE LIBRARIES near the end of this file.)
-  libselinux - https://sourceforge.net/projects/android-ports-for-gnu-emacs
-    (Please see the section SELINUX near the end of this file.)
+libselinux	- https://android.googlesource.com/platform/external/libselinux  
+(このファイルの最後にあるpatchを適用、さらに以下の3つの依存関係を入手しなければならない)  
 
-And other developers have ported the following dependencies to Android
-systems:
+libpackagelistparser - https://android.googlesource.com/platform/system/core/+/refs/heads/nougat-mr1-dev/libpackagelistparser/  
+(これのAndroid.mkで`$(BUILD_SHARED_LIBRARY)`をincludeする前に`LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include`を追加しなければならない)  
 
-  ImageMagick, lcms2 - https://github.com/MolotovCherry/Android-ImageMagick7
-    (Please see the section IMAGEMAGICK near the end of this file.)
+libpcre	- https://android.googlesource.com/platform/external/pcre  
+libcrypto	- https://android.googlesource.com/platform/external/boringssl  
+(ARMシステム向けにビルドする場合にはこのファイルの最後にあるpatchを適用しなければならない)  
 
-We anticipate that most untested non-trivial ndk-build dependencies
-will need adjustments in Emacs to work, as the Emacs build system
-which emulates ndk-build is in an extremely early state.
+これらの依存関係の多くは、現在Android自体のビルドにも使用されている`Android.bp`にポートされている。しかし古いブランチでは未だに以前の`Android.mk`がMakefileとして提供されているので、新たなバージョンに容易に調整できるだろう。  
+
+さらにEmacsの一部の依存関係には、それ自体が`ndk-build'のサポートを提供するものもある。  
+
+libwebp	- https://android.googlesource.com/platform/external/webp  
+(armv7デバイスで動作するバイナリを得るには、このファイルの最後にあるpatchを適用しなければならない)  
+
+Emacs開発者によって以下の依存関係についてはARMのAndroidシステムにポートされている:  
+
+gnutls, gmp	- https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+(このファイルの最後の方にあるGNUTLSセクションを参考にして欲しい)  
+
+libtiff    	- https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+(tiff-4.5.0-emacs.tar.gzを解凍したらそこを`--with-ndk-path`に指定)  
+
+tree-sitter	- https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+(このファイルの最後の方にあるTREE-SITTERセクションを参考にして欲しい)  
+
+harfbuzz  	- https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+(このファイルの最後の方にあるARFBUZZセクションを参考にして欲しい)  
+
+libxml2       - https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+(このファイルの最後の方にあるLIBXML2セクションを参考にして欲しい)  
+
+libjpeg-turbo - https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+giflib        - https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+libtiff       - https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+libpng        - https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+(このファイルの最後の方にあるIMAGE LIBRARIESを参考にして欲しい)  
+
+libselinux - https://sourceforge.net/projects/android-ports-for-gnu-emacs  
+(このファイルの最後の方にあるSELINUXセクションを参考にして欲しい)  
+
+さらに他の開発者によって以下の依存関係がAndroid システムにポートされている:  
+
+ImageMagick, lcms2 - https://github.com/MolotovCherry/Android-ImageMagick7  
+(このファイルの最後の方にあるIMAGEMAGICKセクションを参考にして欲しい)  
+
+Emacsビルドシステムによるndk-buildのエミュレートは非常に初期段階にあるので、未テストかつ些細な変更とは言えないndk-buildを使った依存関係をEmacsで動作させるためには調整を要することだろう。  
 
 
-GNUTLS
+## GNUTLS
 
-Modified copies of GnuTLS and its dependencies (such as libgmp,
-libtasn1, p11-kit) which can be built with the ndk-build system can be
-found at https://sourceforge.net/projects/android-ports-for-gnu-emacs.
+ndk-buildシステムでビルドできるGnuTLSとそれの依存関係(libgmp、libtasn1、p11-kitなど)の修正済みのコピーはhttps://sourceforge.net/projects/android-ports-for-gnu-emacs で入手できる。  
 
-They have only been tested on arm64 Android systems running Android
-5.0 or later, and armv7l systems running Android 13 or later, so your
-mileage may vary, especially if you are trying to build Emacs for
-another kind of machine.
+これらはAndroid 5.0以降を実行するarm64のAndroidシステム、およびAndroid 13以降を実行するarmv7lシステムでしかテストされていないので、他のタイプのマシン向けにビルドした結果は人それぞれだろう。  
 
-To build Emacs with GnuTLS, you must unpack each of the following tar
-archives in that site:
+GnuTLSとともにEmacsをビルドするためには、上記サイトの以下のアーカイブそれぞれを解凍しなければならない:  
 
-  gmp-6.2.1-emacs.tgz
-  gnutls-3.8.5-emacs.tar.gz
-    (or gnutls-3.8.5-emacs-armv7a.tar.gz on 32-bit systems)
-  libtasn1-4.19.0-emacs.tar.gz
-  p11-kit-0.24.1-emacs.tar.gz
-  nettle-3.8-emacs.tar.gz
+gmp-6.2.1-emacs.tgz  
+gnutls-3.8.5-emacs.tar.gz  
+(or gnutls-3.8.5-emacs-armv7a.tar.gz on 32-bit systems)  
+libtasn1-4.19.0-emacs.tar.gz  
+p11-kit-0.24.1-emacs.tar.gz  
+nettle-3.8-emacs.tar.gz  
 
-and add the resulting folders to ``--with-ndk-path''.  Do not attempt to
-build these packages separately by means of `configure' scripts or
-Makefiles inside.
+解凍したらそのフォルダーを`--with-ndk-path`に追加する。フォルダー内の`configure`やMakefileを使ってパッケージの個別ビルドを試みてはならない。  
 
 
-LIBXML2
+## LIBXML2
 
-A copy of libxml2 adapted for the same build system is provided under
-the name:
+同じビルドシステム用に調整したlibxml2のコピーは以下の名前で提供されている:  
 
-  libxml2-2.12.4-emacs.tar.gz
+libxml2-2.12.4-emacs.tar.gz  
 
-In contrast to the version distributed by Google, internationalization
-is disabled, which eliminates the dependency on icu4c (and by extension
-a C++ compiler).
+Googleで配布されているバージョンとは対照的に、icu4c(およびC++コンパイラー拡張)への依存関係を削除するために国際化は無効になっている。  
 
 
-IMAGE LIBRARIES
+## IMAGE LIBRARIES
 
-ndk-build enabled versions of image libraries required by Emacs are also
-provided as:
+以下のようにEmacsが必要とするndk-buildが有効なバージョンのイメージライブラリーも提供されている:  
 
-  giflib-5.2.1-emacs.tar.gz
-  libjpeg-turbo-3.0.2-emacs.tar.gz
-  libpng-1.6.41-emacs.tar.gz
-  tiff-4.5.1-emacs.tar.gz
+giflib-5.2.1-emacs.tar.gz  
+libjpeg-turbo-3.0.2-emacs.tar.gz  
+libpng-1.6.41-emacs.tar.gz  
+tiff-4.5.1-emacs.tar.gz  
 
-Of which all but libjpeg-turbo-3.0.2-emacs.tar.gz should compile on
-every supported Android system and toolchain; where the latter does not
-compile, i.e. old armeabi toolchains, Google's version is a suitable
-substitute.
+サポートされているすべてのAndroidシステムとツールチェーンにおいて、libjpeg-turbo-3.0.2-emacs.tar.gz以外はコンパイルできる筈だ。古いarmabiのツールチェーンのようにツールチェーンが原因でコンパイルできなければ、Googleバージョンがよい代替えとなるだろう。  
 
-Of the three remaining image-related dependencies, libwebp provides
-upstream support for ndk-build, ImageMagick has been ported by
-interested third-party developers, and librsvg is addressed below.
+残りの3つのイメージ関連の依存関係だがlibwebpはアップストリームにおいてndk-buildをサポートしている。ImageMagickは有志によるサードパーティ開発者によってポートされているし、librsvgについては次に述べる。  
 
 
-LIBRSVG
+## LIBRSVG
 
-Librsvg 2.40.21, the final release in the librsvg 2.40.x series, the
-last to be implemented in C, is provided as:
+librsvgの2.40.xの最終リリースであるLibrsvg 2.40.21,は、Cで実装された最終リリースでもあり、これは以下の名前で提供されている:  
 
-  librsvg-2.40.21-emacs.tar.gz
+librsvg-2.40.21-emacs.tar.gz  
 
-and has been lightly edited for compatibility with environments where
-Pango cannot provide fonts, with the obvious caveat that text cannot be
-displayed with the resulting librsvg binary.  Among numerous
-dependencies are PCRE, and:
+Pangoがフォントを提供できない環境にたいする互換性のために若干の修正を施してあるものの、結果として得られるlibrsvgバイナリにはテキストを表示できないというという但し書きがつく。PCRE以外にも多くの依存関係が存在する:  
 
-  libiconv-1.17-emacs.tar.gz
-  libffi-3.4.5-emacs.tar.gz
-  pango-1.38.1-emacs.tar.gz
-  glib-2.33.14-emacs.tar.gz
-  libcroco-0.6.13-emacs.tar.gz
-  pixman-0.38.4-emacs.tar.gz
-  libxml2-2.12.4-emacs.tar.gz
-  gdk-pixbuf-2.22.1-emacs.tar.gz
-  giflib-5.2.1-emacs.tar.gz
-  libjpeg-turbo-3.0.2-emacs.tar.gz
-  libpng-1.6.41-emacs.tar.gz
-  tiff-4.5.1-emacs.tar.gz
-  cairo-1.16.0-emacs.tar.gz
+libiconv-1.17-emacs.tar.gz  
+libffi-3.4.5-emacs.tar.gz  
+pango-1.38.1-emacs.tar.gz  
+glib-2.33.14-emacs.tar.gz  
+libcroco-0.6.13-emacs.tar.gz  
+pixman-0.38.4-emacs.tar.gz  
+libxml2-2.12.4-emacs.tar.gz  
+gdk-pixbuf-2.22.1-emacs.tar.gz  
+giflib-5.2.1-emacs.tar.gz  
+libjpeg-turbo-3.0.2-emacs.tar.gz  
+libpng-1.6.41-emacs.tar.gz  
+tiff-4.5.1-emacs.tar.gz  
+cairo-1.16.0-emacs.tar.gz  
 
-which must be individually unpacked and their contents provided on the
-command line, as with other dependencies.  They will introduce
-approximately 8 MiB's worth of shared libraries into the finished
-application package.  It is unlikely that later releases of librsvg will
-ever be ported, as they have migrated to a different implementation
-language.
+これらは他の依存関係と同じように個別に解凍して、それらが提供する内容をコマンドラインで指定しなければならない。これらは最終的なアプリケーションにおよそ8MBの共有ライブラリーとして編入される。librsvgは異なる言語実装に移行されたので、今後のリリースでポートされる可能性は低い。  
 
-No effort has been expended on providing the latest and greatest of
-these dependencies either; rather, the versions chosen are often the
-earliest versions required by their dependents, these being the smaller
-of all available versions, and generally more straightforward to port.
+これらの依存関係にたいして最新で素晴らしいものを提供する努力は何も費やされていない。むしろ依存関係を満足するために利用できるバージョンの中でも古いバージョン、一般的にはポートがより容易なもっとも古いバージョンが選ばれているからだ。  
 
 
-SELINUX
+## SELINUX
 
-The upstream version of libselinux is available as:
+libselinuxのアップストリーム版は以下の名前で提供されている:  
 
-  libselinux-3.6-emacs.tar.gz
+libselinux-3.6-emacs.tar.gz  
 
-and compiles on toolchains configured for Android 4.3 and later, which
-are the earliest Android releases to support SELinux.  Its principal
-advantage over Google's edition is the absence of Android-specific
-modifications that create dependencies on libpackagelistparser and
-libcrypto; Google's pcre remains a requirement.
+そしてSELinuxをサポートする最古のAndroidであるAndroid 4.3以降向けに構成されたツールチェーンでコンパイルする。Googleバージョンに勝る主な利点として、libpackagelistparserとlibcryptoへの依存関係をもたらすGoogle固有の変更がなくなることである。Googleのpcreにはまだその要件が残ったままだ。そしてSELinuxをサポートする最古のAndroidであるAndroid 4.3以降向けに構成されたツールチェーンでコンパイルする。Googleバージョンに勝る主な利点として、libpackagelistparserとlibcryptoへの依存関係をもたらすGoogle固有の変更がなくなることである。Googleのpcreにはまだその要件が残ったままだ。  
 
 
-TREE-SITTER
+## TREE-SITTER
 
-A copy of tree-sitter modified to build with the ndk-build system can
-also be found that URL.  To build Emacs with tree-sitter, you must
-unpack the following tar archive in that site:
+ndk-buildシステムでビルドできるように修正したtree-sitterのコピーもそのURLで見つけられる。tree-sitterとともにEmacsをビルドするには、そのサイトにある以下のtarアーカイブを解凍しなければならない:  
 
-  tree-sitter-0.20.7-emacs.tar.gz
+tree-sitter-0.20.7-emacs.tar.gz  
 
-and add the resulting folder to ``--with-ndk-build''.
+解凍したフォルダーを`--with-ndk-build`に追加する。
 
 
-HARFBUZZ
+## HARFBUZZ
 
-A copy of HarfBuzz modified to build with the ndk-build system can
-also be found at that URL.  To build Emacs with HarfBuzz, you must
-unpack the following tar archive in that site:
+ndk-buildシステムでビルドできるように修正したHarfBuzzもそのURLで見つけられる。HarfBuzzとともにEmacsをビルドするには、そのサイトにある以下のtarアーカイブを解凍しなければならない:  
 
-  harfbuzz-7.1.0-emacs.tar.gz (when building for Android >4.3
-  			       with 21.0.x or later of the NDK)
-  harfbuzz-1.7.7.tar.gz	      (earlier NDK or platform releases)
+harfbuzz-7.1.0-emacs.tar.gz  
+(Android >4.3でNDK 21.0.x以降を使ってビルドする場合)  
 
-and add the resulting folder to ``--with-ndk-build''.
+harfbuzz-1.7.7.tar.gz  
+(もっと古いNDKやプラットフォームリリースの場合)  
+
+解凍したフォルダーを`--with-ndk-build`に追加する。
 
 
-IMAGEMAGICK
+## IMAGEMAGICK
 
-There is a third party port of ImageMagick to Android.  Unfortunately,
-the port also uses its own patched versions of libpng, libjpeg,
-libtiff and libwebp, which conflict with those used by Emacs.  Its
-Makefiles were also written for MS Windows, so you must also apply the
-patch at the end of this file.
+Android向けのImageMagickにはサードパーティ製のポートが存在する。残念ながらこのポートではEmacsで使用されているlibpng、libjpeg、libtiff、libwebpと競合するバージョンのpatchも使用されている。MakefileもMS Windows用に記述されているので、このファイルの最後にあるpatchも適用しなければならない。  
 
 
 
-PATCH FOR LIBXML2
+## PATCH FOR LIBXML2
 
-This patch must be applied to the Android.mk in Google's version of
-libxml2 before it can be built for Emacs.  In addition, you must also
-revert the commit `edb5870767fed8712a9b77ef34097209b61ab2db'.
+このpatchはEmacsをビルドする前に、Googleバージョンのlibxml2のAndroid.mkに適用しなければならない。さらにコミット`edb5870767fed8712a9b77ef34097209b61ab2db`もrevertしなければならない。
 
+```diff
 diff --git a/Android.mk b/Android.mk
 index 07c7b372..2494274f 100644
 --- a/Android.mk
@@ -433,12 +365,13 @@ index 07c7b372..2494274f 100644
  include $(BUILD_HOST_STATIC_LIBRARY)
 +
 +$(call import-module,libicuuc)
+```
 
-PATCH FOR ICU
+## PATCH FOR ICU
 
-This patch must be applied to icu4j/Android.mk in Google's version of
-icu before it can be built for Emacs.
+Emacs用にビルド可能にするには、Google版のicuのicu4j/Android.mkにこのpatchを適用しなければならない。  
 
+```diff
 diff --git a/icu4j/Android.mk b/icu4j/Android.mk
 index d1ab3d5..69eff81 100644
 --- a/icu4j/Android.mk
@@ -466,9 +399,11 @@ index 8e5f757..44bb130 100644
  LOCAL_MODULE_TAGS := optional
  LOCAL_MODULE := libicuuc
  LOCAL_RTTI_FLAG := -frtti
+```
 
-PATCH FOR SQLITE3
+## PATCH FOR SQLITE3
 
+```diff
 diff --git a/dist/Android.mk b/dist/Android.mk
 index bf277d2..36734d9 100644
 --- a/dist/Android.mk
@@ -495,9 +430,11 @@ index b0536a4..8fa1ee9 100644
  #endif
  
  /*
+```
 
-PATCH FOR WEBP
+## PATCH FOR WEBP
 
+```diff
 diff --git a/Android.mk b/Android.mk
 index c7bcb0f5..d4da1704 100644
 --- a/Android.mk
@@ -516,9 +453,11 @@ index c7bcb0f5..d4da1704 100644
  else
    NEON := c
  endif
+```
 
-PATCHES FOR SELINUX
+## PATCHES FOR SELINUX
 
+```diff
 diff --git a/Android.mk b/Android.mk
 index 659232e..1e64fd6 100644
 --- a/Android.mk
@@ -579,9 +518,11 @@ index 5206a9f..b351ffc 100644
          free(strp);
      }
      va_end(ap);
+```
 
-PATCH FOR BORINGSSL
+## PATCH FOR BORINGSSL
 
+```diff
 diff --git a/Android.mk b/Android.mk
 index 3e3ef2a..277d4a9 100644
 --- a/Android.mk
@@ -635,9 +576,11 @@ index e82f3d5..be3a3c4 100644
  
  linux_x86_sources := \
    linux-x86/crypto/aes/aes-586.S\
+```
 
-PATCH FOR IMAGEMAGICK
+## PATCH FOR IMAGEMAGICK
 
+```diff
 diff --git a/Android.mk b/Android.mk
 index 5ab6699..4441417 100644
 --- a/Android.mk
@@ -817,8 +760,7 @@ index 5e3bb9f..505ec82 100644
  
  static xmlChar *
  xmlXPathScanName(xmlXPathParserContextPtr ctxt) {
--    int len = 0, l;
-+    int l;
+-    int len = 0, l;+    int l;
      int c;
      const xmlChar *cur;
      xmlChar *ret;
@@ -1021,20 +963,20 @@ index 3ba4b1d..5471608 100644
 +LOCAL_LDLIBS    := -llog -lz
  LOCAL_SRC_FILES := \
      $(IMAGE_MAGICK)/utilities/magick.c \
- 
+``` 
 
 
-This file is part of GNU Emacs.
+This file is part of GNU Emacs.  
 
-GNU Emacs is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+GNU Emacs is free software: you can redistribute it and/or modify  
+it under the terms of the GNU General Public License as published by  
+the Free Software Foundation, either version 3 of the License, or  
+(at your option) any later version.  
 
-GNU Emacs is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Emacs is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the  
+GNU General Public License for more details.  
 
-You should have received a copy of the GNU General Public License
+You should have received a copy of the GNU General Public License  
 along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
