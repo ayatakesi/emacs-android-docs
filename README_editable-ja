@@ -138,33 +138,17 @@ Androidユーザーだ)のシステムでは、デバイスのオーナー以外
 Creation、および(emacs)Android Environmentを参照のこと。
 
 
-While the names of these executables are stable (and will be so for the
-forseeable future), it is better to use the variables that are specifically
-defined to provide their names: `emacsclient-program-name',
-`movemail-program-name' and so on, in place of hard-coded names such as
-`libemacsclient.so' and `libmovemail.so'.  Following this advice will
-guarantee that your code continues to run faithfully in the future and on
-non-Android systems.
+これの実行可能バイナリの名前は比較的に安定しているので(近い将来においても)、`libemacsclient.so`、`libmovemail.so`等のようなハードコードされた名前ではなく`emacsclient-program-name`、`movemail-program-name`等といった名前を提供するために特に定義した変数を用いるほうがよい。このアドバイスにしたがっていれば将来、そして非Androidデバイスでもあなたのコードが実行され続けることが保証されるだろう。
 
 
-The location of `emacs' is more involved: the `libemacs.so' is actually a
-real shared library containing all of the Emacs C code. This code is not
-functional until it is linked to a bundle of Java code implementing the
-Android filesystem and GUI interfaces, which is automatically performed by
-the Android JVM at run-time when you open Emacs from the app icon.
+`emacs`の場所についてはさらに複雑になる。実際には共有ライブラリーの`libemacs.so`こそが、EmacsのCコードすべてを含んでいるからだ。このコードはAndroidのファイルシステムおよびGUIインターフェイスを実装する一連のJava-コードにリンクされるまでは機能しない。これはアプリケーションからEmacsをオープンした実行時に、Android
+JVMによって自動的に実行されるのだ。
 
 
-`libandroid-emacs.so' is a binary that tries to invoke the JVM with the
-right arguments for starting Emacs on the command line.  While it is true
-that Emacs cannot create a display connection when started in this manner,
-the greatest difficulty posed by this approach is rather its reliance on
-Android internals that are subject to change without notice.  Because of
-this unfortunate dependency, it does not work reliably on all versions of
-Android, and must be revised after each major change to the OS.
+`libandroid-emacs.so'はコマンドラインでのEmacsの開始において、正しい引数でJVMの呼び出しを試みるバイナリだ。Emacsがこの方法で開始された場合にはディスプレイ接続を作成できないというのは事実だが、予告なしに変更されるAndroid内部に依存する点こそがこのアプローチの最大の難点である。すべてのバージョンのAndroidで確実には動作しないこと、そしてOSにメジャーな変更が行われる度に後から修正する必要があるのは、この不適切な依存関係が理由なのだ。
 
 
-The true solution to this conundrum is to avoid running Emacs inside itself,
-obviating the need for that binary in the first place.
+そもそもEmacs内部でEmacsを実行するのではなく、このバイナリの必要性の排除こそがこの難問にたいする真の解決策だろう。
 
 
 8. Where do I get more software?  (clang, git, python, etc.)
