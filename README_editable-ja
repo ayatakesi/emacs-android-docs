@@ -97,72 +97,45 @@ Info設定メニューのPermissionsメニューからStorageという名前の�
 11では設定へのアクセス経路が変更されたので、SettingsにあるSpecial App Accessメニューから権限を与えなければならない。
 
 
-Contrary to several descriptions being circulated online, it is not
-necessary to install the Termux variant for access to external storage.
-That being said, either application will gain any permissions granted to the
-other (of which the right to access external storage is one) as a
-consequence of their shared user ID.
+オンラインに出回っている口上とは異なり、外部ストレージにアクセスするためにTermuxの変種をインストールする必要はない。とはいえ2つのアプリケーションでユーザーIDを共有した結果として、一方のアプリケーションにアクセス権限(外部ストレージへのアクセス権限もそのうちの1つ)が付与されれば、もう一方のアプリケーションもその権限を取得する。 
 
 
-The third is storage provided by other applications (Nextcloud, for example)
-through the Storage Access Framework -- this storage is extremely slow
-(thanks in part to Google's botched implementation of document provider
-IPC), and is located within subdirectories of /content/storage.  Before any
-of these directories become available, you must run `M-x
-android-request-directory-access', and select the directory you want from
-the file selection panel displayed.
+3つ目は他のアプリケーションたとえばNextcloud)によって提供されるストレージ。これはStorage Access
+Frameworkを通じて提供される、/content/storageのサブディレクトリー配下にあるとてつもなく低速なストレージだ(Googleのドキュメントプロバイダー実装の失敗に祝福あれ)。これらのディレクトリーいずれかが利用可能になる前に`M-x
+android-request-directory-access`を実行して、表示されたファイル選択パネルから権限を付与したいディレクトリーを選択しなければならない。
 
 
-Because the /content directory is implemented entirely within Emacs's own
-file input/output primitives, subprocess cannot access any files it
-contains.  If you attempt to create a subprocess inside that directory, its
-working directory will actually be set to Emacs's home directory.  This
-additionally applies to the /assets directory holding Lisp and ancillary
-files distributed with Emacs.
+/contentディレクトリーはEmacs独自のファイル入出力プリミティブによって完全に実装されているので、サブプロセスがそのディレクトリーに含まれるファイルにアクセスすることはできない。そのディレクトリー内でサブプロセス生成を試みると、そのプロセスの実際の作業ディレクトリーは、実際にはEmacsのホームディレクトリーにセットされるだろう。これはEmacsとともに配布されるLispおよび補助ファイルを補助する/assetsディレクトリーにも適用される。
 
 
-Refer to (emacs)Android Filesystem and (emacs)Android Document Providers
-within the Emacs manual for more details.
+詳細についてはEmacsマニュアルの(emacs)Android Filesystem、および(emacs)Android Document
+Providersを参照のこと。
 
 
-6. Where is my .emacs/.emacs.d/init.el?
+6. わたしの.emacs、.emacs.d、init.elはどこにいった?
 
 
-~/.emacs, of course.
+もちろん~/.emacsにある。
 
 
-You cannot copy an Emacs configuration to the so-called internal storage on
-your phone and make it immediately available to Emacs. This is because,
-being subject to Android's security model, Emacs is the only app with
-permission to access its home directory.
+Emacsの構成をスマホ上のいわゆる内部ストレージにコピーして、すぐにEmacsから利用可能にすることはできない。なぜならこれはAndroidのセキュリティーモデルに起因する問題であり、Emacsのホームディレクトリーにアクセス可能な唯一のアプリがEmacsだけであるという理由による。
 
 
-Instead, follow the procedures outlined in the previous answer to grant
-Emacs access to that internal storage, and copy your configuration files
-from there to your home directory.
+Emacsに内部ストレージへのアクセス権限を付与する方法に関する解答で示した手順にしたがい、それからそのディレクトリーにある構成ファイルをホームディレクトリーにコピーすればよい。
 
 
-Android doesn't guarantee that Emacs's home directory will be located at any
-predetermined location, but it is normally placed at
-/data/data/org.gnu.emacs/files.  On systems with multiple users (Android
-users, not Unix users), it may instead be located somewhere within
-/data/user/ if Emacs is installed for a user other than the device owner.
+AndroidはEmacsのホームディレクトリーがあらかじめ決められた場所に配置されることを保証しないが、通常は/data/data/org.gnu.emacs/filesになるだろう。複数ユーザー(Unixユーザーではない;
+Androidユーザーだ)のシステムでは、デバイスのオーナー以外のユーザーによってEmacsがインストールされた場合には、/data/user/配下のどこかに配置される可能性がある。
 
 
-7. Where are binaries like emacs, emacsclient, and movemail?
+7. emacs、emacsclient、movemailといったバイナリはどこ?
 
 
-Short answer: ~/../lib.
+簡単に言うと~/../lib。
 
 
-Long answer: because Android restricts both the locations from where
-executable files can be loaded and the names of the executables that it will
-extract from installation packages, Emacs files all of its ancillary
-executables under names resembling shared libraries.  When Emacs is
-installed, Android extracts these executables to a private directory that
-Emacs symlinks at startup to `lib' within the parent directory of its home
-directory.  Refer to (elisp)Subprocess Creation and (emacs)Android
-Environment for more details.
+長いバージョンで答えるとAndroidは実行可能ファイルをロードできる場所、それにインストールパッケージから抽出される実行可能ファイルの名前の両方に制限を課すので、Emacsは補助的な実行可能ファイルを共有ライブラリーに習った名前にしている。Emacsがインストールされると、AndroidはEmacsが起動時にホームディレクトリーの親ディレクトリーにある`lib`としてシンボリックリンクするプライベートディレクトリーにこれらの実行可能バイナリを抽出する。詳細については(elisp)Subprocess
+Creation、および(emacs)Android Environmentを参照のこと。
 
 
 While the names of these executables are stable (and will be so for the
