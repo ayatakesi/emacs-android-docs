@@ -151,72 +151,50 @@ JVMによって自動的に実行されるのだ。
 そもそもEmacs内部でEmacsを実行するのではなく、このバイナリの必要性の排除こそがこの難問にたいする真の解決策だろう。
 
 
-8. Where do I get more software?  (clang, git, python, etc.)
+8. どこでソフトウェアを入手できるの?  (clang、git、pythonなど)
 
 
-See (emacs)Android Software.  The `termux' directory holds versions of both
-Termux and Emacs that share the same user ID and signing key.
+(emacs)Android
+Softwareを参照のこと。`termux`ディレクトリーにはどちらも同じ共有ユーザーID、署名キーをもったバージョンのTermuxとEmacsがある。
 
 
-9. The on-screen keyboard isn't displayed!  You must only use Emacs    with a physical keyboard!
+9. オンスクリーンキーボードが表示されない! 物理キーボードでしかEmacsを使っていないんだね!
 
 
-The author of this port does not use a physical keyboard under Android.  He
-uses AnySoftKeyboard for English input, and Fcitx
+このポートの作成者は、Androidでは物理キーボードを使っていない。彼が使っているのは英語入力にはAnySoftKeyboard、CJK入力には以下のFcitxを使っている。
 
 
   https://github.com/fcitx5-android/fcitx5-android/
 
 
-for CJK input.  With that misconception out of the way, there are at least
-two reasons for asking this question.
+疑いは晴れたとして、このような誤解が生じたのには、少なくとも2つの理由が考えられる。
 
 
-The first is that you may have unthinkingly disabled the menu bar or tool
-bar in keeping with an online Emacs introductory text, and now want to
-perform operations which are then impossible without a keyboard.  This is a
-very unwise decision on Android: any operation performed from a keyboard can
-also be performed from the menu bar or tool bar (including M-x, which is
-Edit -> Execute Command), making the use of a keyboard unnecessary.
+1つ目の理由として考えられるのはオンラインで手に入れた入門テキストの記述にしたがい、意味を吟味することなくメニューバーやツールバーを無効にして、その後にキーボードがなくては行うことが不可能な操作を行いたい場合だろう。これはAndroidにおいてはとんでもなく愚かな判断だ。キーボードから行うすべての操作はメニューバーやツールバーからも行うことができるので、キーボードを使う必要はなくなる(M-xを含む;
+Edit -> Executeがそれだ)。
 
 
-With that in mind, and to save screen space, the keyboard is normally hidden
-when the current window has selected a read-only buffer.  The second reason
-for asking this question is wanting to always display the on-screen
-keyboard; to do so, simply customize the option
-`touch-screen-display-keyboard' to a non-nil value.  (Options -> Customize
-Emacs, hint, hint.)
+上記を念頭に置いて考えると、カレントウィンドウが読み取り専用バッファーを選択した際には、画面スペースを確保するためにキーボードが非表示になるからだろう。2つ目の理由として考えられるのは、オンスクリーンキーボードを常時表示しておきたいという理由だろう。これは単にオプション`touch-screen-display-keyboard`を非nil値にカスタマイズするだけで行うことができる(ヒント:
+Options -> Customize Emacs)。
 
 
-For more details and an in depth explanation of how Emacs treats touch
-screen and on-screen-keyboard input, refer to (emacs)Touchscreens,
-(emacs)On-Screen Keyboards, (elisp)Misc Events, and (elisp)Touchscreen
-Events.
+Emacsがタッチスクリーンおよびオンスクリーンキーボード入力を扱う方法に関する詳細については(emacs)On-Screen
+Keyboards、(elisp)Misc Events、(elisp)Touchscreen Eventsを参照のこと。
 
 
-10. My package X that relies on reading raw key events / binding keys     globally doesn't work with an on screen keyboard!
+10. 生のキーイベント/キーバインドに依存するわたしのパッケージXは、オンスクリーンキーボードでは概ね動作しないのだが!
 
 
-This is because Android input methods rely on directly invoking Emacs's
-buffer editing primitives, which is dubbed text conversion. Emacs tries to
-implement features such as electric-indent, electric-pair and Auto-Fill
-through analyzing the course of their edits after they take place.
+Androidの入力メソッドが、Emacsのバッファー編集プリミティブ(テキスト変換と呼ばれている)の直接呼び出しに依存しているのが理由だ。Emacsは編集後の経過を分析することによってelectric-indentやelectric-pair、Auto-Fillなどを実装している。
 
 
-Consequentially, Emacs doesn't receive raw key press events as you type into
-the input method, your package doesn't work, and the text you type is
-inserted directly into the current buffer in lieu of the events you meant to
-send.
+その結果、Emacsは入力メソッドにタイプしたキーの内の押下イベントを受け取らず、あなたのパッケージは機能せず、あなたがタイプして送信しようと意図したイベントのかわりに、タイプしたテキストが直接バッファーに挿入されることと相なる訳だ。
 
 
-You can either fix these packages to disable text conversion through the
-variable `overriding-text-conversion-style' or the buffer-local variable
-`text-conversion-style', or disable text conversion globally by setting the
-first variable.
+変数`overriding-text-conversion-style`、またはバッファーローカル変数`text-conversion-style`のいずれかを通じてこれらのパッケージのテキスト変換を無効にすれば解決するだろう(テキスト変換をグローバルに無効にするなら前者の変数)。
 
 
-See (elisp)Misc Events for further elucidations on the subject of text
-conversion.
+テキスト変換についての詳細については、(elisp)Misc Eventsを参照のこと。
 
 
 11. Point jumps to the start of the text after I type an opening     paren!  (And other problems with IMEs in Text or Prog Mode     derivatives.) This is probably a bug in your IME.  Emacs implements the Android input method interfaces to the letter, but Android's own implementation leaves much to be desired.
