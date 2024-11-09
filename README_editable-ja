@@ -294,104 +294,75 @@ Androidでのアップデートで、既存のインストールで署名した�
 このメニューは実はフォントの"バックエンド"がXだけであった頃、プログラムはほとんどのXサーバーで共通なフォントを常にリストするだけでよかった、Emacsのグラフィカルサポート黎明期の名残りである。Androidで呼び出すと、Androidには実際にはほとんど存在しないフォントの長ったらしいリストが生成される。フォントはCustomizeか`set-frame-font`コマンドで構成する必要がある。
 
 
-21. Glyphs within Microsoft core fonts (Arial, Tahoma, and the like)     are misshapen or blurry.
+21. Microsoftのコアフォント(Arial、Tahomaなど)のグリフ(glyph: 字形、字体)が崩れるぼやける。
 
 
-Antiquated versions of these fonts exploit extensions and
-implementation-specific behavior unique to the Microsoft Windows font scaler
-that Emacs does not supply, as a result of which various glyph programs they
-define go awry as they are executed to fit glyphs to the pixel grid.  The
-solution is to update them to their latest revisions, as distributed with
-recent releases of MS Windows.
+これらのフォントの旧バージョンは、Emacsが提供していないMicrosoft
+Windows固有のフォントスケーラーの拡張機能と実装固有の動作を利用している。このためにグリフをピクセルグリッドに適合させるために、これらのフォントが定義しているさまざまなグリフプログラムを実行しても上手く機能しないのだ。解決策はMS
+Windowsの最新リリースに同梱されているこれらのフォントの最新版にアップデートすること。
 
 
-In particular, such fonts expect the interpreter to grant them leave to
-address nonexistent glyph points.  The MS scaler ignores offending
-instructions, while Emacs terminates the program entirely.
+そのようなフォントは存在しないグリフポイントをアドレス指定する権限をインタープリターに期待する。MSスケーラーは無効な命令は無視するが、Emacsはプログラムを完全に終了する。
 
 
-22. Tool bar buttons are undersized.
+22. ツールバーのボタンが小さい。
 
 
-Tool bar button margins do not increase to match the display density, which
-produces buttons that appear smaller than expected on high-density output
-devices, as featured by most Android phones today. Adjust the variable
-`tool-bar-button-margin' to compensate.
+ツールバーのボタンのマージン(余白)は画面解像度に合わせて拡大しない。今日ではほとんどのAndroidスマホに搭載されている高解像度出力デバイスでは、予想よりも小さく表示されるだろう。変数`tool-bar-button-margin`を調整して補正できる。
 
 
-23. B/W or grayscale displays are not detected, with the result that     colors applied by the likes of font-lock lack contrast.
+23. モノクロあるいはグレースケールのディスプレイが検出されないすぃで、フォントロックなどが適用する色がコントラスト不足になる。
 
 
-This entry is relevant on tablets featuring "digital paper" displays,
-monochromatic or grayscale displays being virtually unknown elsewhere.
+これは"電子ペーパーディスプレイ(digital paper
+display)"以外ではほとんど知られていない、モノクロ/グレースケールのディスプレイを搭載するタブレットに関連する質問だ。
 
 
-Android not being designed for such applications, the display's visual class
-is not reported to programs, and consequently you the user are responsible
-for informing Emacs of the display color depth by means of the variable
-`android-display-depth'; for a grayscale display, the optimal value is
-anywhere between 2 and 8, where greater values correspond to more supported
-grays, while the proper value for a monochrome display is 1.
+そのようなアプリケーション向けにAndroidはデザインされていないので、ディスプレイのビジュアルクラスはそれをプログラムに報告しない。という訳で変数`android-display-depth`を使用してEmacsにディスプレイの色深度(color
+depth)を通知する役目はユーザーたるあなたが担うことになる。グレースケールに最適な値は2から8の間だろう。値が大きくなるほどサポートされるグレー値が多くなる。モノクロディスプレイの適切な値は1。
 
 
-Though this value controls color allocation choices, the display
-capabilities reported to Lisp, and by extension colors selected during the
-realization of faces, yet it does not affect font anti-aliasing or the
-display of images, as the underlying surface provided to Emacs is always
-color, with the driver converting anti-aliased text and color graphics into
-grayscale or monochrome data for the glass instead.  Its purpose is rather
-to enable users to activate the carefully curated palette for displays
-wanting in color space or depth.
+たとえこの値が色割り当ての選択がLispに報告されるディスプレイ機能、フェイスの実現中に選択される色を制御するとしても、Emacsに提供される基礎となるサーフェス(surface)は依然として色のままなので、フォントのアンチエイリアスやイメージ表示には効果がなく、かわりにドライバーがアンチエイリアスされたテキストやカラーグラフィックを、スクリーン向けにグレースケールやモノクロのデータに変換している。これはむしろ色空間や色深度を必要とするディスプレイ用に慎重に厳選したパレットを、ユーザーがアクティブにできるようにすることを意図した変数なのだ。
 
 
-24. How/where do I obtain the corresponding source code to which I am     entitled under the terms of the GNU GPL?
+24. このアプリのGNU GPLの条件に基づく権利を有するソースコードはどこでどうやって入手できるの?
 
 
-Type:
+Emacsで以下をタイプすればよい:
 
 
   M-x describe-variable RET emacs-repository-version RET
 
 
-within Emacs.  Next, download that revision from the Emacs Git repository
-at:
+そして以下のEmacsのGitレポジトリからそのリビジョンをダウンロードする:
 
 
   https://git.savannah.gnu.org/git/emacs.git
 
 
-I also retain source code tarballs produced from the repository for the
-binaries that are currently present on SourceForge.  Please contact me if
-you require those.
+このレポジトリから現在SourceForgeにあるバイナリ用に取得したソースコードのtarアーカイブは残してある。これが必要なら連絡して欲しい。
 
 
-25. Termux, its add-ons (or Emacs) won't install.
+25. TermuxやTermuxのアドオン、(あるいはEmacs)がインストールされない。
 
 
-If you have downloaded and installed either the Termux-enabled Emacs, or
-Termux itself, from this site, installation of upstream Termux app packages
-will fail with a nondescript error message, as their signature will disagree
-with those of the packages already installed.
+このサイトからTermuxが有効なEmacsやTermux自体をダウンロードしてインストールしている場合には、アップストリームのTermuxのアプリパッケージのインストールは何の特徴もないエラーメッセージを表示して失敗するだろう。これはアプリパッケージの署名がインストール済みのパッケージの署名と一致しないからだ。
 
 
-You must either resign the packages you wish to install with the upstream
-Emacs signing key:
+インストールするには以下のEmacsのアップストリームの署名キーでインストールしたいパッケージに再署名する:
 
 
   https://git.savannah.gnu.org/cgit/emacs.git/tree/java/emacs.keystore
 
 
-or modify Android to disable its draconian signature verification, as with
-an XPosed module such as:
+あるいは以下のようなXPosedモジュールでAndroidを変更して、厳格な署名検証を無効化しなければならない:
 
 
   https://github.com/LSPosed/CorePatch
 
 
-26. Something's missing from this FAQ!
+26. このFAQには何かが足りない!
 
 
-If it's a subject not covered by the Android or Input nodes in the Emacs
-manual, or the relevant portions of the Lisp reference manual, please report
-a bug.  I will then update the manual and this FAQ as I see fit.
+EmacsマニュアルのAndroidやInputに関する章、あるいはLispリファレンスマニュアルの関連する部分でカバーされていない問題の場合には、どうかバグを報告して欲しい。必要と判断したらこのFAQとマニュアルを更新する。
 
