@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-06 23:52+0900\n"
-"PO-Revision-Date: 2024-11-14 22:58+0900\n"
+"PO-Revision-Date: 2024-11-15 08:28+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japan\n"
 "Language: ja\n"
@@ -1194,7 +1194,7 @@ msgstr "これはAndroidにたいして`EmacsActivity` (org/gnu/emacs/EmacsActiv
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:487
 msgid "To do so, the Android system creates an instance of ``EmacsActivity'' and the window system window associated with it, and eventually calls:"
-msgstr "これによりAndroidシステムが`EmacsActivity`のインスタンスを作成、それにウィンドウシステムがウィンドウを割り当てて最終的には以下を呼び出す:"
+msgstr "これによりAndroidシステムが`EmacsActivity`のインスタンスを作成、それにウィンドウシステムがウィンドウを関連付けて最終的には以下を呼び出す:"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:489
@@ -1291,7 +1291,7 @@ msgstr ""
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:525
 msgid "Next, Emacs sets an appropriate theme for the activity's associated window decorations."
-msgstr "次にEmacsはこのactivityにたいして割り当てられたウィンドウ装飾(window decoration)にたいして、適切なテーマをセットする。"
+msgstr "次にEmacsはこのactivityにたいして関連付けられたウィンドウ装飾(window decoration)にたいして、適切なテーマをセットする。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:528
@@ -1793,12 +1793,12 @@ msgstr "次にこの関数は適切なvector引数を算出して、(android.c�
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:734
 msgid "At that point, Emacs initialization proceeds as usual: Vinitial_window_system is set, loadup.el calls `normal-top-level', which calls `command-line', and finally `window-system-initialization', which initializes the `android' terminal interface as usual."
-msgstr ""
+msgstr "この時点で通常のlEmacs初期化処理が行われる。Vinitial_window_systemをセット、loadup.elが`normal-top-level`呼び出し、これが`command-line'を呼び出して、最終的には通常の`android`端末を初期化する`window-system-initialization`が呼び出されるのだ。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:738
 msgid "What happens here is the same as on other platforms.  Now, here is what happens when the initial frame is created: Fx_create_frame calls `android_create_frame_window' to create a top level window:"
-msgstr ""
+msgstr "ここでは他のプラットフォームで行われるのと同様なことが起こっている。デフォルト初期フレーム作成時に何が起こっているのだろうか? まずトップレベルのウィンドウを作成するためにFx_create_frameが`android_create_frame_window`を呼び出す:"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:744
@@ -1810,6 +1810,12 @@ msgid ""
 "  struct android_set_window_attributes attributes;\n"
 "  enum android_window_value_mask attribute_mask;\n"
 msgstr ""
+"```java\n"
+"static void\n"
+"android_create_frame_window (struct frame *f)\n"
+"{\n"
+"  struct android_set_window_attributes attributes;\n"
+"  enum android_window_value_mask attribute_mask;\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:747
@@ -1818,6 +1824,8 @@ msgid ""
 "  attributes.background_pixel = FRAME_BACKGROUND_PIXEL (f);\n"
 "  attribute_mask = ANDROID_CW_BACK_PIXEL;\n"
 msgstr ""
+"  attributes.background_pixel = FRAME_BACKGROUND_PIXEL (f);\n"
+"  attribute_mask = ANDROID_CW_BACK_PIXEL;\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:758
@@ -1834,16 +1842,28 @@ msgid ""
 "  unblock_input ();\n"
 "}\n"
 msgstr ""
+"```java\n"
+"  block_input ();\n"
+"  FRAME_ANDROID_WINDOW (f)\n"
+"    = android_create_window (FRAME_DISPLAY_INFO (f)->root_window,\n"
+"\t\t\t     f->left_pos,\n"
+"\t\t\t     f->top_pos,\n"
+"\t\t\t     FRAME_PIXEL_WIDTH (f),\n"
+"\t\t\t     FRAME_PIXEL_HEIGHT (f),\n"
+"\t\t\t     attribute_mask, &attributes);\n"
+"  unblock_input ();\n"
+"}\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:761
 msgid "This calls the function `android_create_window' with some arguments whose meanings are identical to the arguments to `XCreateWindow'."
-msgstr ""
+msgstr "これが同じ引数で関数`android_create_window`を呼び出す。引数の意味は`XCreateWindow`の場合と同じだ。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:763
 msgid "Here is the definition of `android_create_window', in android.c:"
-msgstr ""
+msgstr "以下はandroid.cにおける`android_create_window`の定義:"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:776
@@ -1862,27 +1882,44 @@ msgid ""
 "  android_handle prev_max_handle;\n"
 "  bool override_redirect;\n"
 msgstr ""
+"```java\n"
+"android_window\n"
+"android_create_window (android_window parent, int x, int y,\n"
+"\t\t       int width, int height,\n"
+"\t\t       enum android_window_value_mask value_mask,\n"
+"\t\t       struct android_set_window_attributes *attrs)\n"
+"{\n"
+"  static jclass class;\n"
+"  static jmethodID constructor;\n"
+"  jobject object, parent_object, old;\n"
+"  android_window window;\n"
+"  android_handle prev_max_handle;\n"
+"  bool override_redirect;\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:778
 msgid "What does it do? First, some context:"
-msgstr ""
+msgstr "何を行うのだろうか? コンテキストは"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:784
 msgid "At any time, there can be at most 65535 Java objects referred to by the rest of Emacs through the Java native interface.  Each such object is assigned a ``handle'' (similar to an XID on X) and given a unique type.  The function `android_resolve_handle' returns the JNI `jobject' associated with a given handle."
-msgstr ""
+msgstr "任意の時点において最大で65535のJavaオブジェクトが、Javaのネイティブインターフェイスを通じてEmacsの残りの部分から参照され得る。そのようなオブジェクトにはそれぞれ`handle` (XでのXIDのようなもの)が割り当てられて、一意なタイプが付与される。`android_resolve_handle`は、そのhandleに関連付けられたJNIの`jobject`をリターンする関数だ。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:786
 #, no-wrap
 msgid "  parent_object = android_resolve_handle (parent, ANDROID_HANDLE_WINDOW);\n"
 msgstr ""
+"```java\n"
+"  parent_object = android_resolve_handle (parent, ANDROID_HANDLE_WINDOW);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:789
 msgid "Here, it is being used to look up the `jobject' associated with the `parent' handle."
-msgstr ""
+msgstr "ここでは`parent`というhandleに関連付けられている`jobject`を検索するために使用されている。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:792
@@ -1891,11 +1928,15 @@ msgid ""
 "  prev_max_handle = max_handle;\n"
 "  window = android_alloc_id ();\n"
 msgstr ""
+"```java\n"
+"  prev_max_handle = max_handle;\n"
+"  window = android_alloc_id ();\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:795
 msgid "Next, `max_handle' is saved, and a new handle is allocated for `window'."
-msgstr ""
+msgstr "`max_handle`が保存されて、今度は`window`にたいして新たなhandleが割り当てられる。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:798

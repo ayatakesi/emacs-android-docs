@@ -501,7 +501,7 @@ Androidシステムがアプリケーションを開始する際には、実際�
 (org/gnu/emacs/EmacsActivity.java)で定義されているactivity
 (Androidのクラス`Activity``を拡張するクラス)を開始するように指示する。
 
-これによりAndroidシステムが`EmacsActivity`のインスタンスを作成、それにウィンドウシステムがウィンドウを割り当てて最終的には以下を呼び出す:
+これによりAndroidシステムが`EmacsActivity`のインスタンスを作成、それにウィンドウシステムがウィンドウを関連付けて最終的には以下を呼び出す:
 
 ```java
   Activity activity;
@@ -542,7 +542,7 @@ Androidシステムがアプリケーションを開始する際には、実際�
       setTheme (android.R.style.Theme_NoTitleBar);
 ```
 
-次にEmacsはこのactivityにたいして割り当てられたウィンドウ装飾(window decoration)にたいして、適切なテーマをセットする。
+次にEmacsはこのactivityにたいして関連付けられたウィンドウ装飾(window decoration)にたいして、適切なテーマをセットする。
 
 ```java
     params = new FrameLayout.LayoutParams (LayoutParams.MATCH_PARENT,
@@ -749,15 +749,12 @@ public class EmacsThread extends Thread
 
 次にこの関数は適切なvector引数を算出して、(android.cで定義されている)`EmacsNative.initEmacs`、それにEmacsの通常の`main`関数の修正版を呼び出す。
 
-At that point, Emacs initialization proceeds as usual:
-Vinitial_window_system is set, loadup.el calls `normal-top-level', which
-calls `command-line', and finally `window-system-initialization', which
-initializes the `android' terminal interface as usual.
+この時点で通常のlEmacs初期化処理が行われる。Vinitial_window_systemをセット、loadup.elが`normal-top-level`呼び出し、これが`command-line'を呼び出して、最終的には通常の`android`端末を初期化する`window-system-initialization`が呼び出されるのだ。
 
-What happens here is the same as on other platforms.  Now, here is what
-happens when the initial frame is created: Fx_create_frame calls
-`android_create_frame_window' to create a top level window:
+ここでは他のプラットフォームで行われるのと同様なことが起こっている。デフォルト初期フレーム作成時に何が起こっているのだろうか?
+まずトップレベルのウィンドウを作成するためにFx_create_frameが`android_create_frame_window`を呼び出す:
 
+```java
 static void
 android_create_frame_window (struct frame *f)
 {
@@ -767,6 +764,7 @@ android_create_frame_window (struct frame *f)
   attributes.background_pixel = FRAME_BACKGROUND_PIXEL (f);
   attribute_mask = ANDROID_CW_BACK_PIXEL;
 
+```java
   block_input ();
   FRAME_ANDROID_WINDOW (f)
     = android_create_window (FRAME_DISPLAY_INFO (f)->root_window,
@@ -777,12 +775,13 @@ android_create_frame_window (struct frame *f)
 			     attribute_mask, &attributes);
   unblock_input ();
 }
+```
 
-This calls the function `android_create_window' with some arguments whose
-meanings are identical to the arguments to `XCreateWindow'.
+これが同じ引数で関数`android_create_window`を呼び出す。引数の意味は`XCreateWindow`の場合と同じだ。
 
-Here is the definition of `android_create_window', in android.c:
+以下はandroid.cにおける`android_create_window`の定義:
 
+```java
 android_window
 android_create_window (android_window parent, int x, int y,
 		       int width, int height,
@@ -795,24 +794,25 @@ android_create_window (android_window parent, int x, int y,
   android_window window;
   android_handle prev_max_handle;
   bool override_redirect;
+```
 
-What does it do? First, some context:
+何を行うのだろうか? コンテキストは
 
-At any time, there can be at most 65535 Java objects referred to by the rest
-of Emacs through the Java native interface.  Each such object is assigned a
-``handle'' (similar to an XID on X) and given a unique type.  The function
-`android_resolve_handle' returns the JNI `jobject' associated with a given
-handle.
+任意の時点において最大で65535のJavaオブジェクトが、Javaのネイティブインターフェイスを通じてEmacsの残りの部分から参照され得る。そのようなオブジェクトにはそれぞれ`handle`
+(XでのXIDのようなもの)が割り当てられて、一意なタイプが付与される。`android_resolve_handle`は、そのhandleに関連付けられたJNIの`jobject`をリターンする関数だ。
 
+```java
   parent_object = android_resolve_handle (parent, ANDROID_HANDLE_WINDOW);
+```
 
-Here, it is being used to look up the `jobject' associated with the `parent'
-handle.
+ここでは`parent`というhandleに関連付けられている`jobject`を検索するために使用されている。
 
+```java
   prev_max_handle = max_handle;
   window = android_alloc_id ();
+```
 
-Next, `max_handle' is saved, and a new handle is allocated for `window'.
+`max_handle`が保存されて、今度は`window`にたいして新たなhandleが割り当てられる。
 
   if (!window)
     error ("Out of window handles!");
