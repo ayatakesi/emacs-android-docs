@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-06 23:52+0900\n"
-"PO-Revision-Date: 2024-11-15 08:28+0900\n"
+"PO-Revision-Date: 2024-11-16 09:38+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japan\n"
 "Language: ja\n"
@@ -1900,7 +1900,7 @@ msgstr ""
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:778
 msgid "What does it do? First, some context:"
-msgstr "何を行うのだろうか? コンテキストは"
+msgstr "何を行うのだろうか? コンテキストを少々説明しよう:"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:784
@@ -1945,11 +1945,15 @@ msgid ""
 "  if (!window)\n"
 "    error (\"Out of window handles!\");\n"
 msgstr ""
+"```java\n"
+"  if (!window)\n"
+"    error (\"Out of window handles!\");\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:800
 msgid "An error is signaled if Emacs runs out of available handles."
-msgstr ""
+msgstr "Emacsが利用可能なlhandleを使い切ったときは、エラーがシグナルされる。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:806
@@ -1961,11 +1965,18 @@ msgid ""
 "\t\t\t\t\t      \"org/gnu/emacs/EmacsWindow\");\n"
 "      assert (class != NULL);\n"
 msgstr ""
+"```java\n"
+"  if (!class)\n"
+"    {\n"
+"      class = (*android_java_env)->FindClass (android_java_env,\n"
+"\t\t\t\t\t      \"org/gnu/emacs/EmacsWindow\");\n"
+"      assert (class != NULL);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:809
 msgid "Then, if this initialization has not yet been completed, Emacs proceeds to find the Java class named ``EmacsWindow''."
-msgstr ""
+msgstr "この初期化がまだ完了していない場合には、Emacsは`EmacsWindow`という名前のJavaクラスの検索を実行する。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:815
@@ -1977,11 +1988,18 @@ msgid ""
 "\t\t\t\t\t    \"IIIIZ)V\");\n"
 "      assert (constructor != NULL);\n"
 msgstr ""
+"```java\n"
+"      constructor\n"
+"\t= (*android_java_env)->GetMethodID (android_java_env, class, \"<init>\",\n"
+"\t\t\t\t\t    \"(SLorg/gnu/emacs/EmacsWindow;\"\n"
+"\t\t\t\t\t    \"IIIIZ)V\");\n"
+"      assert (constructor != NULL);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:818
 msgid "And it tries to look up the constructor, which should take seven arguments:"
-msgstr ""
+msgstr "そしてconstructorを見つける、引数は7つの筈だ:"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:826
@@ -1995,6 +2013,10 @@ msgid ""
 "\t\t\t\t\t  window is override-redirect; see\n"
 "\t\t\t\t\t  XChangeWindowAttributes.)\n"
 msgstr ""
+"- S :: データはshort(lhandleのID)\n"
+"- Lorg/gnu/Emacs/EmacsWindow; :: EmacsWindowクラスのインスタンス(親)\n"
+"- IIII :: 4つの整数(ウィンドウジオメトリ)\n"
+"- Z :: ブール値(そのウィンドウがoverride-redirectかどうか; XChangeWindowAttributesを参照)\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:831
@@ -2005,11 +2027,17 @@ msgid ""
 "      (*android_java_env)->ExceptionClear (android_java_env);\n"
 "      ANDROID_DELETE_LOCAL_REF (old);\n"
 msgstr ""
+"```java\n"
+"      old = class;\n"
+"      class = (*android_java_env)->NewGlobalRef (android_java_env, class);\n"
+"      (*android_java_env)->ExceptionClear (android_java_env);\n"
+"      ANDROID_DELETE_LOCAL_REF (old);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:835
 msgid "Next, it saves a global reference to the class and deletes the local reference.  Global references will never be deallocated by the Java virtual machine as long as they still exist."
-msgstr ""
+msgstr "次にクラスへのグローバルリファレンスを保存、ローカルリファレンスを削除する。グローバルリファレンスは、存在し続けるかぎりはJava仮想マシンによって割り当て開放されることはない。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:839
@@ -2019,6 +2047,10 @@ msgid ""
 "\tmemory_full (0);\n"
 "    }\n"
 msgstr ""
+"```java\n"
+"      if (!class)\n"
+"\tmemory_full (0);\n"
+"    }\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:845
@@ -2030,6 +2062,11 @@ msgid ""
 "\t\t\t& ANDROID_CW_OVERRIDE_REDIRECT)\n"
 "\t\t       && attrs->override_redirect);\n"
 msgstr ""
+"  /* 注意: ANDROID_CW_OVERRIDE_REDIRECTはウィンドウ作成時しか\n"
+"     セットできない     */\n"
+"  override_redirect = ((value_mask\n"
+"\t\t\t& ANDROID_CW_OVERRIDE_REDIRECT)\n"
+"\t\t       && attrs->override_redirect);\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:851
@@ -2041,11 +2078,17 @@ msgid ""
 "\t\t\t\t\t   (jint) width, (jint) height,\n"
 "\t\t\t\t\t   (jboolean) override_redirect);\n"
 msgstr ""
+"  object = (*android_java_env)->NewObject (android_java_env, class,\n"
+"\t\t\t\t\t   constructor, (jshort) window,\n"
+"\t\t\t\t\t   parent_object, (jint) x, (jint) y,\n"
+"\t\t\t\t\t   (jint) width, (jint) height,\n"
+"\t\t\t\t\t   (jboolean) override_redirect);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:854
 msgid "Then, it creates an instance of the ``EmacsWindow'' class with the appropriate arguments and previously determined constructor."
-msgstr ""
+msgstr "そして適切な引数と前に見つけたconstructorで、`EmacsWindow`のインスタンスを作成する。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:858
@@ -2055,6 +2098,10 @@ msgid ""
 "    {\n"
 "      (*android_java_env)->ExceptionClear (android_java_env);\n"
 msgstr ""
+"```java\n"
+"  if (!object)\n"
+"    {\n"
+"      (*android_java_env)->ExceptionClear (android_java_env);\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:861
@@ -2063,6 +2110,9 @@ msgid ""
 "      max_handle = prev_max_handle;\n"
 "      memory_full (0);\n"
 msgstr ""
+"      max_handle = prev_max_handle;\n"
+"      memory_full (0);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:865
@@ -2072,6 +2122,9 @@ msgid ""
 "and signals that it is out of memory.\n"
 "    }\n"
 msgstr ""
+"オブジェクトの作成に失敗した場合には、Emacsは\"保留中の例外\"をクリアーしてから\"out of memory(メモリ不足)\"をシグナルする。\n"
+"```java\n"
+"    }\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:872
@@ -2084,11 +2137,18 @@ msgid ""
 "  (*android_java_env)->ExceptionClear (android_java_env);\n"
 "  ANDROID_DELETE_LOCAL_REF (object);\n"
 msgstr ""
+"  android_handles[window].type = ANDROID_HANDLE_WINDOW;\n"
+"  android_handles[window].handle\n"
+"    = (*android_java_env)->NewGlobalRef (android_java_env,\n"
+"\t\t\t\t\t object);\n"
+"  (*android_java_env)->ExceptionClear (android_java_env);\n"
+"  ANDROID_DELETE_LOCAL_REF (object);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:876
 msgid "Otherwise, it associates a new global reference to the object with the handle, and deletes the local reference returned from the JNI NewObject function."
-msgstr ""
+msgstr "成功した場合にはそのオブジェクトにhandleと新たなグローバルリファレンスが割り当てられて、JNIのNewObject関数からリターンされたローカルリファレンスは削除する。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:879
@@ -2097,11 +2157,15 @@ msgid ""
 "  if (!android_handles[window].handle)\n"
 "    memory_full (0);\n"
 msgstr ""
+"```java\n"
+"  if (!android_handles[window].handle)\n"
+"    memory_full (0);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:882
 msgid "If allocating the global reference fails, Emacs signals that it is out of memory."
-msgstr ""
+msgstr "グローバルリファレンスの割り当てに失敗した場合にも、Emacsは\"out of memory\"をシグナルする。"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:885
@@ -2110,11 +2174,19 @@ msgid ""
 "  android_change_window_attributes (window, value_mask, attrs);\n"
 "  return window;\n"
 msgstr ""
+"```java\n"
+"  android_change_window_attributes (window, value_mask, attrs);\n"
+"  return window;\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:889
 msgid "Otherwise, it applies the specified window attributes and returns the handle of the new window.  }"
 msgstr ""
+"成功した場合には指定されたウィンドウ属性を適用して、新たなウィンドウのhandleをリターンする。\n"
+"```java\n"
+"}\n"
+"```"
 
 #. type: Plain text
 #: emacs-30/admin/notes/java_editable:893

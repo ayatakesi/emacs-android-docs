@@ -796,7 +796,7 @@ android_create_window (android_window parent, int x, int y,
   bool override_redirect;
 ```
 
-何を行うのだろうか? コンテキストは
+何を行うのだろうか? コンテキストを少々説明しよう:
 
 任意の時点において最大で65535のJavaオブジェクトが、Javaのネイティブインターフェイスを通じてEmacsの残りの部分から参照され得る。そのようなオブジェクトにはそれぞれ`handle`
 (XでのXIDのようなもの)が割り当てられて、一意なタイプが付与される。`android_resolve_handle`は、そのhandleに関連付けられたJNIの`jobject`をリターンする関数だ。
@@ -814,51 +814,54 @@ android_create_window (android_window parent, int x, int y,
 
 `max_handle`が保存されて、今度は`window`にたいして新たなhandleが割り当てられる。
 
+```java
   if (!window)
     error ("Out of window handles!");
+```
 
-An error is signaled if Emacs runs out of available handles.
+Emacsが利用可能なlhandleを使い切ったときは、エラーがシグナルされる。
 
+```java
   if (!class)
     {
       class = (*android_java_env)->FindClass (android_java_env,
 					      "org/gnu/emacs/EmacsWindow");
       assert (class != NULL);
+```
 
-Then, if this initialization has not yet been completed, Emacs proceeds to
-find the Java class named ``EmacsWindow''.
+この初期化がまだ完了していない場合には、Emacsは`EmacsWindow`という名前のJavaクラスの検索を実行する。
 
+```java
       constructor
 	= (*android_java_env)->GetMethodID (android_java_env, class, "<init>",
 					    "(SLorg/gnu/emacs/EmacsWindow;"
 					    "IIIIZ)V");
       assert (constructor != NULL);
+```
 
-And it tries to look up the constructor, which should take seven arguments:
+そしてconstructorを見つける、引数は7つの筈だ:
 
-  S					- a short.  (the handle ID)
-  Lorg/gnu/Emacs/EmacsWindow;		- an instance of the EmacsWindow
-					  class.  (the parent)
-  IIII					- four ints.  (the window geometry.)
-  Z					- a boolean.  (whether or not the
-					  window is override-redirect; see
-					  XChangeWindowAttributes.)
+- S :: データはshort(lhandleのID)
+- Lorg/gnu/Emacs/EmacsWindow; :: EmacsWindowクラスのインスタンス(親)
+- IIII :: 4つの整数(ウィンドウジオメトリ)
+- Z :: ブール値(そのウィンドウがoverride-redirectかどうか; XChangeWindowAttributesを参照)
 
+```java
       old = class;
       class = (*android_java_env)->NewGlobalRef (android_java_env, class);
       (*android_java_env)->ExceptionClear (android_java_env);
       ANDROID_DELETE_LOCAL_REF (old);
+```
 
-Next, it saves a global reference to the class and deletes the local
-reference.  Global references will never be deallocated by the Java virtual
-machine as long as they still exist.
+次にクラスへのグローバルリファレンスを保存、ローカルリファレンスを削除する。グローバルリファレンスは、存在し続けるかぎりはJava仮想マシンによって割り当て開放されることはない。
 
+```java
       if (!class)
 	memory_full (0);
     }
 
-  /* N.B. that ANDROID_CW_OVERRIDE_REDIRECT can only be set at window
-     creation time.  */
+  /* 注意: ANDROID_CW_OVERRIDE_REDIRECTはウィンドウ作成時しか
+     セットできない     */
   override_redirect = ((value_mask
 			& ANDROID_CW_OVERRIDE_REDIRECT)
 		       && attrs->override_redirect);
@@ -868,19 +871,21 @@ machine as long as they still exist.
 					   parent_object, (jint) x, (jint) y,
 					   (jint) width, (jint) height,
 					   (jboolean) override_redirect);
+```
 
-Then, it creates an instance of the ``EmacsWindow'' class with the
-appropriate arguments and previously determined constructor.
+そして適切な引数と前に見つけたconstructorで、`EmacsWindow`のインスタンスを作成する。
 
+```java
   if (!object)
     {
       (*android_java_env)->ExceptionClear (android_java_env);
 
       max_handle = prev_max_handle;
       memory_full (0);
+```
 
-If creating the object fails, Emacs clears the ``pending exception''
-and signals that it is out of memory.
+オブジェクトの作成に失敗した場合には、Emacsは"保留中の例外"をクリアーしてから"out of memory(メモリ不足)"をシグナルする。
+```java
     }
 
   android_handles[window].type = ANDROID_HANDLE_WINDOW;
@@ -889,22 +894,26 @@ and signals that it is out of memory.
 					 object);
   (*android_java_env)->ExceptionClear (android_java_env);
   ANDROID_DELETE_LOCAL_REF (object);
+```
 
-Otherwise, it associates a new global reference to the object with the
-handle, and deletes the local reference returned from the JNI NewObject
-function.
+成功した場合にはそのオブジェクトにhandleと新たなグローバルリファレンスが割り当てられて、JNIのNewObject関数からリターンされたローカルリファレンスは削除する。
 
+```java
   if (!android_handles[window].handle)
     memory_full (0);
+```
 
-If allocating the global reference fails, Emacs signals that it is out of
-memory.
+グローバルリファレンスの割り当てに失敗した場合にも、Emacsは"out of memory"をシグナルする。
 
+```java
   android_change_window_attributes (window, value_mask, attrs);
   return window;
+```
 
-Otherwise, it applies the specified window attributes and returns the handle
-of the new window.  }
+成功した場合には指定されたウィンドウ属性を適用して、新たなウィンドウのhandleをリターンする。
+```java
+}
+```
 
 
 
