@@ -364,7 +364,7 @@ wchar_t character; extern char *s; size_t s;
 
   for (/* determine n, s in a loop.  */)
     s += mbstowc (&character, s, n);
-``
+```
 
 あるいは:
 
@@ -554,6 +554,7 @@ Androidシステムがアプリケーションを開始する際には、実際�
 
     /* content viewにそれをセット       */
     setContentView (layout);
+```
 
 それからEmacsは`FrameLayout` (別の単一のwidgetを保持するwidget)を作成して、そのactivityの`content
 view`にする。
@@ -917,54 +918,34 @@ Emacsが利用可能なlhandleを使い切ったときは、エラーがシグ�
 
 
 
-DRAWABLES, CURSORS AND HANDLES
+## DRAWABLES, CURSORS AND HANDLES
 
-Each widget created by Emacs corresponds to a single ``window'', which has
-its own backing store.  This arrangement is quite similar to X.
+Emacsが作成したwidgetはそれぞれ、独自のバッキングストアをもった単一の`window`に対応する。これはXと非常に似た采配といえよう。
 
-C code does not directly refer to the EmacsView widgets that implement the
-UI logic behind windows.  Instead, its handles refer to EmacsWindow
-structures, which contain the state necessary to interact with the widgets
-in an orderly and synchronized manner.
+ウィンドウ背後にあるUIロジックを実装するEmacsViewのwidgetそれぞれを、Cコードが直接参照することはない。Cコードは順序よく同期してwidgetと相互作用を行うために必要となる、state(状態)を含んだEmacsWindowをかわりに参照して処理を行う。
 
-Like X, both pixmaps and windows are drawable resources, and the same
-graphics operations can be applied to both.  Thus, a separate EmacsPixmap
-structure is used to wrap around Android Bitmap resources, and the
-Java-level graphics operation functions are capable of operating on them
-both.
+Xと同じようにpixmapとwindowはどちらもドローワブル(drawable:
+描画可能)なリソースであり、いずれも同じグラフィック操作を適用できる。したがってEmacsPixmapのstructureはそれぞれ個別にAndroidのBitmapリソースをラップできるし、Javaレベルのグラフィック操作関数はどちらも処理する能力がある。
 
-Finally, graphics contexts are maintained on both the C and Java levels; the
-C state recorded in `struct android_gc' is kept in sync with the Java state
-in the GContext handle's corresponding EmacsGC structure, and cursors are
-used through handles that refer to EmacsCursor structures that hold system
-PointerIcons.
+最後にグラフィックコンテキストはCとJavaの両方のレベルで保守されている。Cのstate(`struct
+android_gc`の中に記録されている)とJavaのstate(EmacsGC構造体に相当するGContextのhandleにある)との同期を保つとともに、カーソルもシステムのPointerIconsを保持しているEmacsCursor構造体を参照するhandleを介して使用される。
 
-In all cases, the interfaces provided are identical to X.
+すべての状況において、提供されているインターフェイスはXの場合と同じだ。
 
 
 
-EVENT LOOP
+## EVENT LOOP
 
-In a typical Android application, the event loop is managed by the operating
-system, and callbacks (implemented through overriding separate functions in
-widgets) are run by the event loop wherever necessary.  The thread which
-runs the event loop is also the only thread capable of creating and
-manipulating widgets and activities, and is referred to as the ``UI
-thread''.
+典型的なAndroidアプリケーションではイベントループはオペレーティングシステムによって管理されており、必要であれば常にイベントループによってコールバック(widgetの個々の関数をオーバーライドすることにより実装する)が実行される。イベントループが実行するスレッドは、widgetやactivityの作成と操作ができる唯一のスレッドでもあり、`UI
+thread`と呼ばれている。
 
-These callbacks are used by Emacs to write representations of X-like events
-to a separate event queue, which are then read from Emacs's own event loop
-running in a separate thread.  This is accomplished through replacing
-`select' by a function which waits for the event queue to be occupied, in
-addition to any file descriptors that `select' would normally wait for.
+これらのコールバックはEmacsがXに似たイベント表現を、個々のイベントキューに書き込むために使用される。そして書き込まれたイベントキューは、別スレッドで実行中のEmacs独自のイベントループによって読み取られることになる。これは`select`、および`select`が待機するであろうすべてのファイル記述子をイベントキューの占有を待機する関数で置き換えることによって実現している。
 
-Conversely, Emacs's event loop sometimes needs to send events to the UI
-thread.  These events are implemented as tiny fragments of code, which are
-run as they are received by the main thread.
+これとは反対にEmacsのイベントループの方はUIスレッドにイベントを送信する必要が間々ある。これらの少量のコードによって実装されるイベントは、メインスレッドによってこれらのイベントが受信されると実行されることになる。
 
-A typical example is `displayToast', which is implemented in
-EmacsService.java:
+典型的な例は`displayToast`だ。これはEmacsService.javaに実装されている:
 
+```java
   public void
   displayToast (final String string)
   {
@@ -981,21 +962,13 @@ EmacsService.java:
 	}
       });
   }
+```
 
-Here, the variable `string' is used by a nested function.  This nested
-function contains a copy of that variable, and is run on the main thread
-using the function `runOnUiThread', in order to display a short status
-message on the display.
+ここで`string`はネストされた関数(入れ子関数)で使用される変数だ。ディスプレイ上に短いstatusメッセージを表示するために、関数`runOnUiThread`を用いてメインスレッドで実行されるこのネストされた関数には、この変数のコピーが含まれることになる。
 
-When Emacs needs to wait for the nested function to finish, it uses a
-mechanism implemented in `syncRunnable'.  This mechanism first calls a
-deadlock avoidance mechanism, then runs a nested function on the UI thread,
-which is expected to signal itself as a condition variable upon completion.
-It is typically used to allocate resources that can only be allocated from
-the UI thread, or to obtain non-thread-safe information.  The following
-function is an example; it returns a new EmacsView widget corresponding to
-the provided window:
+ネストされた関数の完了を待機する必要がある場合には、Emacsは`syncRunnable`で実装されているメカニズムを使用する。これは最初にデッドロック回避メカニズムを呼び出して、その後に完了時にはコンディション変数を自身にシグナルするネスト関数をUIスレッドで実行するというメカニズムだ。これは通常だとUIスレッドからしか割り当てられないリソースの割り当てや、スレッドセーフではない情報の取得に用いられるメカニズムだ。以下は提供されたウィンドウに相当するEmacsViewの新たなwidgetをリターンする関数の例だ:
 
+```java
   public EmacsView
   getEmacsView (final EmacsWindow window, final int visibility,
 		final boolean isFocusedByDefault)
@@ -1027,35 +1000,42 @@ the provided window:
     syncRunnable (runnable);
     return view.thing;
   }
+```
 
-As no value can be directly returned from the nested function, a separate
-container object is used to hold the result after the function finishes
-execution.  Note the type name inside the angle brackets: this type is
-substituted into the class definition as it is used; a definition such as:
+ネストされた関数から値は直接リターンされないので、関数が実行を完了した後の結果を保持するためのコンテナオブジェクト別途使用する。山カッコ(angle
+bracket)の内側のタイプ名に注目。このタイプ名は使用するクラスの定義に置き換えられるのだ。以下のような定義は:
 
+```java
 public class Foo<T>
 {
   T bar;
 };
+```
 
-can not be used alone:
+これ単独では使用ではない:
 
-  Foo holder; /* Error! */
+```java
+  Foo holder; /* エラーになるよ! */
+```
 
-but must have a type specified:
+タイプを指定しなければならない:
 
+```java
   Foo<Object> holder;
+```
 
-in which case the effective definition is:
+この場合に効果がある定義は:
 
+```java
 public class Foo
 {
   Object bar;
 };
+```
 
 
 
-COMPATIBILITY
+## COMPATIBILITY
 
 There are three variables set within every Android application that extert
 influence over the set of Android systems it supports, and the measures it
