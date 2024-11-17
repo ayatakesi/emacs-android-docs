@@ -765,7 +765,6 @@ android_create_frame_window (struct frame *f)
   attributes.background_pixel = FRAME_BACKGROUND_PIXEL (f);
   attribute_mask = ANDROID_CW_BACK_PIXEL;
 
-```java
   block_input ();
   FRAME_ANDROID_WINDOW (f)
     = android_create_window (FRAME_DISPLAY_INFO (f)->root_window,
@@ -1012,7 +1011,7 @@ public class Foo<T>
 };
 ```
 
-これ単独では使用ではない:
+これ単独では使用できない:
 
 ```java
   Foo holder; /* エラーになるよ! */
@@ -1037,54 +1036,41 @@ public class Foo
 
 ## COMPATIBILITY
 
-There are three variables set within every Android application that extert
-influence over the set of Android systems it supports, and the measures it
-must take to function faithfully on each of those systems: the minimum API
-level, compile SDK version and target API level.
+すべてのAndroidアプリケーションには、サポート対象のAndroidシステムにたいして影響を与えるために、そしてこれらのシステムそれぞれにたいして正確に機能するために必要な対策を講じるためにセットする3つの変数がある。それは最小APIレベル(minimum
+API level)、コンパイルSDKバージョン(compile SDK version)、ターゲットAPIレベル(target API
+level)という3つの変数だ。
 
-The minimum API level is the earliest version of Android that is permitted
-to install and run the application.  For Emacs, this is established by
-detecting the __ANDROID_API__ preprocessor macro defined within the Android
-C compiler.
+最小APIレベルとは、そのアプリケーションのインストールと実行が許されるもっとも古いAndroidのバージョンのことだ。EmacsではAndroidのCコンパイラーで定義されているプリプロセッサマクロ__ANDROID_API__を調べて確認している。
 
-Before Java code executes any Android API calls that are not present within
-Android 2.2 (API level 8), the lowest API level supported by Emacs as a
-whole, it must first check the value of the:
+JavaコードがAndroid 2.2(API level 8; Emacs
+がサポートする最小のAPIレベルだ)では提供されていないAndroidのAPI呼び出しを実行する前に、まずは以下の値をチェックしなければならない:
 
+```text
   Build.VERSION.SDK_INT
+```
 
-variable, which is always set to the API level of the system Emacs is
-presently installed within.  For example, before calling
-`dispatchKeyEventFromInputMethod', a function absent from Android 6.0 (API
-level 23) or earlier, check:
+この変数には常にその時点でEmacsがインストールされているシステムのAPIレベルがセットされる。たとえば`dispatchKeyEventFromInputMethod`(Android
+6.0: API level 23では提供されていない)を呼び出す前に以下のようなチェックを行う:
 
+```java
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
       view.imManager.dispatchKeyEventFromInputMethod (view, key);
     else
       {
+```
 
-where `N' is a constant defined to 24.
+ここで`N`は定数24に定義されている。
 
-The compile SDK version is the version of the Android SDK headers Java code
-is compiled against.  Because Java does not provide conditional compilation
-constructs, Emacs can't be compiled with any version of these headers other
-than the version mentioned in `java/INSTALL', but the headers used do not
-affect the set of supported systems provided that the version checks
-illustrated above are performed where necessary.
+コンパイルSDKバージョンとは、JavaコードがコンパイルされるAndroid
+SDKのヘッダーのバージョンのこと。Javaは条件付きコンパイル構造を提供していないので、`java/INSTALL`記載のバージョン以外のヘッダーではEmacsをコンパイルできないが、必要に応じて上述したバージョンチェックが行われるかぎり、サポート対象となるシステムの範囲には影響しない。
 
-The target API level is a number within java/AndroidManifest.xml.in the
-system refers to when deciding whether to enable backwards-incompatible
-modifications to the behavior of various system APIs.  For any given Android
-version, backwards incompatible changes in that version will be disabled for
-applications whose target API levels don't exceed its own.
+ターゲットAPIレベルとは、さまざまなシステムAPIの動作にたいする後方互換性のない変更を有効にするかどうか判断する際に、システムが参照するjava/AndroidManifest.xml.inで定義されている数値のこと。どのAndroidバージョンにおいても、そのアプリケーションのターゲットAPIレベル以下のバージョンにおける後方互換性のない変更は無効になる。
 
-The target API should nevertheless be updated to match every major Android
-update, as Google has stated their intentions to prohibit users from
-installing applications targeting ``out-of-date'' versions of Android,
-though this threat has hitherto been made good on.
+GoogleがAndroidの"時代遅れ"のバージョンをターゲットとするアプリケーションをユーザーがインストールことを禁止する意向を表明しているので、Androidのメジャーバージョンアップに合わせてターゲットAPIを更新する必要があるものの、これまでのところこの脅威にたいしては上手く対処できている。
 
 
 
+```text
 This file is part of GNU Emacs.
 
 GNU Emacs is free software: you can redistribute it and/or modify it under
@@ -1099,3 +1085,4 @@ details.
 
 You should have received a copy of the GNU General Public License along with
 GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+```
