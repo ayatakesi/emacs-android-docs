@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-18 21:42+0900\n"
+"PO-Revision-Date: 2024-11-19 08:26+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -137,66 +137,73 @@ msgstr ""
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:77
 msgid "There are other ways to overcome that difficulty, they are all described in the node \"Auto-loading safe path\" in the GDB user manual.  If nothing else helps, type \"source /path/to/.gdbinit RET\" at the GDB prompt, to unconditionally load the GDB init file."
-msgstr ""
+msgstr "これらの困難を克服する他の手段については、GDBユーザーマニュアルのノード\"Auto-loading safe path\"にすべて記されている。他に手立てがなければ、GDBプロンプトで`source /path/to/.gdbinit RET`とタイプして、GDBのinitファイルを無条件でロードできる。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:79
 msgid "Running GDB on macOS sometimes brings an error message like this:"
-msgstr ""
+msgstr "macOSでGDBを実行すると、以下のようなエラーメッセージが表示されることがあるかもしれない:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:81
 #, no-wrap
 msgid "  Unable to find Mach task port for process-id NNN: (os/kern) failure (0x5).\n"
 msgstr ""
+"```text\n"
+"  Unable to find Mach task port for process-id NNN: (os/kern) failure (0x5).\n"
+"  # 訳注: process-id NNNのMachタスクポートが見つからない: (os/kern) failure (0x5).\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:85
 msgid "To overcome this, search the Internet for the phrase \"Unable to find Mach task port for process-id\", and you will find detailed instructions to follow."
-msgstr ""
+msgstr "これを解決するためにはインターネットで\"Unable to find Mach task port for process-id\"というフレーズを検索すれば、したがうべき手順の記述を見つけられるだろう。。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:87
 #, no-wrap
 msgid "*** Use the Emacs GDB UI front-end\n"
-msgstr ""
+msgstr "### Use the Emacs GDB UI front-end\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:95
 msgid "We recommend using the GUI front-end for GDB provided by Emacs.  With it, you can start GDB by typing \"M-x gdb RET\".  This will suggest the file name of the default binary to debug; if the suggested default is not the Emacs binary you want to debug, change the file name as needed.  Alternatively, if you want to attach the debugger to an already running Emacs process, change the GDB command shown in the minibuffer to say this:"
-msgstr ""
+msgstr "わたしたちが推薦するのはEmacsが提供するGDB用のGUIフロントエンドの使用だ。これを使えば、`M-x gdb RET`とタイプしてGDBを開始できる。このコマンドはデバッグするバイナリファイルのデフォルトの名前を提案する。デバッグしたいEmacsバイナリ以外のデフォルトが提案された場合には、必要に応じてファイル名を変更すればよい。すでに実行中のEmacsプロセスにアタッチしたい場合には、ミニバッファーに表示されているGDBコマンドを以下のように修正しよう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:97
 #, no-wrap
 msgid "   gdb -i=mi -p PID\n"
 msgstr ""
+"```shell\n"
+"    gdb -i=mi -p PID\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:101
 msgid "where PID is the numerical process ID of the running Emacs process, displayed by system utilities such as 'top' or 'ps' on Posix hosts and Task Manager on MS-Windows."
-msgstr ""
+msgstr "ここでPIDはPosixホストの`top`や`ps`、MS-Windowsのタスクマネージャーのようなシステムユーティリティーが表示する実行中のEmacsのプロセスID(数値)だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:108
 msgid "Once the debugger starts, open the additional windows provided by the GDB UI, by typing \"M-x gdb-many-windows RET\".  (Alternatively, click Gud->GDB-MI->Display Other Windows\" from the menu bar.)  At this point, make your frame large enough (or full-screen) such that the windows you just opened have enough space to show the content without horizontal scrolling."
-msgstr ""
+msgstr "デバッガが開始されたら、`M-x gdb-many-windows RET`とタイプしてGDBのUIが提供する追加のウィンドウをオープンしよう(メニューバーの`Gud->GDB-MI->Display Other Windows`をクリックしてもよい)。この段階で水平スクロールせずとも内容が表示されるように、オープンしたばかりのウィンドウのスペースを充分大きく拡げておこう(フルスクリーンにするという手もある)。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:112
 msgid "You can later restore your window configuration with the companion command \"M-x gdb-restore-windows RET\", or by deselecting \"Display Other Windows\" from the menu bar."
-msgstr ""
+msgstr "変更したウィンドウ構成はお馴染みのウィンドウ構成コマンド`M-x gdb-restore-windows RET`、あるいはメニューバーの`Display Other Windows`を選択解除すれば、後からリストアできる。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:114
 #, no-wrap
 msgid "*** Setting initial breakpoints\n"
-msgstr ""
+msgstr "### Setting initial breakpoints\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:122
 msgid "Before you let Emacs run, you should now set breakpoints in the code which you want to debug, so that Emacs stops there and lets GDB take control.  If the code which you want to debug is executed under some rare conditions, or only when a certain Emacs command is manually invoked, then just set your breakpoint there, let Emacs run, and trigger the breakpoint by invoking that command or reproducing those rare conditions."
-msgstr ""
+msgstr "Emacsを実行する前の今こそ、デバッグしたいコードにブレークポイントをすべきときだ。そうすればそこでEmacsは停止して、GDBが制御を得られるのだ。何らかの非常に稀な特殊な状況下で実行されるコード、あるいは特定のEmacsコマンドを手作業で呼び出した場合のみ実行されるコードをデバッグしたい場合には、そこにブレークポイントをセットしてEmacsを実行して後はそのコマンドを呼び出すか、あるいはその稀な状況やらを再現すればブレークポイントがトリガーされるだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:129

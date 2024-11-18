@@ -54,52 +54,41 @@ l最近のバージョンのGDBでは、GDBを呼び出したディレクトリ�
   add-auto-load-safe-path /path/to/emacs/src/.gdbinit
 ```
 
-There are other ways to overcome that difficulty, they are all described in
-the node "Auto-loading safe path" in the GDB user manual.  If nothing else
-helps, type "source /path/to/.gdbinit RET" at the GDB prompt, to
-unconditionally load the GDB init file.
+これらの困難を克服する他の手段については、GDBユーザーマニュアルのノード"Auto-loading safe
+path"にすべて記されている。他に手立てがなければ、GDBプロンプトで`source /path/to/.gdbinit
+RET`とタイプして、GDBのinitファイルを無条件でロードできる。
 
-Running GDB on macOS sometimes brings an error message like this:
+macOSでGDBを実行すると、以下のようなエラーメッセージが表示されることがあるかもしれない:
 
+```text
   Unable to find Mach task port for process-id NNN: (os/kern) failure (0x5).
+  # 訳注: process-id NNNのMachタスクポートが見つからない: (os/kern) failure (0x5).
+```
 
-To overcome this, search the Internet for the phrase "Unable to find Mach
-task port for process-id", and you will find detailed instructions to
-follow.
+これを解決するためにはインターネットで"Unable to find Mach task port for
+process-id"というフレーズを検索すれば、したがうべき手順の記述を見つけられるだろう。。
 
-*** Use the Emacs GDB UI front-end
+### Use the Emacs GDB UI front-end
 
-We recommend using the GUI front-end for GDB provided by Emacs.  With it,
-you can start GDB by typing "M-x gdb RET".  This will suggest the file name
-of the default binary to debug; if the suggested default is not the Emacs
-binary you want to debug, change the file name as needed.  Alternatively, if
-you want to attach the debugger to an already running Emacs process, change
-the GDB command shown in the minibuffer to say this:
+わたしたちが推薦するのはEmacsが提供するGDB用のGUIフロントエンドの使用だ。これを使えば、`M-x gdb
+RET`とタイプしてGDBを開始できる。このコマンドはデバッグするバイナリファイルのデフォルトの名前を提案する。デバッグしたいEmacsバイナリ以外のデフォルトが提案された場合には、必要に応じてファイル名を変更すればよい。すでに実行中のEmacsプロセスにアタッチしたい場合には、ミニバッファーに表示されているGDBコマンドを以下のように修正しよう:
 
-   gdb -i=mi -p PID
+```shell
+    gdb -i=mi -p PID
+```
 
-where PID is the numerical process ID of the running Emacs process,
-displayed by system utilities such as 'top' or 'ps' on Posix hosts and Task
-Manager on MS-Windows.
+ここでPIDはPosixホストの`top`や`ps`、MS-Windowsのタスクマネージャーのようなシステムユーティリティーが表示する実行中のEmacsのプロセスID(数値)だ。
 
-Once the debugger starts, open the additional windows provided by the GDB
-UI, by typing "M-x gdb-many-windows RET".  (Alternatively, click
-Gud->GDB-MI->Display Other Windows" from the menu bar.)  At this point, make
-your frame large enough (or full-screen) such that the windows you just
-opened have enough space to show the content without horizontal scrolling.
+デバッガが開始されたら、`M-x gdb-many-windows
+RET`とタイプしてGDBのUIが提供する追加のウィンドウをオープンしよう(メニューバーの`Gud->GDB-MI->Display Other
+Windows`をクリックしてもよい)。この段階で水平スクロールせずとも内容が表示されるように、オープンしたばかりのウィンドウのスペースを充分大きく拡げておこう(フルスクリーンにするという手もある)。
 
-You can later restore your window configuration with the companion command
-"M-x gdb-restore-windows RET", or by deselecting "Display Other Windows"
-from the menu bar.
+変更したウィンドウ構成はお馴染みのウィンドウ構成コマンド`M-x gdb-restore-windows
+RET`、あるいはメニューバーの`Display Other Windows`を選択解除すれば、後からリストアできる。
 
-*** Setting initial breakpoints
+### Setting initial breakpoints
 
-Before you let Emacs run, you should now set breakpoints in the code which
-you want to debug, so that Emacs stops there and lets GDB take control.  If
-the code which you want to debug is executed under some rare conditions, or
-only when a certain Emacs command is manually invoked, then just set your
-breakpoint there, let Emacs run, and trigger the breakpoint by invoking that
-command or reproducing those rare conditions.
+Emacsを実行する前の今こそ、デバッグしたいコードにブレークポイントをすべきときだ。そうすればそこでEmacsは停止して、GDBが制御を得られるのだ。何らかの非常に稀な特殊な状況下で実行されるコード、あるいは特定のEmacsコマンドを手作業で呼び出した場合のみ実行されるコードをデバッグしたい場合には、そこにブレークポイントをセットしてEmacsを実行して後はそのコマンドを呼び出すか、あるいはその稀な状況やらを再現すればブレークポイントがトリガーされるだろう。
 
 If you are less lucky, and the code in question is run very frequently, you
 will have to find some way of avoiding triggering your breakpoint when the

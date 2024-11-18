@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for ORIGINAL in README emacs-30/java/INSTALL emacs-30/admin/notes/java emacs-30/cross/ndk-build/README
+for ORIGINAL in README emacs-30/java/INSTALL emacs-30/admin/notes/java emacs-30/cross/ndk-build/README emacs-30/etc/DEBUG
 do
     EDITABLE_FILE=${ORIGINAL}_editable;
     PERL_OUT=$(mktemp);
