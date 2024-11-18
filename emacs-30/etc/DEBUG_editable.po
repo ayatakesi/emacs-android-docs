@@ -1,0 +1,2057 @@
+# SOME DESCRIPTIVE TITLE
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2024-11-18 07:30+0900\n"
+"PO-Revision-Date: 2024-11-18 21:42+0900\n"
+"Last-Translator: ayatakesi\n"
+"Language-Team: japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:2
+msgid "Debugging GNU Emacs"
+msgstr "# Debugging GNU Emacs"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:5
+msgid "Copyright (C) 1985, 2000-2024 Free Software Foundation, Inc.  See the end of the file for license conditions."
+msgstr ""
+"```text\n"
+"Copyright (C) 1985, 2000-2024 Free Software Foundation, Inc.\n"
+"See the end of the file for license conditions.\n"
+"```"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:7
+#, no-wrap
+msgid "** Preliminaries\n"
+msgstr "## Preliminaries\n"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:11
+msgid "This section can be skipped if you are already familiar with building Emacs with debug info, configuring and starting GDB, and simple GDB debugging techniques."
+msgstr "あなたがすでにdebug情報つきEmacsのビルド、GDBの設定と開始、GDBによる簡単なデバッグテクニックに親しんでいる場合には、このセクションはスキップしてもよい。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:13
+#, no-wrap
+msgid "*** Configuring Emacs for debugging\n"
+msgstr "### Configuring Emacs for debugging\n"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:18
+msgid "It is best to configure and build Emacs with special options that will make the debugging easier.  Here are the configure-time options we recommend (they are in addition to any other options you might need, such as --prefix):"
+msgstr "デバッグを容易にする特別なオプションでEmacsをconfigure、ビルドするのが最善だ。以下にconfigure時にわたしたちが推薦しているオプションを示す(--prefixのようにあなたにとって必要なオプションに追加して指定する):"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:21
+#, no-wrap
+msgid ""
+"  ./configure --enable-checking='yes,glyphs' --enable-check-lisp-object-type \\\n"
+"    CFLAGS='-O0 -g3'\n"
+msgstr ""
+"```shell\n"
+"  ./configure --enable-checking='yes,glyphs' --enable-check-lisp-object-type \\\n"
+"    CFLAGS='-O0 -g3'\n"
+"```\n"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:27
+msgid "The -O0 flag is important, as debugging optimized code can be hard.  If the problem happens only with optimized code, you may need to enable optimizations.  If that happens, try using -Og first instead of -O2, as -Og disables some optimizations that make debugging some code exceptionally hard."
+msgstr "`-O0`フラグの指定は重要だ。最適化されたコードのデバッグは困難な場合が多いからだ。しかし最適化されたコードでのみ問題が発生する場合には、最適化を有効にする必要があるかもしれない。このようなケースに遭遇した場合には`-O2`ではなくまずは`-Og`の使用を試みて欲しい。`-Og`ならある種のコードのデバッグを著しく困難にする一部の最適化が無効になるからだ。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:30
+msgid "Older versions of GCC may need more than just the -g3 flag.  For more, search for \"analyze failed assertions\" below."
+msgstr "古いバージョンのGCCには`-g3`フラグだけでは足りないかもしれない。詳細は後述の\"analyze failed assertions\"を参照して欲しい。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:37
+msgid "The 2 --enable-* switches are optional.  They don't have any effect on debugging with GDB, but will compile additional code that might catch the problem you are debugging much earlier, in the form of assertion violation.  The --enable-checking option also enables additional functionality useful for debugging display problems; see more about this below under \"Debugging Emacs redisplay problems\"."
+msgstr "2つの`--enable-*`フラグは必須ではない。これらのフラグはGDBでのデバッグには何も影響を与えないが、あなたがデバッグしている問題をassert違反という形で、より早い段階で検知できるかもしれない追加のコードをコンパイルする。`--enable-checking`オプションは、ディスプレイに起因する問題のデバッグに有用な追加機能の有効化も行う。これについては後述の\"Debugging Emacs redisplay problems\"を参照して欲しい。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:40
+msgid "Emacs needs not be installed to be debugged, you can debug the binary created in the 'src' directory."
+msgstr "デバッグ用のEmacsをインストールする必要はない。`src`ディレクトリーに作成されるバイナリをデバッグできるからだ。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:42
+#, no-wrap
+msgid "*** Configuring GDB\n"
+msgstr "### Configuring GDB\n"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:47
+msgid "To start GDB to debug Emacs, you can simply type \"gdb ./emacs RET\" at the shell prompt (assuming you do that from the directory of the Emacs executable, usually the 'src' sub-directory of the Emacs tree).  However, we recommend starting GDB from Emacs, see below."
+msgstr "EmacsをデバッグするためにGDBを開始するには、シェルプロンプトで単に`gdb ./emacs RET`とタイプすればよい(Emacsの実行可能ファイルがあるディレクトリー、通常はEmacsソースツリーのサブディレクトリー`src`からデバッグを行う場合)。しかしわたしたちが推奨するのは、以下のようにEmacsからGDBを開始する方法だ。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:54
+msgid "When you debug Emacs with GDB, you should start GDB in the directory where the Emacs executable was made (the 'src' directory in the Emacs source tree).  That directory has a .gdbinit file that defines various \"user-defined\" commands for debugging Emacs.  (These commands are described below under \"Examining Lisp object values\" and \"Debugging Emacs Redisplay problems\".)"
+msgstr "GDBでEmacsをデバッグする際には、Emacsの実行可能形式が作成されたディレクトリー(Emacsソースツリーの`src`ディレクトリー)でGDBを開始すること。このディレクトリーにある`.gdbinit`ファイルには、Emacsのデバッグ用にさまざまな\"ユーザー定義\"コマンドが定義されている(これらのコマンドについては\"Examining Lisp object values\"や\"Debugging Emacs Redisplay problems\"で後述する)。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:61
+msgid "Starting the debugger from Emacs, via the \"M-x gdb\" command (described below), when the current buffer visits one of the Emacs C source files will automatically start GDB in the 'src' directory.  If you invoke \"M-x gdb\" from a buffer whose default directory is different, such as from the \"*scratch*\" buffer, you can change the default directory with the \"M-x cd\" command before starting the debugger."
+msgstr "Emacsからのデバッガの開始は`M-x gdb`コマンド(後述)通じて行う。カレントバッファーでEmacsのCソースファイルをvisitしていれば、`src`ディレクトリーで自動的にGDBが開始される筈だ。デフォルトディレクトリーが別のディレクトリーであるようなバッファー、たとえば\"*scratch*\"バッファーから`M-x gdb`を呼び出した場合には、デバッガを開始する前に`M-x cd`コマンドでデフォルトディレクトリーを変更できる。"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:65
+msgid "Recent GDB versions by default do not automatically load .gdbinit files in the directory where you invoke GDB.  With those versions of GDB, you will see a warning when GDB starts, like this:"
+msgstr "l最近のバージョンのGDBでは、GDBを呼び出したディレクトリーにある`.gdbinit`を自動的にロードすることはない。そのようなバージョンのGDBでは、GDBの開始時に以下のような警告を目にするかもしれない:"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:67
+#, no-wrap
+msgid "  warning: File \".../src/.gdbinit\" auto-loading has been declined by your `auto-load safe-path' set to \"$debugdir:$datadir/auto-load\".\n"
+msgstr ""
+"```shell\n"
+"  warning: File \".../src/.gdbinit\" auto-loading has been declined by your `auto-load safe-path' set to \"$debugdir:$datadir/auto-load\".\n"
+"  # 訳注: あなたの`auto-loadできる安全なパス'が\"$debugdir:$datadir/auto-load\"に\n"
+"  # セットされているので\"...\"のオートロードは拒否する\n"
+"```\n"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:70
+msgid "The simplest way to fix this is to add the following line to your ~/.gdbinit file (creating such a file if it doesn't already exist):"
+msgstr "これを解決する一番簡単な方法は、あなたの`~/.gdbinit`ファイルに(そんなファイルがなければ作成して)、以下の行を追加すればよい:"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:72
+#, no-wrap
+msgid "  add-auto-load-safe-path /path/to/emacs/src/.gdbinit\n"
+msgstr ""
+"```shell\n"
+"  add-auto-load-safe-path /path/to/emacs/src/.gdbinit\n"
+"```\n"
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:77
+msgid "There are other ways to overcome that difficulty, they are all described in the node \"Auto-loading safe path\" in the GDB user manual.  If nothing else helps, type \"source /path/to/.gdbinit RET\" at the GDB prompt, to unconditionally load the GDB init file."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:79
+msgid "Running GDB on macOS sometimes brings an error message like this:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:81
+#, no-wrap
+msgid "  Unable to find Mach task port for process-id NNN: (os/kern) failure (0x5).\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:85
+msgid "To overcome this, search the Internet for the phrase \"Unable to find Mach task port for process-id\", and you will find detailed instructions to follow."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:87
+#, no-wrap
+msgid "*** Use the Emacs GDB UI front-end\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:95
+msgid "We recommend using the GUI front-end for GDB provided by Emacs.  With it, you can start GDB by typing \"M-x gdb RET\".  This will suggest the file name of the default binary to debug; if the suggested default is not the Emacs binary you want to debug, change the file name as needed.  Alternatively, if you want to attach the debugger to an already running Emacs process, change the GDB command shown in the minibuffer to say this:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:97
+#, no-wrap
+msgid "   gdb -i=mi -p PID\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:101
+msgid "where PID is the numerical process ID of the running Emacs process, displayed by system utilities such as 'top' or 'ps' on Posix hosts and Task Manager on MS-Windows."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:108
+msgid "Once the debugger starts, open the additional windows provided by the GDB UI, by typing \"M-x gdb-many-windows RET\".  (Alternatively, click Gud->GDB-MI->Display Other Windows\" from the menu bar.)  At this point, make your frame large enough (or full-screen) such that the windows you just opened have enough space to show the content without horizontal scrolling."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:112
+msgid "You can later restore your window configuration with the companion command \"M-x gdb-restore-windows RET\", or by deselecting \"Display Other Windows\" from the menu bar."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:114
+#, no-wrap
+msgid "*** Setting initial breakpoints\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:122
+msgid "Before you let Emacs run, you should now set breakpoints in the code which you want to debug, so that Emacs stops there and lets GDB take control.  If the code which you want to debug is executed under some rare conditions, or only when a certain Emacs command is manually invoked, then just set your breakpoint there, let Emacs run, and trigger the breakpoint by invoking that command or reproducing those rare conditions."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:129
+msgid "If you are less lucky, and the code in question is run very frequently, you will have to find some way of avoiding triggering your breakpoint when the conditions for the buggy behavior did not yet happen.  There's no single recipe for this, you will have to be creative and study the code to see what's appropriate.  Some useful tricks for that:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:132
+#, no-wrap
+msgid ""
+"  . Make your breakpoint conditional on certain buffer or string\n"
+"    position.  For example:\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:134
+#, no-wrap
+msgid "      (gdb) break foo.c:1234 if PT >= 9876\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:139
+#, no-wrap
+msgid ""
+"  . Set a break point in some rarely called function, then create the\n"
+"    conditions for the bug, call that rare function, and when GDB gets\n"
+"    control, set the breakpoint in the buggy code, knowing that it\n"
+"    will now be called when the bug happens.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:143
+#, no-wrap
+msgid ""
+"  . If the bug manifests itself as an error message, set a breakpoint\n"
+"    in Fsignal, and when it breaks, look at the backtrace to see what\n"
+"    triggers the error.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:146
+msgid "Some additional techniques are described below under \"Getting control to the debugger\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:148
+msgid "You are now ready to start your debugging session."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:150
+#, no-wrap
+msgid "*** Running Emacs from GDB\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:155
+msgid "If you are starting a new Emacs session, type \"run\", followed by any command-line arguments (e.g., \"-Q\") into the *gud-emacs* buffer and press RET.  If you ran GDB outside of Emacs, type \"run\" followed by the command-line arguments at the GDB prompt instead."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:158
+msgid "If you attached the debugger to a running Emacs, type \"continue\" into the *gud-emacs* buffer and press RET."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:171
+msgid "Many variables you will encounter while debugging are Lisp objects.  These are normally displayed as opaque pointers or integers that are hard to interpret, especially if they represent long lists.  (They are instead displayed as structures containing these opaque values, if --enable-check-lisp-object-type is in effect.)  You can use the 'pp' command to display them in their Lisp form.  That command displays its output on the standard error stream, which you can redirect to a file using \"M-x redirect-debugging-output\".  This means that if you attach GDB to a running Emacs that was invoked from a desktop icon, chances are you will not see the output at all, or it will wind up in an obscure place (check the documentation of your desktop environment)."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:174
+msgid "Additional information about displaying Lisp objects can be found under \"Examining Lisp object values\" below."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:179
+msgid "The rest of this document describes specific useful techniques for debugging Emacs; we suggest reading it in its entirety the first time you are about to debug Emacs, then look up your specific issues whenever you need."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:181
+msgid "Good luck!"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:193
+#, no-wrap
+msgid ""
+"** When you are trying to analyze failed assertions or backtraces, it\n"
+"is essential to compile Emacs with flags suitable for debugging.\n"
+"Although CFLAGS=\"-O0 -g3\" often suffices with modern compilers,\n"
+"you may benefit further by using CFLAGS=\"-O0 -g3 -gdwarf-4\", replacing\n"
+"\"4\" by the highest version of DWARF that your compiler supports;\n"
+"this is especially important for GCC versions older than 4.8.\n"
+"With GCC and higher optimization levels such as -O2, the\n"
+"-fno-omit-frame-pointer and -fno-crossjumping options are often\n"
+"essential.  The latter prevents GCC from using the same abort call for\n"
+"all assertions in a given function, rendering the stack backtrace\n"
+"useless for identifying the specific failed assertion.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:199
+#, no-wrap
+msgid ""
+"** It is a good idea to run Emacs under GDB (or some other suitable\n"
+"debugger) *all the time*.  Then, when Emacs crashes, you will be able\n"
+"to debug the live process, not just a core dump.  (This is especially\n"
+"important on systems which don't support core files, and instead print\n"
+"just the registers and some stack addresses.)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:203
+#, no-wrap
+msgid ""
+"** If Emacs hangs, or seems to be stuck in some infinite loop, typing\n"
+"\"kill -TSTP PID\", where PID is the Emacs process ID, will cause GDB to\n"
+"kick in, provided that you run under GDB.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:205
+#, no-wrap
+msgid "** Getting control to the debugger\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:210
+msgid "Setting a breakpoint in a strategic place, after loading Emacs into the debugger, but before running it, is the most efficient way of making sure control will be returned to the debugger when you need that."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:215
+msgid "'Fsignal' is a very useful place to put a breakpoint in.  All Lisp errors go through there.  If you are only interested in errors that would fire the Lisp debugger, breaking at 'maybe_call_debugger' is useful."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:220
+msgid "Another technique for getting control to the debugger is to put a breakpoint in some rarely used function.  One such convenient function is Fredraw_display, which you can invoke at will interactively with \"M-x redraw-display RET\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:228
+msgid "It is also useful to have a guaranteed way to return to the debugger at any arbitrary time.  When using X, this is easy: type C-z at the window where you are interacting with GDB, and it will stop Emacs just as it would stop any ordinary program.  (This doesn't work if GDB was attached to a running Emacs process; in that case, you will need to type C-z to the shell window from which Emacs was started, or use the \"kill -TSTP\" method described below.)"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:232
+msgid "When Emacs is displaying on a text terminal, things are not so easy, so we describe the various alternatives below (however, those of them that use signals only work on Posix systems)."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:237
+msgid "The src/.gdbinit file in the Emacs distribution arranges for SIGINT (C-g in Emacs on a text-mode frame) to be passed to Emacs and not give control back to GDB.  On modern systems, you can override that with this command:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:239
+#, no-wrap
+msgid "   handle SIGINT stop nopass\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:244
+msgid "After this 'handle' command, SIGINT will return control to GDB.  If you want the C-g to cause a quit within Emacs as well, omit the 'nopass'.  See the GDB manual for more details about signal handling and the 'handle' command."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:247
+msgid "A technique that can work when 'handle SIGINT' does not is to store the code for some character into the variable stop_character.  Thus,"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:249
+#, no-wrap
+msgid "    set stop_character = 29\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:255
+msgid "makes Control-] (decimal code 29) the stop character.  Typing Control-] will cause immediate stop.  You cannot use the set command until the inferior process has been started, so start Emacs with the 'start' command, to get an opportunity to do the above 'set' command."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:258
+msgid "On a Posix host, you can also send a signal using the 'kill' command from a shell prompt, like this:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:260
+#, no-wrap
+msgid "   kill -TSTP Emacs-PID\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:264
+msgid "where Emacs-PID is the process ID of Emacs being debugged.  Other useful signals to send are SIGUSR1 and SIGUSR2; see \"Error Debugging\" in the ELisp manual for how to use those."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:269
+msgid "When Emacs is displaying on a text terminal, it is useful to have a separate terminal for the debug session.  This can be done by starting Emacs as usual, then attaching to it from gdb with the 'attach' command which is explained in the node \"Attach\" of the GDB manual."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:273
+msgid "On MS-Windows, you can alternatively start Emacs from its own separate console by setting the new-console option before running Emacs under GDB:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:276 emacs-30/etc/DEBUG_editable:966
+#, no-wrap
+msgid ""
+"  (gdb) set new-console 1\n"
+"  (gdb) run\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:287
+msgid "If you do this, then typing C-c or C-BREAK into the console window through which you interact with GDB will stop Emacs and return control to the debugger, no matter if Emacs displays GUI or text-mode frames.  With GDB versions before 13.1, this is the only reliable alternative on MS-Windows to get control to the debugger, besides setting breakpoints in advance.  GDB 13.1 changed the way C-c and C-BREAK are handled on Windows, so with those newer versions, you don't need the \"set new-console 1\" setting to be able to interrupt Emacs by typing C-c or C-BREAK into the console window from which you started Emacs and where you interact with GDB."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:289
+#, no-wrap
+msgid "** Examining Lisp object values.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:294
+msgid "When you have a live process to debug, and it has not encountered a fatal error, you can use the GDB command 'pr'.  First print the value in the ordinary way, with the 'p' command.  Then type 'pr' with no arguments.  This calls a subroutine which uses the Lisp printer."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:296
+msgid "You can also use 'pp value' to print the emacs value directly."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:298
+msgid "To see the current value of a Lisp Variable, use 'pv variable'."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:304
+msgid "These commands send their output to stderr; if that is closed or redirected to some file you don't know, you won't see their output.  This is particularly so for Emacs invoked on MS-Windows from the desktop shortcut.  You can use the command 'redirect-debugging-output' to redirect stderr to a file."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:311
+msgid "Note: It is not a good idea to try 'pr', 'pp', or 'pv' if you know that Emacs is in deep trouble: its stack smashed (e.g., if it encountered SIGSEGV due to stack overflow), or crucial data structures, such as 'obarray', corrupted, etc.  In such cases, the Emacs subroutine called by 'pr' might make more damage, like overwrite some data that is important for debugging the original problem."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:317
+msgid "Also, on some systems it is impossible to use 'pr' if you stopped Emacs while it was inside 'select'.  This is in fact what happens if you stop Emacs while it is waiting.  In such a situation, don't try to use 'pr'.  Instead, use 's' to step out of the system call.  Then Emacs will be between instructions and capable of handling 'pr'."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:321
+msgid "If you can't use 'pr' command, for whatever reason, you can use the 'xpr' command to print out the data type and value of the last data value, For example:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:324
+#, no-wrap
+msgid ""
+"    p it->object\n"
+"    xpr\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:329
+msgid "You may also analyze data values using lower-level commands.  Use the 'xtype' command to print out the data type of the last data value.  Once you know the data type, use the command that corresponds to that type.  Here are these commands:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:335
+#, no-wrap
+msgid ""
+"    xint xptr xwindow xmarker xoverlay xmiscfree xintfwd xboolfwd xobjfwd\n"
+"    xbufobjfwd xkbobjfwd xbuflocal xbuffer xsymbol xstring xvector xframe\n"
+"    xwinconfig xcompiled xcons xcar xcdr xsubr xprocess xfloat xscrollbar\n"
+"    xchartable xsubchartable xboolvector xhashtable xlist xcoding\n"
+"    xcharset xfontset xfont\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:339
+msgid "Each one of them applies to a certain type or class of types.  (Some of these types are not visible in Lisp, because they exist only internally.)"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:343
+msgid "Each x... command prints some information about the value, and produces a GDB value (subsequently available in $) through which you can get at the rest of the contents."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:346
+msgid "In general, most of the rest of the contents will be additional Lisp objects which you can examine in turn with the x... commands."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:352
+msgid "Even with a live process, these x...  commands are useful for examining the fields in a buffer, window, process, frame or marker.  Here's an example using concepts explained in the node \"Value History\" of the GDB manual to print values associated with the variable called frame.  First, use these commands:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:357
+#, no-wrap
+msgid ""
+"  cd src\n"
+"  gdb emacs\n"
+"  b set_frame_buffer_list\n"
+"  r -q\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:359
+msgid "Then Emacs hits the breakpoint:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:374
+#, no-wrap
+msgid ""
+"  (gdb) p frame\n"
+"  $1 = 139854428\n"
+"  (gdb) xpr\n"
+"  Lisp_Vectorlike\n"
+"  PVEC_FRAME\n"
+"  $2 = (struct frame *) 0x8560258\n"
+"  \"emacs@localhost\"\n"
+"  (gdb) p *$\n"
+"  $3 = {\n"
+"    size = 1073742931,\n"
+"    next = 0x85dfe58,\n"
+"    name = 140615219,\n"
+"    [...]\n"
+"  }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:376
+msgid "Now we can use 'pp' to print the frame parameters:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:379
+#, no-wrap
+msgid ""
+"  (gdb) pp $->param_alist\n"
+"  ((background-mode . light) (display-type . color) [...])\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:383
+msgid "The Emacs C code heavily uses macros defined in lisp.h.  So suppose we want the address of the l-value expression near the bottom of 'add_command_key' from keyboard.c:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:385
+#, no-wrap
+msgid "  XVECTOR (this_command_keys)->contents[this_command_key_count++] = key;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:390
+msgid "XVECTOR is a macro, so GDB only knows about it if Emacs has been compiled with preprocessor macro information.  GCC provides this if you specify the options '-gdwarf-N' (where N is 2 or higher) and '-g3'.  In this case, GDB can evaluate expressions like \"p XVECTOR (this_command_keys)\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:393
+msgid "When this information isn't available, you can use the xvector command in GDB to get the same result.  Here is how:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:403
+#, no-wrap
+msgid ""
+"  (gdb) p this_command_keys\n"
+"  $1 = 1078005760\n"
+"  (gdb) xvector\n"
+"  $2 = (struct Lisp_Vector *) 0x411000\n"
+"  0\n"
+"  (gdb) p $->contents[this_command_key_count]\n"
+"  $3 = 1077872640\n"
+"  (gdb) p &$\n"
+"  $4 = (int *) 0x411008\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:407
+msgid "Here's a related example of macros and the GDB 'define' command.  There are many Lisp vectors such as 'recent_keys', which contains the last 300 keystrokes.  We can print this Lisp vector"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:410
+#, no-wrap
+msgid ""
+"  p recent_keys\n"
+"  pr\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:414
+msgid "But this may be inconvenient, since 'recent_keys' is much more verbose than 'C-h l'.  We might want to print only the last 10 elements of this vector.  'recent_keys' is updated in keyboard.c by the command"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:416
+#, no-wrap
+msgid "  XVECTOR (recent_keys)->contents[recent_keys_index] = c;\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:419
+msgid "So we define a GDB command 'xvector-elts', so the last 10 keystrokes are printed by"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:421
+#, no-wrap
+msgid "  xvector-elts recent_keys recent_keys_index 10\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:423
+msgid "where you can define xvector-elts as follows:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:438
+#, no-wrap
+msgid ""
+"  define xvector-elts\n"
+"  set $i = 0\n"
+"  p $arg0\n"
+"  xvector\n"
+"  set $foo = $\n"
+"  while $i < $arg2\n"
+"  p $foo->contents[$arg1-($i++)]\n"
+"  pr\n"
+"  end\n"
+"  document xvector-elts\n"
+"  Prints a range of elements of a Lisp vector.\n"
+"  xvector-elts  v n i\n"
+"  prints 'i' elements of the vector 'v' ending at the index 'n'.\n"
+"  end\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:440
+#, no-wrap
+msgid "** Getting Lisp-level backtrace information within GDB\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:443
+msgid "The most convenient way is to use the 'xbacktrace' command.  This shows the names of the Lisp functions that are currently active."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:449
+msgid "If that doesn't work (e.g., because the 'backtrace_list' structure is corrupted), type \"bt\" at the GDB prompt, to produce the C-level backtrace, and look for stack frames that call Ffuncall.  Select them one by one in GDB, by typing \"up N\", where N is the appropriate number of frames to go up, and in each frame that calls Ffuncall type this:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:452
+#, no-wrap
+msgid ""
+"   p *args\n"
+"   pr\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:455
+msgid "This will print the name of the Lisp function called by that level of function calling."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:458
+msgid "By printing the remaining elements of args, you can see the argument values.  Here's how to print the first argument:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:461
+#, no-wrap
+msgid ""
+"   p args[1]\n"
+"   pr\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:465
+msgid "If you do not have a live process, you can use xtype and the other x...  commands such as xsymbol to get such information, albeit less conveniently.  For example:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:468
+#, no-wrap
+msgid ""
+"   p *args\n"
+"   xtype\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:470
+msgid "and, assuming that \"xtype\" says that args[0] is a symbol:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:472
+#, no-wrap
+msgid "   xsymbol\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:474
+#, no-wrap
+msgid "** Debugging Emacs redisplay problems\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:477
+msgid "The Emacs display code includes special debugging code, but it is normally disabled.  Configuring Emacs with --enable-checking='yes,glyphs' enables it."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:484
+msgid "Building Emacs like that activates many assertions which scrutinize display code operation more than Emacs does normally.  (To see the code which tests these assertions, look for calls to the 'eassert' macros.)  Any assertion that is reported to fail should be investigated.  Redisplay problems that cause aborts or segfaults in production builds of Emacs will many times be caught by these assertions before they cause a crash."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:487
+msgid "If you configured Emacs with --enable-checking='glyphs', you can use redisplay tracing facilities from a running Emacs session."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:499
+msgid "The command \"M-x trace-redisplay RET\" will produce a trace of what redisplay does on the standard error stream.  This is very useful for understanding the code paths taken by the display engine under various conditions, especially if some redisplay optimizations produce wrong results.  (You know that redisplay optimizations might be involved if \"M-x redraw-display RET\", or even just typing \"M-x\", causes Emacs to correct the bad display.)  Since the cursor blinking feature and ElDoc trigger periodic redisplay cycles, we recommend disabling 'blink-cursor-mode' and 'global-eldoc-mode' before invoking 'trace-redisplay', so that you have less clutter in the trace.  You can also have up to 30 last trace messages dumped to standard error by invoking the 'dump-redisplay-history' command."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:502
+msgid "To find the code paths which were taken by the display engine, search xdisp.c for the trace messages you see."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:506
+msgid "The command 'dump-glyph-matrix' is useful for producing on standard error stream a full dump of the selected window's glyph matrix.  See the function's doc string for more details."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:511
+msgid "If you run Emacs under GDB, you can print the contents of any glyph matrix by just calling that function with the matrix as its argument.  For example, the following command will print the contents of the current matrix of the window whose pointer is in 'w':"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:513
+#, no-wrap
+msgid "  (gdb) p dump_glyph_matrix (w->current_matrix, 2)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:516
+msgid "(The second argument 2 tells dump_glyph_matrix to print the glyphs in a long form.)"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:519
+msgid "If you are debugging redisplay issues in text-mode frames, you may find the command 'dump-frame-glyph-matrix' useful."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:522
+msgid "Other commands useful for debugging redisplay are 'dump-glyph-row' and 'dump-tool-bar-row'."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:525
+msgid "When you debug display problems running emacs under X, you can use the 'ff' command to flush all pending display updates to the screen."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:528
+msgid "The src/.gdbinit file defines many useful commands for dumping redisplay related data structures in a terse and user-friendly format:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:537
+#, no-wrap
+msgid ""
+" 'ppt' prints value of PT, narrowing, and gap in current buffer.\n"
+" 'pit' dumps the current display iterator 'it'.\n"
+" 'pwin' dumps the current window 'win'.\n"
+" 'prow' dumps the current glyph_row 'row'.\n"
+" 'pg' dumps the current glyph 'glyph'.\n"
+" 'pgi' dumps the next glyph.\n"
+" 'pgrow' dumps all glyphs in current glyph_row 'row'.\n"
+" 'pcursor' dumps current output_cursor.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:541
+msgid "The above commands also exist in a version with an 'x' suffix which takes an object of the relevant type as argument.  For example, 'pgrowx' dumps all glyphs in its argument, which must be of type 'struct glyph_row'."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:545
+msgid "Since redisplay is performed by Emacs very frequently, you need to place your breakpoints cleverly to avoid hitting them all the time, when the issue you are debugging did not (yet) happen.  Here are some useful techniques for that:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:554
+#, no-wrap
+msgid ""
+" . Put a breakpoint at 'Frecenter' or 'Fredraw_display' before running Emacs.\n"
+"   Then do whatever is required to reproduce the bad display, and type C-l or\n"
+"   \"M-x redraw-display\" just before invoking the last action that reproduces\n"
+"   the bug.  The debugger will kick in, and you can set or enable breakpoints\n"
+"   in strategic places, knowing that the bad display will happen soon.  With a\n"
+"   breakpoint at 'Fredraw_display', you can even reproduce the bug and invoke\n"
+"   \"M-x redraw-display\" afterwards, knowing that the bad display will be\n"
+"   redrawn from scratch.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:562
+#, no-wrap
+msgid ""
+" . For debugging incorrect cursor position, a good place to put a breakpoint\n"
+"   is in 'set_cursor_from_row'.  The first time this function is called as\n"
+"   part of 'redraw-display', Emacs is redrawing the minibuffer window, which\n"
+"   is usually not what you want; type \"continue\" to get to the call you want.\n"
+"   In general, always make sure 'set_cursor_from_row' is called for the right\n"
+"   window and buffer by examining the value of w->contents: it should be the\n"
+"   buffer whose display you are debugging.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:569
+#, no-wrap
+msgid ""
+" . 'set_cursor_from_row' is also a good place to look at the contents of a\n"
+"   screen line (a.k.a. \"glyph row\"), by means of the 'pgrow' GDB command.  Of\n"
+"   course, you need first to make sure the cursor is on the screen line which\n"
+"   you want to investigate.  If you have set a breakpoint in 'Fredraw_display'\n"
+"   or 'Frecenter', as advised above, move cursor to that line before invoking\n"
+"   these commands.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:577
+#, no-wrap
+msgid ""
+" . If the problem happens only at some specific buffer position or for some\n"
+"   specific rarely-used character, you can make your breakpoints conditional\n"
+"   on those values.  The display engine maintains the buffer and string\n"
+"   position it is processing in the it->current member; for example, the\n"
+"   buffer character position is in it->current.pos.charpos.  Most redisplay\n"
+"   functions accept a pointer to a 'struct it' object as their argument, so\n"
+"   you can make conditional breakpoints in those functions, like this:\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:579
+#, no-wrap
+msgid "    (gdb) break x_produce_glyphs if it->current.pos.charpos == 1234\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:582
+#, no-wrap
+msgid ""
+"   For conditioning on the character being displayed, use it->c or\n"
+"   it->char_to_display.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:589
+#, no-wrap
+msgid ""
+" . You can also make the breakpoints conditional on what object is being used\n"
+"   for producing glyphs for display.  The it->method member has the value\n"
+"   GET_FROM_BUFFER for displaying buffer contents, GET_FROM_STRING for\n"
+"   displaying a Lisp string (e.g., a 'display' property or an overlay string),\n"
+"   GET_FROM_IMAGE for displaying an image, etc.  See 'enum it_method' in\n"
+"   dispextern.h for the full list of values.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:599
+#, no-wrap
+msgid ""
+" . When the display engine is processing a 'display' text property or an\n"
+"   overlay string, it pushes on the iterator stack the state variables\n"
+"   describing its iteration of buffer text, then reinitializes the iterator\n"
+"   object for processing the property or overlay.  The it->sp (\"stack\n"
+"   pointer\") member, if it is greater than zero, means the iterator's stack\n"
+"   was pushed at least once.  You can therefore condition your breakpoints on\n"
+"   the value of it->sp being positive or being of a certain positive value, to\n"
+"   debug display problems that happen only with display properties or\n"
+"   overlays.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:601
+#, no-wrap
+msgid "** Debugging problems with native-compiled Lisp.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:604
+msgid "When you encounter problems specific to native-compilation of Lisp, we recommend to follow the procedure below to try to identify the cause:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:607
+#, no-wrap
+msgid ""
+" . Reduce the problematic .el file to the minimum by bisection, and\n"
+"   try identifying the function that causes the problem.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:611
+#, no-wrap
+msgid ""
+" . Try natively compiling the problematic file with\n"
+"   'native-comp-speed' set to 1 or even zero.  If doing that solves\n"
+"   the problem, you can use\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:613
+#, no-wrap
+msgid "     (declare (speed 1))\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:617
+#, no-wrap
+msgid ""
+"   at the beginning of the body of suspected function(s) to change\n"
+"   'native-comp-speed' only for those functions -- this could help you\n"
+"   identify the function(s) which cause(s) the problem.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:620
+#, no-wrap
+msgid ""
+" . Reduce the problematic function(s) to the minimal code that still\n"
+"   reproduces the problem.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:623
+#, no-wrap
+msgid ""
+" . Study the problem's artifacts, like Lisp or C backtraces, to try\n"
+"   identifying the cause of the problem.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:635
+msgid "If you cannot figure out the cause for the problem using the above, native-compile the problematic file after setting the variable 'comp-libgccjit-reproducer' to a non-nil value.  That should produce a file named ELNFILENAME_libgccjit_repro.c, where ELNFILENAME is the name of the problematic .eln file, either in the same directory where the .eln file is produced, or under your ~/.emacs.d/eln-cache (which one depends on how the native-compilation is invoked).  It is also possible that the reproducer file's name will be something like subr--trampoline-XXXXXXX_FUNCTION_libgccjit_repro.c, where XXXXXXX is a long string of hex digits and FUNCTION is some function from the compiled .el file.  Attach that reproducer C file to your bug report."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:637
+#, no-wrap
+msgid "** Following longjmp call.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:642
+msgid "Recent versions of glibc (2.4+?) encrypt stored values for setjmp/longjmp which prevents GDB from being able to follow a longjmp call using 'next'.  To disable this protection you need to set the environment variable LD_POINTER_GUARD to 0."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:644
+#, no-wrap
+msgid "** Using GDB in Emacs\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:648
+msgid "Debugging with GDB in Emacs offers some advantages over the command line (See the GDB Graphical Interface node of the Emacs manual).  There are also some features available just for debugging Emacs:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:652
+#, no-wrap
+msgid ""
+"1) The command gud-print is available on the tool bar (the 'p' icon) and\n"
+"   allows the user to print the s-expression of the variable at point,\n"
+"   in the GUD buffer.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:655
+#, no-wrap
+msgid ""
+"2) Pressing 'p' on a component of a watch expression that is a lisp object\n"
+"   in the speedbar prints its s-expression in the GUD buffer.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:659
+#, no-wrap
+msgid ""
+"3) The STOP button on the tool bar and the Signals->STOP menu-bar menu\n"
+"   item are adjusted so that they send SIGTSTP instead of the usual\n"
+"   SIGINT.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:662
+#, no-wrap
+msgid ""
+"4) The command gud-pv has the global binding 'C-x C-a C-v' and prints the\n"
+"   value of the lisp variable at point.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:664
+#, no-wrap
+msgid "** Debugging what happens while preloading and dumping Emacs\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:668
+msgid "Debugging 'temacs' is useful when you want to establish whether a problem happens in an undumped Emacs.  To run 'temacs' under a debugger, type \"gdb temacs\", then start it with 'r -batch -l loadup'."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:672
+msgid "If you need to debug what happens during dumping, start it with 'r -batch -l loadup dump' instead.  For debugging the bootstrap dumping, use \"loadup bootstrap\" instead of \"loadup dump\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:676
+msgid "If temacs actually succeeds when running under GDB in this way, do not try to run the dumped Emacs, because it was dumped with the GDB breakpoints in it."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:678
+#, no-wrap
+msgid "** If you encounter X protocol errors\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:682
+msgid "The X server normally reports protocol errors asynchronously, so you find out about them long after the primitive which caused the error has returned."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:688
+msgid "To get clear information about the cause of an error, try evaluating (x-synchronize t).  That puts Emacs into synchronous mode, where each Xlib call checks for errors before it returns.  This mode is much slower, but when you get an error, you will see exactly which call really caused the error."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:691
+msgid "You can start Emacs in a synchronous mode by invoking it with the -xrm option, like this:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:693
+#, no-wrap
+msgid "    emacs -xrm \"emacs.synchronous: true\"\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:697
+msgid "Setting a breakpoint in the function 'x_error_quitter' and looking at the backtrace when Emacs stops inside that function will show what code causes the X protocol errors."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:702
+msgid "Note that the -xrm option may have no effect when you start a server in an Emacs session invoked with the -nw command-line option, and want to trace X protocol errors from GUI frames created by subsequent invocations of emacsclient.  In that case starting Emacs via"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:704
+#, no-wrap
+msgid "  emacs -nw --eval '(setq x-command-line-resources \"emacs.synchronous: true\")'\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:706
+msgid "should give more reliable results."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:709
+msgid "For X protocol errors related to displaying unusual characters or to font-related customizations, try invoking Emacs like this:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:711
+#, no-wrap
+msgid "  XFT_DEBUG=16 emacs -xrm \"emacs.synchronous: true\"\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:714
+msgid "This should produce information from the libXft library which could give useful hints regarding font-related problems in that library."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:718
+msgid "Some bugs related to the X protocol disappear when Emacs runs in a synchronous mode.  To track down those bugs, we suggest the following procedure:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:723
+#, no-wrap
+msgid ""
+"  - Run Emacs under a debugger and put a breakpoint inside the\n"
+"    primitive function which, when called from Lisp, triggers the X\n"
+"    protocol errors.  For example, if the errors happen when you\n"
+"    delete a frame, put a breakpoint inside 'Fdelete_frame'.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:727
+#, no-wrap
+msgid ""
+"  - When the breakpoint breaks, step through the code, looking for\n"
+"    calls to X functions (the ones whose names begin with \"X\" or\n"
+"    \"Xt\" or \"Xm\").\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:730
+#, no-wrap
+msgid ""
+"  - Insert calls to 'XSync' before and after each call to the X\n"
+"    functions, like this:\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:732
+#, no-wrap
+msgid "       XSync (f->output_data.x->display_info->display, 0);\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:738
+#, no-wrap
+msgid ""
+"    where 'f' is the pointer to the 'struct frame' of the selected\n"
+"    frame, normally available via XFRAME (selected_frame).  (Most\n"
+"    functions which call X already have some variable that holds the\n"
+"    pointer to the frame, perhaps called 'f' or 'sf', so you shouldn't\n"
+"    need to compute it.)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:742
+#, no-wrap
+msgid ""
+"    If your debugger can call functions in the program being debugged,\n"
+"    you should be able to issue the calls to 'XSync' without recompiling\n"
+"    Emacs.  For example, with GDB, just type:\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:744
+#, no-wrap
+msgid "       call XSync (f->output_data.x->display_info->display, 0)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:748
+#, no-wrap
+msgid ""
+"    before and immediately after the suspect X calls.  If your\n"
+"    debugger does not support this, you will need to add these pairs\n"
+"    of calls in the source and rebuild Emacs.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:754
+#, no-wrap
+msgid ""
+"    Either way, systematically step through the code and issue these\n"
+"    calls until you find the first X function called by Emacs after\n"
+"    which a call to 'XSync' winds up in the function\n"
+"    'x_error_quitter'.  The first X function call for which this\n"
+"    happens is the one that generated the X protocol error.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:757
+#, no-wrap
+msgid ""
+"  - You should now look around this offending X call and try to figure\n"
+"    out what is wrong with it.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:759
+#, no-wrap
+msgid "** If Emacs causes errors or memory leaks in your X server\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:762
+msgid "You can trace the traffic between Emacs and your X server with a tool like xmon."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:770
+msgid "Xmon can be used to see exactly what Emacs sends when X protocol errors happen.  If Emacs causes the X server memory usage to increase you can use xmon to see what items Emacs creates in the server (windows, graphical contexts, pixmaps) and what items Emacs delete.  If there are consistently more creations than deletions, the type of item and the activity you do when the items get created can give a hint where to start debugging."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:772
+#, no-wrap
+msgid "** If the symptom of the bug is that Emacs fails to respond\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:780
+msgid "Don't assume Emacs is 'hung'--it may instead be in an infinite loop.  To find out which, make the problem happen under GDB and stop Emacs once it is not responding.  (If Emacs is using X Windows directly, you can stop Emacs by typing C-z at the GDB job.  On MS-Windows, run Emacs as usual, and then attach GDB to it -- that will usually interrupt whatever Emacs is doing and let you perform the steps described below.)"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:783
+msgid "Then try stepping with 'step'.  If Emacs is hung, the 'step' command won't return.  If it is looping, 'step' will return."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:788
+msgid "If this shows Emacs is hung in a system call, stop it again and examine the arguments of the call.  If you report the bug, it is very important to state exactly where in the source the system call is, and what the arguments are."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:795
+msgid "If Emacs is in an infinite loop, try to determine where the loop starts and ends.  The easiest way to do this is to use the GDB command 'finish'.  Each time you use it, Emacs resumes execution until it exits one stack frame.  Keep typing 'finish' until it doesn't return--that means the infinite loop is in the stack frame which you just tried to finish."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:801
+msgid "Stop Emacs again, and use 'finish' repeatedly again until you get back to that frame.  Then use 'next' to step through that frame.  By stepping, you will see where the loop starts and ends.  Also, examine the data being used in the loop and try to determine why the loop does not exit when it should."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:808
+msgid "On GNU and Unix systems, you can also try sending Emacs SIGUSR2, which, if 'debug-on-event' has its default value, will cause Emacs to attempt to break out of its current loop and enter the Lisp debugger.  (See the node \"Debugging\" in the ELisp manual for the details about the Lisp debugger.)  This feature is useful when a C-level debugger is not conveniently available."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:811
+#, no-wrap
+msgid ""
+"** If certain operations in Emacs are slower than they used to be, here\n"
+"is some advice for how to find out why.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:815
+msgid "Stop Emacs repeatedly during the slow operation, and make a backtrace each time.  Compare the backtraces looking for a pattern--a specific function that shows up more often than you'd expect."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:819
+msgid "If you don't see a pattern in the C backtraces, get some Lisp backtrace information by typing \"xbacktrace\" or by looking at Ffuncall frames (see above), and again look for a pattern."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:823
+msgid "When using X, you can stop Emacs at any time by typing C-z at GDB.  When not using X, you can do this with C-g.  On non-Unix platforms, such as MS-DOS, you might need to press C-BREAK instead."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:825
+#, no-wrap
+msgid "** If GDB does not run and your debuggers can't load Emacs.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:830
+msgid "On some systems, no debugger can load Emacs with a symbol table, perhaps because they all have fixed limits on the number of symbols and Emacs exceeds the limits.  Here is a method that can be used in such an extremity.  Do"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:839
+#, no-wrap
+msgid ""
+"    nm -n temacs > nmout\n"
+"    strip temacs\n"
+"    adb temacs\n"
+"    0xd:i\n"
+"    0xe:i\n"
+"    14:i\n"
+"    17:i\n"
+"    :r -l loadup   (or whatever)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:842
+msgid "It is necessary to refer to the file 'nmout' to convert numeric addresses into symbols and vice versa."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:847
+msgid "It is useful to be running under a window system.  Then, if Emacs becomes hopelessly wedged, you can create another window to do kill -9 in.  kill -ILL is often useful too, since that may make Emacs dump core or return to adb."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:849
+#, no-wrap
+msgid "** Debugging incorrect screen updating on a text terminal.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:853
+msgid "To debug Emacs problems that update the screen wrong, it is useful to have a record of what input you typed and what Emacs sent to the screen.  To make these records, do"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:856
+msgid "(open-dribble-file \"~/.dribble\")  (open-termscript \"~/.termscript\")"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:861
+msgid "The dribble file contains all characters read by Emacs from the terminal, and the termscript file contains all characters it sent to the terminal.  The use of the directory '~/' prevents interference with any other user."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:866
+msgid "If you have irreproducible display problems, put those two expressions in your ~/.emacs file.  When the problem happens, exit the Emacs that you were running, kill it, and rename the two files.  Then you can start another Emacs without clobbering those files, and use it to examine them."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:868
+#, no-wrap
+msgid "** Debugging LessTif\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:874
+msgid "If you encounter bugs whereby Emacs built with LessTif grabs all mouse and keyboard events, or LessTif menus behave weirdly, it might be helpful to set the 'DEBUGSOURCES' and 'DEBUG_FILE' environment variables, so that one can see what LessTif was doing at this point.  For instance"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:878
+#, no-wrap
+msgid ""
+"  export DEBUGSOURCES=\"RowColumn.c:MenuShell.c:MenuUtil.c\"\n"
+"  export DEBUG_FILE=/usr/tmp/LESSTIF_TRACE\n"
+"  emacs &\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:883
+msgid "causes LessTif to print traces from the three named source files to a file in '/usr/tmp' (that file can get pretty large).  The above should be typed at the shell prompt before invoking Emacs, as shown by the last line above."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:888
+msgid "Running GDB from another terminal could also help with such problems.  You can arrange for GDB to run on one machine, with the Emacs display appearing on another.  Then, when the bug happens, you can go back to the machine where you started GDB and use the debugger from there."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:890
+#, no-wrap
+msgid "** Debugging problems which happen in GC\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:898
+msgid "The array 'last_marked' (defined on alloc.c) can be used to display up to the 512 most-recent objects marked by the garbage collection process.  Whenever the garbage collector marks a Lisp object, it records the pointer to that object in the 'last_marked' array, which is maintained as a circular buffer.  The variable 'last_marked_index' holds the index into the 'last_marked' array one place beyond where the pointer to the very last marked object is stored."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:904
+msgid "The single most important goal in debugging GC problems is to find the Lisp data structure that got corrupted.  This is not easy since GC changes the tag bits and relocates strings which make it hard to look at Lisp objects with commands such as 'pr'.  It is sometimes necessary to convert Lisp_Object variables into pointers to C struct's manually."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:921
+msgid "Use the 'last_marked' array and the source to reconstruct the sequence that objects were marked.  In general, you need to correlate the values recorded in the 'last_marked' array with the corresponding stack frames in the backtrace, beginning with the innermost frame.  Some subroutines of 'mark_object' are invoked recursively, others loop over portions of the data structure and mark them as they go.  By looking at the code of those routines and comparing the frames in the backtrace with the values in 'last_marked', you will be able to find connections between the values in 'last_marked'.  E.g., when GC finds a cons cell, it recursively marks its car and its cdr.  Similar things happen with properties of symbols, elements of vectors, etc.  Use these connections to reconstruct the data structure that was being marked, paying special attention to the strings and names of symbols that you encounter: these strings and symbol names can be used to grep the sources to find out what high-level symbols and global variables are involved in the crash."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:928
+msgid "Once you discover the corrupted Lisp object or data structure, grep the sources for its uses and try to figure out what could cause the corruption.  If looking at the sources doesn't help, you could try setting a watchpoint on the corrupted data, and see what code modifies it in some invalid way.  (Obviously, this technique is only useful for data that is modified only very rarely.)"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:935
+msgid "It is also useful to look at the corrupted object or data structure in a fresh Emacs session and compare its contents with a session that you are debugging.  This might be somewhat harder on modern systems which randomize addresses of running executables (the so-called Address Space Layout Randomization, or ASLR, feature).  If you have this problem, see below under \"How to disable ASLR\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:937
+#, no-wrap
+msgid "** Debugging the TTY (non-windowed) version\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:941
+msgid "The most convenient method of debugging the character-terminal display is to do that on a window system such as X.  Begin by starting an xterm window, then type these commands inside that window:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:944
+#, no-wrap
+msgid ""
+"  $ tty\n"
+"  $ echo $TERM\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:946
+msgid "Let's say these commands print \"/dev/ttyp4\" and \"xterm\", respectively."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:950
+msgid "Now start Emacs (the normal, windowed-display session, i.e. without the '-nw' option), and invoke \"M-x gdb RET emacs RET\" from there.  Now type these commands at GDB's prompt:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:954
+#, no-wrap
+msgid ""
+"  (gdb) set args -nw -t /dev/ttyp4\n"
+"  (gdb) set environment TERM xterm\n"
+"  (gdb) run\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:957
+msgid "The debugged Emacs should now start in no-window mode with its display directed to the xterm window you opened above."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:960
+msgid "Similar arrangement is possible on a character terminal by using the 'screen' package."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:963
+msgid "On MS-Windows, you can start Emacs in its own separate console by setting the new-console option before running Emacs under GDB:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:968
+#, no-wrap
+msgid "** Running Emacs with undefined-behavior sanitization\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:971
+msgid "Building Emacs with undefined-behavior sanitization can help find several kinds of low-level problems in C code, including:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:981
+#, no-wrap
+msgid ""
+"  * Out-of-bounds access of many (but not all) arrays.\n"
+"  * Signed integer overflow, e.g., (INT_MAX + 1).\n"
+"  * Integer shifts by a negative or wider-than-word value.\n"
+"  * Misaligned pointers and pointer overflow.\n"
+"  * Loading a bool or enum value that is out of range for its type.\n"
+"  * Passing NULL to or returning NULL from a function requiring nonnull.\n"
+"  * Passing a size larger than the corresponding array to memcmp etc.\n"
+"  * Passing invalid values to some builtin functions, e.g., __builtin_clz (0).\n"
+"  * Reaching __builtin_unreachable calls (in Emacs, 'eassume' failure).\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:986
+msgid "To use GCC's UndefinedBehaviorSanitizer, append '-fsanitize=undefined' to CFLAGS, either when running 'configure' or running 'make'.  When supported, you can also specify 'bound-strict' and 'float-cast-overflow'.  For example:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:989
+#, no-wrap
+msgid ""
+"  ./configure \\\n"
+"    CFLAGS='-O0 -g3 -fsanitize=undefined,bounds-strict,float-cast-overflow'\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:992
+msgid "You may need to append '-static-libubsan' to CFLAGS if your version of GCC is installed in an unusual location."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:997
+msgid "Clang's UB sanitizer can also be used, but has coverage problems.  You'll need '-fsanitize=undefined -fno-sanitize=pointer-overflow' to suppress misguided warnings about adding zero to a null pointer, although this also suppresses any valid pointer overflow warnings."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1000
+msgid "When using GDB to debug an executable with undefined-behavior sanitization, the GDB command:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1002
+#, no-wrap
+msgid "  (gdb) rbreak ^__ubsan_handle_\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1006
+msgid "will let you gain control when an error is detected and before UndefinedBehaviorSanitizer outputs to stderr or terminates the program."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1008
+#, no-wrap
+msgid "** Running Emacs with address sanitization\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1016
+msgid "Building Emacs with address sanitization can help debug memory-use problems, such as freeing the same object twice.  To use AddressSanitizer with GCC and similar compilers, append '-fsanitize=address' to CFLAGS, either when running 'configure' or running 'make'.  Configure, build and run Emacs with ASAN_OPTIONS='detect_leaks=0' in the environment to suppress diagnostics of minor memory leaks in Emacs.  For example:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1021
+#, no-wrap
+msgid ""
+"  export ASAN_OPTIONS='detect_leaks=0'\n"
+"  ./configure CFLAGS='-O0 -g3 -fsanitize=address'\n"
+"  make\n"
+"  src/emacs\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1024
+msgid "You may need to append '-static-libasan' to CFLAGS if your version of GCC is installed in an unusual location."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1027
+msgid "When using GDB to debug an executable with address sanitization, the GDB command:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1029
+#, no-wrap
+msgid "  (gdb) rbreak ^__asan_report_\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1032
+msgid "will let you gain control when an error is detected and before AddressSanitizer outputs to stderr or terminates the program."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1036
+msgid "Address sanitization is incompatible with undefined-behavior sanitization, unfortunately.  Address sanitization is also incompatible with the --with-dumping=unexec option of 'configure'."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1038
+#, no-wrap
+msgid "*** Address poisoning/unpoisoning\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1046
+msgid "When compiled with address sanitization, Emacs will also try to mark dead/free lisp objects as poisoned, forbidding them from being accessed without being unpoisoned first.  This adds an extra layer of checking with objects in internal free lists, which may otherwise evade traditional use-after-free checks. To disable this, add 'allow_user_poisoning=0' to ASAN_OPTIONS, or build Emacs with '-DGC_ASAN_POISON_OBJECTS=0' in CFLAGS."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1049
+msgid "While using GDB, memory addresses can be inspected by using helper functions additionally provided by the ASan library:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1051
+#, no-wrap
+msgid "  (gdb) call __asan_describe_address(ptr)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1053
+msgid "To check whether an address range is poisoned or not, use:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1055
+#, no-wrap
+msgid "  (gdb) call __asan_region_is_poisoned(ptr, 8)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1058
+msgid "Additional functions can be found in the header 'sanitizer/asan_interface.h' in your compiler's headers directory."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1060
+#, no-wrap
+msgid "** Running Emacs under Valgrind\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1070
+msgid "Valgrind <https://valgrind.org/> is free software that can be useful when debugging low-level Emacs problems.  Unlike GCC sanitizers, Valgrind does not need you to compile Emacs with special debugging flags, so it can be helpful in investigating problems that vanish when Emacs is recompiled with debugging enabled.  However, by default Valgrind generates many false alarms with Emacs, and you will need to maintain a suppressions file to suppress these false alarms and use Valgrind effectively.  For example, you might invoke Valgrind this way:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1072
+#, no-wrap
+msgid "   valgrind --suppressions=valgrind.supp ./emacs\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1075
+msgid "where valgrind.supp contains groups of lines like the following, which suppresses some Valgrind false alarms during Emacs garbage collection:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1082
+#, no-wrap
+msgid ""
+"   {\n"
+"     Fgarbage_collect Cond - conservative garbage collection\n"
+"     Memcheck:Cond\n"
+"     ...\n"
+"     fun:Fgarbage_collect\n"
+"   }\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1085
+msgid "Unfortunately Valgrind suppression files tend to be system-dependent, so you will need to keep one around that matches your system."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1087
+#, no-wrap
+msgid "** How to disable ASLR\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1096
+msgid "Modern systems use the so-called Address Space Layout Randomization, (ASLR) feature, which randomizes the base address of running programs, making it harder for malicious software or hackers to find the address of some function or variable in a running program by looking at its executable file.  This causes the address of the same symbol to be different across rerunning of the same program.  Sometimes, it can be useful to disable ASLR, for example, if you want to compare objects in two different Emacs sessions."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1099
+msgid "On GNU/Linux, you can disable ASLR temporarily with the following shell command:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1101
+#, no-wrap
+msgid "  echo 0 > /proc/sys/kernel/randomize_va_space\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1104
+msgid "or by running Emacs in an environment where ASLR is temporarily disabled:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1106
+#, no-wrap
+msgid "  setarch -R emacs [args...]\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1113
+msgid "To disable ASLR in Emacs on MS-Windows, you will have to rebuild Emacs while adding '-Wl,-disable-dynamicbase' to LD_SWITCH_SYSTEM_TEMACS variable defined in src/Makefile.  Alternatively, use some tool to edit the PE header of the Emacs executable file and reset the DYNAMIC_BASE (0x40) flag in the DllCharacteristics flags recorded by the PE header."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1116
+msgid "On macOS, there's no official way for disabling ASLR, but there are various hacks that can be found by searching the Internet."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1118
+#, no-wrap
+msgid "** How to recover buffer contents from an Emacs core dump file\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1123
+msgid "The file etc/emacs-buffer.gdb defines a set of GDB commands for recovering the contents of Emacs buffers from a core dump file.  You might also find those commands useful for displaying the list of buffers in human-readable format from within the debugger."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1125
+#, no-wrap
+msgid "** Debugging Emacs with LLDB\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1128
+msgid "On systems where GDB is not available, like macOS with M1 chip, you can also use LLDB for Emacs debugging."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1132
+msgid "To start LLDB to debug Emacs, you can simply type \"lldb ./emacs RET\" at the shell prompt in directory of the Emacs executable, usually the 'src' sub-directory of the Emacs tree)."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1138
+msgid "When you debug Emacs with LLDB, you should start LLDB in the directory where the Emacs executable was built.  That directory has an .lldbinit file that loads a Python module emacs_lldb.py from the 'etc' directory of the Emacs source tree.  The Python module defines \"user-defined\" commands for debugging Emacs."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1143
+msgid "LLDB by default does not automatically load .lldbinit files in the current directory.  The simplest way to fix this is to add the following line to your ~/.lldbinit file (creating such a file if it doesn't already exist):"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1145
+#, no-wrap
+msgid "  settings set target.load-cwd-lldbinit true\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1147
+msgid "Alternatively, you can type \"lldb --local-lldbinit ./emacs RET\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1151
+msgid "If everything worked, you should see something like \"Emacs debugging support has been installed\" after starting LLDB.  You can see which Emacs-specific commands are defined with"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1153
+#, no-wrap
+msgid "  (lldb) help\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1155
+msgid "User-defined commands for Emacs debugging start with an \"x\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1159
+msgid "Please refer to the LLDB reference on the web for more information about LLDB.  If you already know GDB, you will also find a mapping from GDB commands to corresponding LLDB commands there."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1161
+#, no-wrap
+msgid "** Debugging Emacs on OpenBSD\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1165
+msgid "To debug Emacs on OpenBSD, use the 'egdb' command from the 'gdb' package.  This reportedly works both if Emacs was compiled with GCC and if it was compiled with clang."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1167
+#, no-wrap
+msgid "** Debugging Emacs on Android.\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1171
+msgid "A script located in the java/ directory automates the procedures necessary run Emacs under a Gdb session on an Android device connected to a computer using USB."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1175
+msgid "Its requirements are the `adb' (Android Debug Bridge) utility and the Java debugger (jdb), utilized to cue the Android system to resume the Emacs process after the debugger attaches."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1178
+msgid "If all three of those tools are present, simply run (from the Emacs source directory):"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1180
+#, no-wrap
+msgid "  ../java/debug.sh -- [any extra arguments you wish to pass to gdb]\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1183
+msgid "Several lines of debug information will be printed, after which the Gdb prompt should be displayed."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1186
+msgid "If there is no Gdbserver binary present on the device, then specify one to upload, like so:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1188
+#, no-wrap
+msgid "  ../java/debug.sh --gdbserver /path/to/gdbserver\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1193
+msgid "This Gdbserver should be statically linked or compiled using the Android NDK, and must target the same architecture as the debugged Emacs binary.  Older versions of the Android NDK (such as r24)  distribute suitable Gdbserver binaries, usually located within"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1195
+#, no-wrap
+msgid "  prebuilt/android-<arch>/gdbserver/gdbserver\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1197
+msgid "relative to the root of the NDK distribution."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1200
+msgid "To attach Emacs to an existing process on a target device, use the `--attach-existing' argument to debug.sh:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1202
+#, no-wrap
+msgid "  ../java/debug.sh --attach-existing [other arguments]\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1206
+msgid "If multiple Emacs processes are running, debug.sh will display the names and PIDs of each running process, and prompt for the process that it should attach to."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1208
+msgid "After Emacs starts, type:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1210
+#, no-wrap
+msgid "  (gdb) handle SIGUSR1 noprint pass\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1214
+msgid "to ignore the SIGUSR1 signal that is sent by the Android port's `select' emulation.  If this is overlooked, Emacs will stop each time a windowing event is received, which is probably unwanted."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1220
+msgid "On top of the debugging procedure described above, Android also maintains a \"logcat\" buffer, where it prints backtraces during or after each crash.  Its contents are of interest when performing post-mortem debugging after a crash, and can also be retrieved through the `adb' tool, like so:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1222
+#, no-wrap
+msgid "  $ adb logcat\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1226
+msgid "There are three forms of crash messages printed by Android.  The first form is printed when a crash arises within Java code, and should resemble the following when printed in the logcat buffer:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1233
+msgid "E AndroidRuntime: FATAL EXCEPTION: main E AndroidRuntime: Process: org.gnu.emacs, PID: 18057 E AndroidRuntime: java.lang.RuntimeException: sample crash E AndroidRuntime: \tat org.gnu.emacs.EmacsService.onCreate(EmacsService.java:308)  E AndroidRuntime: \tat android.app.ActivityThread.handleCreateService(ActivityThread.java:4485)  E AndroidRuntime: \t... 9 more"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1237
+msgid "The second form is printed when a fatal signal (such as an abort, or segmentation fault) is raised within C code.  Here is an example of such a crash:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1281
+#, no-wrap
+msgid ""
+"F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x3 in tid 32644\n"
+" (Emacs main thre), pid 32619 (org.gnu.emacs)\n"
+"F DEBUG   : Cmdline: org.gnu.emacs\n"
+"F DEBUG   : pid: 32619, tid: 32644, name: Emacs main thre  >>> org.gnu.emacs <<<\n"
+"F DEBUG   :       #00 pc 002b27b0  /.../lib/arm64/libemacs.so (sfnt_read_cmap_table+32)\n"
+"F DEBUG   :       #01 pc 002c4ee8  /.../lib/arm64/libemacs.so (sfntfont_read_cmap+84)\n"
+"F DEBUG   :       #02 pc 002c4dc4  /.../lib/arm64/libemacs.so (sfntfont_lookup_char+396)\n"
+"F DEBUG   :       #03 pc 002c23d8  /.../lib/arm64/libemacs.so (sfntfont_list+1688)\n"
+"F DEBUG   :       #04 pc 0021112c  /.../lib/arm64/libemacs.so (font_list_entities+864)\n"
+"F DEBUG   :       #05 pc 002138d8  /.../lib/arm64/libemacs.so (font_find_for_lface+1532)\n"
+"F DEBUG   :       #06 pc 00280c50  /.../lib/arm64/libemacs.so (fontset_find_font+2760)\n"
+"F DEBUG   :       #07 pc 0027cadc  /.../lib/arm64/libemacs.so (fontset_font+792)\n"
+"F DEBUG   :       #08 pc 0027c710  /.../lib/arm64/libemacs.so (face_for_char+412)\n"
+"F DEBUG   :       #09 pc 00217314  /.../lib/arm64/libemacs.so (Finternal_char_font+324)\n"
+"F DEBUG   :       #10 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #11 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #12 pc 001f3cf0  /.../lib/arm64/libemacs.so (eval_sub+2260)\n"
+"F DEBUG   :       #13 pc 001f853c  /.../lib/arm64/libemacs.so (Feval+80)\n"
+"F DEBUG   :       #14 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #15 pc 00240130  /.../lib/arm64/libemacs.so (Fbyte_code+120)\n"
+"F DEBUG   :       #16 pc 001f3d84  /.../lib/arm64/libemacs.so (eval_sub+2408)\n"
+"F DEBUG   :       #17 pc 00221d7c  /.../lib/arm64/libemacs.so (readevalloop+1748)\n"
+"F DEBUG   :       #18 pc 002201a0  /.../lib/arm64/libemacs.so (Fload+2544)\n"
+"F DEBUG   :       #19 pc 00221f3c  /.../lib/arm64/libemacs.so (save_match_data_load+88)\n"
+"F DEBUG   :       #20 pc 001f8414  /.../lib/arm64/libemacs.so (load_with_autoload_queue+252)\n"
+"F DEBUG   :       #21 pc 001f6550  /.../lib/arm64/libemacs.so (Fautoload_do_load+608)\n"
+"F DEBUG   :       #22 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #23 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #24 pc 001f1120  /.../lib/arm64/libemacs.so (Ffuncall_interactively+64)\n"
+"F DEBUG   :       #25 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #26 pc 001f8b8c  /.../lib/arm64/libemacs.so (Fapply+916)\n"
+"F DEBUG   :       #27 pc 001f137c  /.../lib/arm64/libemacs.so (Fcall_interactively+576)\n"
+"F DEBUG   :       #28 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #29 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #30 pc 0016d054  /.../lib/arm64/libemacs.so (command_loop_1+1344)\n"
+"F DEBUG   :       #31 pc 001f6d90  /.../lib/arm64/libemacs.so (internal_condition_case+92)\n"
+"F DEBUG   :       #32 pc 0016cafc  /.../lib/arm64/libemacs.so (command_loop_2+48)\n"
+"F DEBUG   :       #33 pc 001f6660  /.../lib/arm64/libemacs.so (internal_catch+84)\n"
+"F DEBUG   :       #34 pc 0016c288  /.../lib/arm64/libemacs.so (command_loop+264)\n"
+"F DEBUG   :       #35 pc 0016c0d8  /.../lib/arm64/libemacs.so (recursive_edit_1+144)\n"
+"F DEBUG   :       #36 pc 0016c4fc  /.../lib/arm64/libemacs.so (Frecursive_edit+348)\n"
+"F DEBUG   :       #37 pc 0016af9c  /.../lib/arm64/libemacs.so (android_emacs_init+7132)\n"
+"F DEBUG   :       #38 pc 002ab8d4  /.../lib/arm64/libemacs.so (Java_org_gnu_emacs_...+3816)\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1287
+msgid "Where the first line (the one containing \"libc\") mentions the number of the fatal signal, the address of any VM fault, and the name and ID of the thread which crashed.  Subsequent lines then contain a backtrace, recounting each function in the call stack culminating in the crash."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1290
+msgid "The third form is printed when Emacs misuses the JVM in some fashion that is detected by the Android CheckJNI facility.  It looks like:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1324
+#, no-wrap
+msgid ""
+"A/art: art/runtime/check_jni.cc:65] JNI DETECTED ERROR IN APPLICATION: ...\n"
+"A/art: art/runtime/check_jni.cc:65]     in call to CallVoidMethodV\n"
+"A/art: art/runtime/check_jni.cc:65]     from void android.os.MessageQueue.nativePollOnce(long, int)\n"
+"A/art: art/runtime/check_jni.cc:65] \"main\" prio=5 tid=1 Runnable\n"
+"A/art: art/runtime/check_jni.cc:65]   | group=\"main\" sCount=0 dsCount=0 obj=0x87d30ef0 self=0xb4f07800\n"
+"A/art: art/runtime/check_jni.cc:65]   | sysTid=18828 nice=-11 cgrp=apps sched=0/0 handle=0xb6fdeec8\n"
+"A/art: art/runtime/check_jni.cc:65]   | state=R schedstat=( 2249126546 506089308 3210 ) utm=183 stm=41 core=3 HZ=100\n"
+"A/art: art/runtime/check_jni.cc:65]   | stack=0xbe0c8000-0xbe0ca000 stackSize=8MB\n"
+"A/art: art/runtime/check_jni.cc:65]   | held mutexes= \"mutator lock\"(shared held)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #00 pc 00004640  /system/lib/libbacktrace_libc++.so (UnwindCurrent::Unwind(unsigned int, ucontext*)+23)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #01 pc 00002e8d  /system/lib/libbacktrace_libc++.so (Backtrace::Unwind(unsigned int, ucontext*)+8)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #02 pc 00248381  /system/lib/libart.so (art::DumpNativeStack(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, int, char const*, art::mirror::ArtMethod*)+68)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #03 pc 0022cd0b  /system/lib/libart.so (art::Thread::Dump(std::__1::basic_ostream<char, std::__1::char_traits<char> >&) const+146)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #04 pc 000b189b  /system/lib/libart.so (art::JniAbort(char const*, char const*)+582)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #05 pc 000b1fd5  /system/lib/libart.so (art::JniAbortF(char const*, char const*, ...)+60)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #06 pc 000b50e5  /system/lib/libart.so (art::ScopedCheck::ScopedCheck(_JNIEnv*, int, char const*)+1284)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #07 pc 000bc59f  /system/lib/libart.so (art::CheckJNI::CallVoidMethodV(_JNIEnv*, _jobject*, _jmethodID*, std::__va_list)+30)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #08 pc 00063803  /system/lib/libandroid_runtime.so (???)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #09 pc 000776bd  /system/lib/libandroid_runtime.so (android::NativeDisplayEventReceiver::dispatchVsync(long long, int, unsigned int)+40)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #10 pc 00077885  /system/lib/libandroid_runtime.so (android::NativeDisplayEventReceiver::handleEvent(int, int, void*)+80)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #11 pc 00010f6f  /system/lib/libutils.so (android::Looper::pollInner(int)+482)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #12 pc 00011019  /system/lib/libutils.so (android::Looper::pollOnce(int, int*, int*, void**)+92)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #13 pc 000830c1  /system/lib/libandroid_runtime.so (android::NativeMessageQueue::pollOnce(_JNIEnv*, int)+22)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #14 pc 000b22d7  /system/framework/arm/boot.oat (Java_android_os_MessageQueue_nativePollOnce__JI+102)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.os.MessageQueue.nativePollOnce(Native method)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.os.MessageQueue.next(MessageQueue.java:143)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.os.Looper.loop(Looper.java:130)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.app.ActivityThread.main(ActivityThread.java:5832)\n"
+"A/art: art/runtime/check_jni.cc:65]   at java.lang.reflect.Method.invoke!(Native method)\n"
+"A/art: art/runtime/check_jni.cc:65]   at java.lang.reflect.Method.invoke(Method.java:372)\n"
+"A/art: art/runtime/check_jni.cc:65]   at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1399)\n"
+"A/art: art/runtime/check_jni.cc:65]   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1194)\n"
+"A/art: art/runtime/check_jni.cc:65]\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1328
+msgid "In such situations, the first line explains what infraction Emacs committed, while the ensuing ones print backtraces for each running Java thread at the time of the error."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1331
+msgid "If Emacs is executing on Android 5.0 and later, placing a breakpoint on"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1333
+#, no-wrap
+msgid "  (gdb) break art::JavaVMExt::JniAbort\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1335
+msgid "will set a breakpoint that is hit each time such an error is detected."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1340
+msgid "Since the logcat output is always rapidly being amended, it is worth piping it to a file or shell command buffer, and then searching for keywords such as \"AndroidRuntime\", \"Fatal signal\", or \"JNI DETECTED ERROR IN APPLICATION\"."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1345
+msgid "Once in a blue moon, it proves necessary to debug Java rather than C code.  To this end, the `--jdb' option will attach the Java debugger instead of gdbserver.  Lametably, it seems impossible to debug both C and Java code in concert."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1353
+msgid "C code within Emacs rigorously checks for Java exceptions after calling any JVM function that may signal an out-of-memory error, employing one of the android_exception_check(_N) functions defined within android.c for this purpose.  These functions operate presuming the preceding Java code does not signal exceptions of its own, and report out-of-memory errors upon any type of exception, not just OOM errors."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1357
+msgid "If Emacs protests that it is out of memory, yet you witness a substantial amount of free space remaining, search the log buffer for a string containing:"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1359
+#, no-wrap
+msgid "  \"Possible out of memory error.  The Java exception follows:\"\n"
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1363
+msgid "subsequent to which a reproduction of the exception precipitating the spurious OOM error should be located.  This exception is invariably indicative of a bug within Emacs that should be fixed."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1366
+msgid "This file is part of GNU Emacs."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1371
+msgid "GNU Emacs is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1376
+msgid "GNU Emacs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1379
+msgid "You should have received a copy of the GNU General Public License along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>."
+msgstr ""
+
+#. type: Plain text
+#: emacs-30/etc/DEBUG_editable:1384
+msgid "Local variables: mode: outline paragraph-separate: \"[ \t\f]*$\" end:"
+msgstr ""
