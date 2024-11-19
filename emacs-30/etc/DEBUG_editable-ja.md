@@ -90,61 +90,36 @@ RET`、あるいはメニューバーの`Display Other Windows`を選択解除�
 
 Emacsを実行する前の今こそ、デバッグしたいコードにブレークポイントをすべきときだ。そうすればそこでEmacsは停止して、GDBが制御を得られるのだ。何らかの非常に稀な特殊な状況下で実行されるコード、あるいは特定のEmacsコマンドを手作業で呼び出した場合のみ実行されるコードをデバッグしたい場合には、そこにブレークポイントをセットしてEmacsを実行して後はそのコマンドを呼び出すか、あるいはその稀な状況やらを再現すればブレークポイントがトリガーされるだろう。
 
-If you are less lucky, and the code in question is run very frequently, you
-will have to find some way of avoiding triggering your breakpoint when the
-conditions for the buggy behavior did not yet happen.  There's no single
-recipe for this, you will have to be creative and study the code to see
-what's appropriate.  Some useful tricks for that:
+あなたにそれほどツキがなく問題となっているのがとても頻繁に実行されるコードの場合には、バグのある動作が起こるまであなたのブレークポイントがトリガーされないように回避する手段を見つける必要があるだろう。これには単一の処方せんは存在しない。あなたはより創造力を発揮するとともに、適切なのは何なのかを見い出すためにコードをより深く学ぶことが必要になるだろう。有用なトリックをいくつか挙げておこう:
 
-  . Make your breakpoint conditional on certain buffer or string
-    position.  For example:
+- 特定のバッファーや文字列の位置にブレークポイント条件を作成する。たとえば:
 
+```text
       (gdb) break foo.c:1234 if PT >= 9876
+```
 
-  . Set a break point in some rarely called function, then create the
-    conditions for the bug, call that rare function, and when GDB gets
-    control, set the breakpoint in the buggy code, knowing that it
-    will now be called when the bug happens.
+- 滅多に呼び出されない関数を何か選んでからバグが発生する条件をセットアップして、その滅多に呼び出されない関数を呼び出す。このタイミングなら疑わしいコードが呼び出されればバグが発生するであろうこと予見できるのでGDBに制御が渡り次第、バグの疑いがあるコードにブレークポイントをセットすればよい。
 
-  . If the bug manifests itself as an error message, set a breakpoint
-    in Fsignal, and when it breaks, look at the backtrace to see what
-    triggers the error.
+- バグ自体がエラーメッセージとして顕現するのであれば、Fsignalにブレークポイントをセットして、ブレークポイントで実行が止まってからバックトレースを調べれば何でエラーが発生したのか確認できる。
 
-Some additional techniques are described below under "Getting control to the
-debugger".
+他にも追加のテクニックについては、"Getting control to the debugger"で後述する。
 
-You are now ready to start your debugging session.
+これであなたのデバッグセッションを始められるだろう。
 
-*** Running Emacs from GDB
+### Running Emacs from GDB
 
-If you are starting a new Emacs session, type "run", followed by any
-command-line arguments (e.g., "-Q") into the *gud-emacs* buffer and press
-RET.  If you ran GDB outside of Emacs, type "run" followed by the
-command-line arguments at the GDB prompt instead.
+新たにEmacsセッションを開始する場合には"*gud-emacs*"バッファーで`run`、その後にコマンドライン引数(`-Q`とか)をタイプしてから`RET`を押下する。Emacs外部でGDBを実行している場合には、GDBプロンプトでは`run`、その後にコマンドライン引数をタイプすればよい。
 
-If you attached the debugger to a running Emacs, type "continue" into the
-*gud-emacs* buffer and press RET.
+実行中のEmacsにデバッガをアタッチした場合には、"*gud-emacs*"バッファーで`continue`をタイプして`RET`を押下する。
 
-Many variables you will encounter while debugging are Lisp objects.  These
-are normally displayed as opaque pointers or integers that are hard to
-interpret, especially if they represent long lists.  (They are instead
-displayed as structures containing these opaque values, if
---enable-check-lisp-object-type is in effect.)  You can use the 'pp' command
-to display them in their Lisp form.  That command displays its output on the
-standard error stream, which you can redirect to a file using "M-x
-redirect-debugging-output".  This means that if you attach GDB to a running
-Emacs that was invoked from a desktop icon, chances are you will not see the
-output at all, or it will wind up in an obscure place (check the
-documentation of your desktop environment).
+デバッグ中に目にするであろう多くの変数はLispオブジェクトだ。通常は正体がはっきりしないポインターや解釈が困難な整数が表示されるだろう。それが長いリストして表されている場合にはなおさら不可解なものとなる(`--enable-check-lisp-object-type`が有効な場合にはこれら不可解な値を含む構造体として表示される)。これらをLisp形式で表示するために`pp`コマンドが使用できる。このコマンドは出力をエラーストリームに表示するので、`M-x
+redirect-debugging-output`を使えばファイルにリダイレクトできる。もしあなたがGDBでデスクトップアイコンから呼び出された実行中のEmacsにアタッチした場合には、出力をまったく目にしなかったり、どこかの見知らぬ場所に吐き出される公算が強いことを意味している(あなたのデスクトップ環境のドキュメントをチェックしよう)。
 
-Additional information about displaying Lisp objects can be found under
-"Examining Lisp object values" below.
+"Examining Lisp object values"で、Lispオブジェクトの表示に関する追加情報を入手できるだろう。
 
-The rest of this document describes specific useful techniques for debugging
-Emacs; we suggest reading it in its entirety the first time you are about to
-debug Emacs, then look up your specific issues whenever you need.
+このドキュメントの残りの部分では、Emacsのデバッグで特に役に立つテクニックを説明する。Emacsをデバッグしようと思ったらまず全体に目を通して、必要に応じて特定の問題を調べることをお勧めする。
 
-Good luck!
+幸運を祈る!
 
 ** When you are trying to analyze failed assertions or backtraces, it
 is essential to compile Emacs with flags suitable for debugging.
