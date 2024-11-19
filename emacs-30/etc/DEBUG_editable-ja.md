@@ -121,27 +121,14 @@ redirect-debugging-output`を使えばファイルにリダイレクトできる
 
 幸運を祈る!
 
-** When you are trying to analyze failed assertions or backtraces, it
-is essential to compile Emacs with flags suitable for debugging.
-Although CFLAGS="-O0 -g3" often suffices with modern compilers,
-you may benefit further by using CFLAGS="-O0 -g3 -gdwarf-4", replacing
-"4" by the highest version of DWARF that your compiler supports;
-this is especially important for GCC versions older than 4.8.
-With GCC and higher optimization levels such as -O2, the
--fno-omit-frame-pointer and -fno-crossjumping options are often
-essential.  The latter prevents GCC from using the same abort call for
-all assertions in a given function, rendering the stack backtrace
-useless for identifying the specific failed assertion.
+## 失敗したassertやバックトレースの分析を試みる場合
+デバッグに適したフラグでEmacsをコンパイルすることが肝だ。最近のコンパイラーでは`CFLAGS="-O0 -g3"`で充分な場合が多いものの、`CFLAGS="-O0 -g3 -gdwarf-4"`を使うことでさらなる恩恵を得られるかもしれない。あなたのコンパイラーがもっと上のバージョンのDWARFをサポートしているようなら、そのバージョンで`4`を置き換えよう。これは4.8より前のバージョンのGCCでは、特に重要だ。GCCともっと高い`-O2`のような最適化レベルでは、オプション`-fno-omit-frame-pointer`や`-fno-crossjumping`が必須なことが多い。後者のオプションは与えられた関数のすべてのassertにたいして、GCCが同一のabort呼び出しを使う(特定のassert失敗を特定するスタックバックトレース出力が使い物にならない)ことが抑止される。
 
-** It is a good idea to run Emacs under GDB (or some other suitable
-debugger) *all the time*.  Then, when Emacs crashes, you will be able
-to debug the live process, not just a core dump.  (This is especially
-important on systems which don't support core files, and instead print
-just the registers and some stack addresses.)
+## GDB(や他の適切なデバッガ)配下でEmacsを **常に** 実行するのは悪くないアイデアだ
+そうしておけばEmacsがクラッシュした際にcoreダンプだけではなく、生きたプロセスをデバッグできるだろう(coreファイルをサポートしていないシステムや、単にレジスターや一部のスタックアドレスのプリントできないシステムでは、これが特に重要になる)。
 
-** If Emacs hangs, or seems to be stuck in some infinite loop, typing
-"kill -TSTP PID", where PID is the Emacs process ID, will cause GDB to
-kick in, provided that you run under GDB.
+## Emacsが固まったときや何らかの無限ループに嵌っているように見える場合
+`kill -TSTP PID`とタイプする。ここでPIDはEmacsのプロセスID。GDB配下で実行していれば、これによりGDBに制御が渡るだろう。
 
 ** Getting control to the debugger
 
@@ -335,9 +322,7 @@ GDB to get the same result.  Here is how:
   (gdb) p &$
   $4 = (int *) 0x411008
 
-Here's a related example of macros and the GDB 'define' command.  There are
-many Lisp vectors such as 'recent_keys', which contains the last 300
-keystrokes.  We can print this Lisp vector
+以下はマクロおよびGDBの`define`コマンドに関する例だ。`recent_keys`(直近3000回分のキーストロークが記録されている)のように多くのLispベクターが存在する。以下のようにすればこのLispベクターをプリントできる
 
   p recent_keys
   pr

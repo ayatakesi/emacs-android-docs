@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-20 00:15+0900\n"
+"PO-Revision-Date: 2024-11-20 08:11+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -308,6 +308,8 @@ msgid ""
 "all assertions in a given function, rendering the stack backtrace\n"
 "useless for identifying the specific failed assertion.\n"
 msgstr ""
+"## 失敗したassertやバックトレースの分析を試みる場合\n"
+"デバッグに適したフラグでEmacsをコンパイルすることが肝だ。最近のコンパイラーでは`CFLAGS=\"-O0 -g3\"`で充分な場合が多いものの、`CFLAGS=\"-O0 -g3 -gdwarf-4\"`を使うことでさらなる恩恵を得られるかもしれない。あなたのコンパイラーがもっと上のバージョンのDWARFをサポートしているようなら、そのバージョンで`4`を置き換えよう。これは4.8より前のバージョンのGCCでは、特に重要だ。GCCともっと高い`-O2`のような最適化レベルでは、オプション`-fno-omit-frame-pointer`や`-fno-crossjumping`が必須なことが多い。後者のオプションは与えられた関数のすべてのassertにたいして、GCCが同一のabort呼び出しを使う(特定のassert失敗を特定するスタックバックトレース出力が使い物にならない)ことが抑止される。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:199
@@ -319,6 +321,8 @@ msgid ""
 "important on systems which don't support core files, and instead print\n"
 "just the registers and some stack addresses.)\n"
 msgstr ""
+"## GDB(や他の適切なデバッガ)配下でEmacsを **常に** 実行するのは悪くないアイデアだ\n"
+"そうしておけばEmacsがクラッシュした際にcoreダンプだけではなく、生きたプロセスをデバッグできるだろう(coreファイルをサポートしていないシステムや、単にレジスターや一部のスタックアドレスのプリントできないシステムでは、これが特に重要になる)。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:203
@@ -328,6 +332,8 @@ msgid ""
 "\"kill -TSTP PID\", where PID is the Emacs process ID, will cause GDB to\n"
 "kick in, provided that you run under GDB.\n"
 msgstr ""
+"## Emacsが固まったときや何らかの無限ループに嵌っているように見える場合\n"
+"`kill -TSTP PID`とタイプする。ここでPIDはEmacsのプロセスID。GDB配下で実行していれば、これによりGDBに制御が渡るだろう。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:205
@@ -603,7 +609,7 @@ msgstr ""
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:407
 msgid "Here's a related example of macros and the GDB 'define' command.  There are many Lisp vectors such as 'recent_keys', which contains the last 300 keystrokes.  We can print this Lisp vector"
-msgstr ""
+msgstr "以下はマクロおよびGDBの`define`コマンドに関する例だ。`recent_keys`(直近3000回分のキーストロークが記録されている)のように多くのLispベクターが存在する。以下のようにすればこのLispベクターをプリントできる"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:410
