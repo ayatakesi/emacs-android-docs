@@ -130,82 +130,60 @@ redirect-debugging-output`を使えばファイルにリダイレクトできる
 ## Emacsが固まったときや何らかの無限ループに嵌っているように見える場合
 `kill -TSTP PID`とタイプする。ここでPIDはEmacsのプロセスID。GDB配下で実行していれば、これによりGDBに制御が渡るだろう。
 
-** Getting control to the debugger
+## デバッガに制御を渡すには 
 
-Setting a breakpoint in a strategic place, after loading Emacs into the
-debugger, but before running it, is the most efficient way of making sure
-control will be returned to the debugger when you need that.
+デバッガにEmacsをロードした後、実行する前にブレークポイントを戦略的な位置にセットすること。制御権が必要なタイミングで、制御権が確実にデバッガにリターンされるようにすることがもっとも重要なのだ。
 
-'Fsignal' is a very useful place to put a breakpoint in.  All Lisp errors go
-through there.  If you are only interested in errors that would fire the
-Lisp debugger, breaking at 'maybe_call_debugger' is useful.
+ブレークポイントを配置する場所として、`Fsignal`はとても役に立つ場所だ。すべてのLispエラーがそこにたどり着く。Lispデバッガを起動するエラーだけに興味がある場合には、ブレークポイントを`maybe_call_debugger`にすれば役に立つだろう。
 
-Another technique for getting control to the debugger is to put a breakpoint
-in some rarely used function.  One such convenient function is
-Fredraw_display, which you can invoke at will interactively with "M-x
-redraw-display RET".
+デバッガに制御を渡す別のテクニックとして、稀にしか使用されない関数へのブレークポイントの配置が挙げられる。この類の便利な関数の1つがFredraw_displayだ。この関数は呼び出そうと思ったら、`M-x
+redraw-display RET`でインタラクティブに呼び出すことができる。
 
-It is also useful to have a guaranteed way to return to the debugger at any
-arbitrary time.  When using X, this is easy: type C-z at the window where
-you are interacting with GDB, and it will stop Emacs just as it would stop
-any ordinary program.  (This doesn't work if GDB was attached to a running
-Emacs process; in that case, you will need to type C-z to the shell window
-from which Emacs was started, or use the "kill -TSTP" method described
-below.)
+任意のタイミングで確実にデバッガに戻れる手段をもっていれば、それも役に立つだろう。Xを使っていれば簡単だ。GDBと対話中のウィンドウで`C-z`とタイプすれば、普通のプログラムと同じようにEmacsも停止するだろう(実行中のEmacsプロセスにアタッチしたGDBでは機能しない;
+この場合にはEmacsを開始したシェルウィンドウで`C-z`をタイプするか、以下で述べる`kill -TSTP`を用いる手法が必要になるだろう)。
 
-When Emacs is displaying on a text terminal, things are not so easy, so we
-describe the various alternatives below (however, those of them that use
-signals only work on Posix systems).
+テキスト端末上でEmacsを表示している際には、そう簡単にはいかない。そこで以下にさまざまな代替え案記しておいた(ただしシグナルを使用する方法が機能するのはPosixシステムだけだが)。
 
-The src/.gdbinit file in the Emacs distribution arranges for SIGINT (C-g in
-Emacs on a text-mode frame) to be passed to Emacs and not give control back
-to GDB.  On modern systems, you can override that with this command:
+Emacsディストリビューションにある`src/.gdbinit`ファイルは、Emacsに`SIGINT`
+(テキストモードのフレー厶のEmacsではC-gに相当する)を送信するようアレンジされている。この場合にはGDBに制御は戻らない。最近のシステムでは、以下のコマンドでこれをオーバーライドできる:
 
-   handle SIGINT stop nopass
+```text
+    handle SIGINT stop nopass
+```
 
-After this 'handle' command, SIGINT will return control to GDB.  If you want
-the C-g to cause a quit within Emacs as well, omit the 'nopass'.  See the
-GDB manual for more details about signal handling and the 'handle' command.
+この`handle`コマンド以降は、`SIGINT`でGDBに制御が戻るようになる筈だ。通常のEmacs使用時と同じように`C-g`でquitしたければ、`nopass`を省略する。シグナルハンドリングと`handle`コマンドの詳細については、GDBマニュアルを参照のこと。
 
-A technique that can work when 'handle SIGINT' does not is to store the code
-for some character into the variable stop_character.  Thus,
+何か文字コードを変数`stop_character`に格納しておくというテクニックは、`handle
+SIGINT`が機能しなくても上手く動作するだろう。つまり、
 
+```text
     set stop_character = 29
+```
 
-makes Control-] (decimal code 29) the stop character.  Typing Control-] will
-cause immediate stop.  You cannot use the set command until the inferior
-process has been started, so start Emacs with the 'start' command, to get an
-opportunity to do the above 'set' command.
+とすることで、`Control-]`
+(10進では文字コード29)が一時停止文字にするのだ。これで`Control-]`とタイプすれば即座に停止できるようになる。内部プロセスを開始するまでは`set`コマンドは使用できないので、上述の`set`コマンドを使えるようにするためには、`start`コマンドでEmacsを開始すること。
 
-On a Posix host, you can also send a signal using the 'kill' command from a
-shell prompt, like this:
+Posixホストであれば、以下のようにシェルプロンプトから、`kill `コマンドでシグナルを送信することも可能だ:
 
-   kill -TSTP Emacs-PID
+```shell
+    kill -TSTP Emacs-PID
+```
 
-where Emacs-PID is the process ID of Emacs being debugged.  Other useful
-signals to send are SIGUSR1 and SIGUSR2; see "Error Debugging" in the ELisp
-manual for how to use those.
+ここで`Emacs-PID`は、デバッグするEmacsのプロセスIDのこと。送信するシグナルとして、他にも`SIGUSR1`と`SIGUSR2`が役に立つ。これらのシグナルの使い方については、ELispマニュアルの"Error
+Debugging"を参照して欲しい。
 
-When Emacs is displaying on a text terminal, it is useful to have a separate
-terminal for the debug session.  This can be done by starting Emacs as
-usual, then attaching to it from gdb with the 'attach' command which is
-explained in the node "Attach" of the GDB manual.
+テキスト端末上にEmacsが表示されている際には、デバッグセッション用に別個に端末があると便利だ。これは通常通りEmacsを開始して、GDBから`attach`コマンド(GDBマニュアルのノード"Attach"を参照)でアタッチすることで実現できる。
 
-On MS-Windows, you can alternatively start Emacs from its own separate
-console by setting the new-console option before running Emacs under GDB:
+MS-Windowsの場合にはGDB配下でEmacsを実行する前にnew-consoleオプションをセットすれば、別個のコンソールからEmacsを開始できる:
 
+```text
   (gdb) set new-console 1
   (gdb) run
+```
 
-If you do this, then typing C-c or C-BREAK into the console window through
-which you interact with GDB will stop Emacs and return control to the
-debugger, no matter if Emacs displays GUI or text-mode frames.  With GDB
-versions before 13.1, this is the only reliable alternative on MS-Windows to
-get control to the debugger, besides setting breakpoints in advance.  GDB
-13.1 changed the way C-c and C-BREAK are handled on Windows, so with those
-newer versions, you don't need the "set new-console 1" setting to be able to
-interrupt Emacs by typing C-c or C-BREAK into the console window from which
-you started Emacs and where you interact with GDB.
+この方法を使えばEmacsが表示されているのがGUIフレームか、あるいはテキストモード端末かに関わらず、GDBとの対話に使用しているコンソールウィンドウ経由で`C-c`か`C-BREAK`をタイプすることにより、Emacsが停止して制御がデバッガに戻されるだろう。これは13.1より前のバージョンのGDBを使用するMS-Windowsでは、あらかじめブレークポイントをセットする方法にかわる信頼性のある唯一の選択肢であった。GDB
+13.1ではWindowsにおける`C-c`と`C-BREAK`の扱いが変更されたので、Emacsを開始したGDBの対話に使用するコンソールウィンドウで`set
+new-console 1`を実行せずとも、新しいバージョンのGDBなら`C-c`や`C-BREAK`でEmacsに割り込めるようになったのだ。
 
 ** Examining Lisp object values.
 
@@ -870,8 +848,10 @@ Similar arrangement is possible on a character terminal by using the
 On MS-Windows, you can start Emacs in its own separate console by setting
 the new-console option before running Emacs under GDB:
 
+```text
   (gdb) set new-console 1
   (gdb) run
+```
 
 ** Running Emacs with undefined-behavior sanitization
 
