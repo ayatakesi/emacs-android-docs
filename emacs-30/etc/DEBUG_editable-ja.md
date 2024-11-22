@@ -5,11 +5,11 @@ Copyright (C) 1985, 2000-2024 Free Software Foundation, Inc.
 See the end of the file for license conditions.
 ```
 
-## Preliminaries
+## まえがき
 
 あなたがすでにdebug情報つきEmacsのビルド、GDBの設定と開始、GDBによる簡単なデバッグテクニックに親しんでいる場合には、このセクションはスキップしてもよい。
 
-### Configuring Emacs for debugging
+### デバッグ用のEmacsのconfigure
 
 デバッグを容易にする特別なオプションでEmacsをconfigure、ビルドするのが最善だ。以下にconfigure時にわたしたちが推薦しているオプションを示す(--prefixのようにあなたにとって必要なオプションに追加して指定する):
 
@@ -28,7 +28,7 @@ Emacs redisplay problems"を参照して欲しい。
 
 デバッグ用のEmacsをインストールする必要はない。`src`ディレクトリーに作成されるバイナリをデバッグできるからだ。
 
-### Configuring GDB
+### GDBの設定
 
 EmacsをデバッグするためにGDBを開始するには、シェルプロンプトで単に`gdb ./emacs
 RET`とタイプすればよい(Emacsの実行可能ファイルがあるディレクトリー、通常はEmacsソースツリーのサブディレクトリー`src`からデバッグを行う場合)。しかしわたしたちが推奨するのは、以下のようにEmacsからGDBを開始する方法だ。
@@ -68,7 +68,7 @@ macOSでGDBを実行すると、以下のようなエラーメッセージが表
 これを解決するためにはインターネットで"Unable to find Mach task port for
 process-id"というフレーズを検索すれば、したがうべき手順の記述を見つけられるだろう。。
 
-### Use the Emacs GDB UI front-end
+### EmacsのGDB用のUIフロントエンドの使用
 
 わたしたちが推薦するのはEmacsが提供するGDB用のGUIフロントエンドの使用だ。これを使えば、`M-x gdb
 RET`とタイプしてGDBを開始できる。このコマンドはデバッグするバイナリファイルのデフォルトの名前を提案する。デバッグしたいEmacsバイナリ以外のデフォルトが提案された場合には、必要に応じてファイル名を変更すればよい。すでに実行中のEmacsプロセスにアタッチしたい場合には、ミニバッファーに表示されているGDBコマンドを以下のように修正しよう:
@@ -86,7 +86,7 @@ Windows`をクリックしてもよい)。この段階で水平スクロール�
 変更したウィンドウ構成はお馴染みのウィンドウ構成コマンド`M-x gdb-restore-windows
 RET`、あるいはメニューバーの`Display Other Windows`を選択解除すれば、後からリストアできる。
 
-### Setting initial breakpoints
+### 最初のブレークポイントの設定
 
 Emacsを実行する前の今こそ、デバッグしたいコードにブレークポイントをすべきときだ。そうすればそこでEmacsは停止して、GDBが制御を得られるのだ。何らかの非常に稀な特殊な状況下で実行されるコード、あるいは特定のEmacsコマンドを手作業で呼び出した場合のみ実行されるコードをデバッグしたい場合には、そこにブレークポイントをセットしてEmacsを実行して後はそのコマンドを呼び出すか、あるいはその稀な状況やらを再現すればブレークポイントがトリガーされるだろう。
 
@@ -106,7 +106,7 @@ Emacsを実行する前の今こそ、デバッグしたいコードにブレー
 
 これであなたのデバッグセッションを始められるだろう。
 
-### Running Emacs from GDB
+### GDBからのEmacs起動
 
 新たにEmacsセッションを開始する場合には"*gud-emacs*"バッファーで`run`、その後にコマンドライン引数(`-Q`とか)をタイプしてから`RET`を押下する。Emacs外部でGDBを実行している場合には、GDBプロンプトでは`run`、その後にコマンドライン引数をタイプすればよい。
 
@@ -124,7 +124,7 @@ redirect-debugging-output`を使えばファイルにリダイレクトできる
 ## 失敗したassertやバックトレースの分析を試みる場合
 デバッグに適したフラグでEmacsをコンパイルすることが肝だ。最近のコンパイラーでは`CFLAGS="-O0 -g3"`で充分な場合が多いものの、`CFLAGS="-O0 -g3 -gdwarf-4"`を使うことでさらなる恩恵を得られるかもしれない。あなたのコンパイラーがもっと上のバージョンのDWARFをサポートしているようなら、そのバージョンで`4`を置き換えよう。これは4.8より前のバージョンのGCCでは、特に重要だ。GCCともっと高い`-O2`のような最適化レベルでは、オプション`-fno-omit-frame-pointer`や`-fno-crossjumping`が必須なことが多い。後者のオプションは与えられた関数のすべてのassertにたいして、GCCが同一のabort呼び出しを使う(特定のassert失敗を特定するスタックバックトレース出力が使い物にならない)ことが抑止される。
 
-## GDB(や他の適切なデバッガ)配下でEmacsを **常に** 実行するのは悪くないアイデアだ
+## GDB(や他の適切なデバッガ)配下でEmacsを実行するのは、 __如何なるときでも__ 悪くないアイデアだ
 そうしておけばEmacsがクラッシュした際にcoreダンプだけではなく、生きたプロセスをデバッグできるだろう(coreファイルをサポートしていないシステムや、単にレジスターや一部のスタックアドレスのプリントできないシステムでは、これが特に重要になる)。
 
 ## Emacsが固まったときや何らかの無限ループに嵌っているように見える場合
@@ -185,77 +185,57 @@ MS-Windowsの場合にはGDB配下でEmacsを実行する前にnew-consoleオプ
 13.1ではWindowsにおける`C-c`と`C-BREAK`の扱いが変更されたので、Emacsを開始したGDBの対話に使用するコンソールウィンドウで`set
 new-console 1`を実行せずとも、新しいバージョンのGDBなら`C-c`や`C-BREAK`でEmacsに割り込めるようになったのだ。
 
-** Examining Lisp object values.
+## Lispオブジェクトの値の調べ方
 
-When you have a live process to debug, and it has not encountered a fatal
-error, you can use the GDB command 'pr'.  First print the value in the
-ordinary way, with the 'p' command.  Then type 'pr' with no arguments.  This
-calls a subroutine which uses the Lisp printer.
+デバッグするのが生きたプロセスで、致命的なエラーにはまだ遭遇していなければ、GDBの`pr`コマンドを使うことができる。まずは通常のように`p`コマンドで値をプリントしよう。それから引数なしで`pr`をタイプするのだ。これはLispプリンターを使用するサブルーチンを呼び出す。
 
-You can also use 'pp value' to print the emacs value directly.
+emacsの値を直接プリントする`pp value`を使うことも可能だ。
 
-To see the current value of a Lisp Variable, use 'pv variable'.
+Lisp変数のカレント値を確認する場合には`pv variable'`を使う。
 
-These commands send their output to stderr; if that is closed or redirected
-to some file you don't know, you won't see their output.  This is
-particularly so for Emacs invoked on MS-Windows from the desktop shortcut.
-You can use the command 'redirect-debugging-output' to redirect stderr to a
-file.
+これらのコマンドは出力をstderrに送信する。stderrがクローズされていたり、何処か知らない場所にリダイレクトされている場合には、出力は確認できないだろう。これは特にMS-WindowsでデスクトップのショートカットからEmacsを呼び出した場合が該当する。stderrをファイルにリダイレクトするためには、コマンド`redirect-debugging-output`を使うことができる。
 
-Note: It is not a good idea to try 'pr', 'pp', or 'pv' if you know that
-Emacs is in deep trouble: its stack smashed (e.g., if it encountered SIGSEGV
-due to stack overflow), or crucial data structures, such as 'obarray',
-corrupted, etc.  In such cases, the Emacs subroutine called by 'pr' might
-make more damage, like overwrite some data that is important for debugging
-the original problem.
+注意:
+Emacsが深刻なトラブルの最中にあると判っているのに`pr`、`pp`、`pv`といったコマンドを使うのはよいアイデアではない。これによりスタック(たとえばスタックオーバーフローによるSIGSEGVの発生)がめちゃくちゃになったり、あるいは`obarray`のような非常に重要なデータ構造が壊れてしまうかもしれないからだ。このような状況下では`pr`によって呼び出されるEmacsサブルーチンが、たとえば元の原因のデバッグにとって重要な何らかのデータを上書きしてしまうかもしれない。
 
-Also, on some systems it is impossible to use 'pr' if you stopped Emacs
-while it was inside 'select'.  This is in fact what happens if you stop
-Emacs while it is waiting.  In such a situation, don't try to use 'pr'.
-Instead, use 's' to step out of the system call.  Then Emacs will be between
-instructions and capable of handling 'pr'.
+`select`の呼び出し中にEmacsを停止すると、`pr`の使用が不可能なシステムもある。実際のところ、Emacsがwaitを行っている間にEmacsを停止するとこの現象が発生する。このような状況において`pr`を使ってはならない。かわりにそのシステムコールから抜け出すために`s`を使うこと。そうすればEmacsが命令と命令の間に移って、`pr`を処理することが可能になるだろう。
 
-If you can't use 'pr' command, for whatever reason, you can use the 'xpr'
-command to print out the data type and value of the last data value, For
-example:
+何らかの理由により`pr`コマンドが使用できない場合には、`xpr`コマンドが使用できる。これはデータタイプとそのデータの最後の値をプリントするコマンドだ。たとえば:
 
+```text
     p it->object
     xpr
+```
 
-You may also analyze data values using lower-level commands.  Use the
-'xtype' command to print out the data type of the last data value.  Once you
-know the data type, use the command that corresponds to that type.  Here are
-these commands:
+低レベルコマンドを用いたデータ値の分析もできるかもしれない。最後のデータ値のデータタイプをプリントするのは`xtype`コマンドだ。データタイプが判ってしまえば、そのタイプに応じたコマンドを使用すればよい。以下にその種のコマンドを挙げておこう:
 
+```text
     xint xptr xwindow xmarker xoverlay xmiscfree xintfwd xboolfwd xobjfwd
     xbufobjfwd xkbobjfwd xbuflocal xbuffer xsymbol xstring xvector xframe
     xwinconfig xcompiled xcons xcar xcdr xsubr xprocess xfloat xscrollbar
     xchartable xsubchartable xboolvector xhashtable xlist xcoding
     xcharset xfontset xfont
+```
 
-Each one of them applies to a certain type or class of types.  (Some of
-these types are not visible in Lisp, because they exist only internally.)
+これらのコマンドはそれぞれ特定のタイプ、あるいはタイプクラスに適用できる(いくつかのタイプは内部的にしか存在しないのでLispでは目にしないタイプだろう)。
 
-Each x... command prints some information about the value, and produces a
-GDB value (subsequently available in $) through which you can get at the
-rest of the contents.
+これらの`x...`コマンドはいずれも値に関する情報、およびGDB値を生成する。このGDB値は以後`$`で使用できるので、これで残りの内容を取得できる筈だ。
 
-In general, most of the rest of the contents will be additional Lisp objects
-which you can examine in turn with the x... commands.
+残りの内容のほとんどは、一般的には順繰りに`x...`コマンドを使って調べることができるLispオブジェクトの筈だ。
 
-Even with a live process, these x...  commands are useful for examining the
-fields in a buffer, window, process, frame or marker.  Here's an example
-using concepts explained in the node "Value History" of the GDB manual to
-print values associated with the variable called frame.  First, use these
-commands:
+たとえ生きたプロセスの場合であってもバッファー、ウィンドウ、プロセス、マーカーのフィールドを調べるのにも`x...`コマンドは役に立つだろう。以下にフレームと呼ばれる変数に割り当てられた値のプリントに、GDBマニュアルのノード"Value
+History"で説明されている概念を用いた例を示す。最初は以下のコマンドを使う:
 
+```shell
   cd src
   gdb emacs
   b set_frame_buffer_list
   r -q
+```
 
-Then Emacs hits the breakpoint:
+その後にEmacsがブレークポイントに到達するので:
 
+```shell
   (gdb) p frame
   $1 = 139854428
   (gdb) xpr
@@ -270,26 +250,27 @@ Then Emacs hits the breakpoint:
     name = 140615219,
     [...]
   }
+```
 
-Now we can use 'pp' to print the frame parameters:
+これで`pp`コマンドでフレームパラメーターをプリントできる:
 
+```shell
   (gdb) pp $->param_alist
   ((background-mode . light) (display-type . color) [...])
+```
 
-The Emacs C code heavily uses macros defined in lisp.h.  So suppose we want
-the address of the l-value expression near the bottom of 'add_command_key'
-from keyboard.c:
+EmacsのCコードでは、`lisp.h`で定義されているマクロが頻繁に使用されている。ここでたとえば`keyboard.c`の終盤付近にある`add_command_key`の左辺値アドレスが知りたいとする:
 
+```shell
   XVECTOR (this_command_keys)->contents[this_command_key_count++] = key;
+```
 
-XVECTOR is a macro, so GDB only knows about it if Emacs has been compiled
-with preprocessor macro information.  GCC provides this if you specify the
-options '-gdwarf-N' (where N is 2 or higher) and '-g3'.  In this case, GDB
-can evaluate expressions like "p XVECTOR (this_command_keys)".
+XVECTORはマクロなので、それに関してGDBが知ることができるのは、Emacsがプリプロセッサマクロ情報とともにコンパイルされた場合だけだ。オプション`-gdwarf-N`(`N`は2以上)、および`-g3`オプションを指定するとGCCがその情報を提供する。この場合には`p
+XVECTOR (this_command_keys)`のような式でもGDBが評価できるだろう。
 
-When this information isn't available, you can use the xvector command in
-GDB to get the same result.  Here is how:
+この情報が利用できない場合には、GDBの`xvector`コマンドを使って同じ結果を得ることができる。以下に手順を示そう:
 
+```shell
   (gdb) p this_command_keys
   $1 = 1078005760
   (gdb) xvector
@@ -299,6 +280,7 @@ GDB to get the same result.  Here is how:
   $3 = 1077872640
   (gdb) p &$
   $4 = (int *) 0x411008
+```
 
 以下はマクロおよびGDBの`define`コマンドに関する例だ。`recent_keys`(直近3000回分のキーストロークが記録されている)のように多くのLispベクターが存在する。以下のようにすればこのLispベクターをプリントできる
 

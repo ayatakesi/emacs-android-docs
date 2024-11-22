@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-21 12:26+0900\n"
+"PO-Revision-Date: 2024-11-22 09:15+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -33,7 +33,7 @@ msgstr ""
 #: emacs-30/etc/DEBUG_editable:7
 #, no-wrap
 msgid "** Preliminaries\n"
-msgstr "## Preliminaries\n"
+msgstr "## まえがき\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:11
@@ -44,7 +44,7 @@ msgstr "あなたがすでにdebug情報つきEmacsのビルド、GDBの設定�
 #: emacs-30/etc/DEBUG_editable:13
 #, no-wrap
 msgid "*** Configuring Emacs for debugging\n"
-msgstr "### Configuring Emacs for debugging\n"
+msgstr "### デバッグ用のEmacsのconfigure\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:18
@@ -87,7 +87,7 @@ msgstr "デバッグ用のEmacsをインストールする必要はない。`src
 #: emacs-30/etc/DEBUG_editable:42
 #, no-wrap
 msgid "*** Configuring GDB\n"
-msgstr "### Configuring GDB\n"
+msgstr "### GDBの設定\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:47
@@ -163,7 +163,7 @@ msgstr "これを解決するためにはインターネットで\"Unable to fin
 #: emacs-30/etc/DEBUG_editable:87
 #, no-wrap
 msgid "*** Use the Emacs GDB UI front-end\n"
-msgstr "### Use the Emacs GDB UI front-end\n"
+msgstr "### EmacsのGDB用のUIフロントエンドの使用\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:95
@@ -198,7 +198,7 @@ msgstr "変更したウィンドウ構成はお馴染みのウィンドウ構成
 #: emacs-30/etc/DEBUG_editable:114
 #, no-wrap
 msgid "*** Setting initial breakpoints\n"
-msgstr "### Setting initial breakpoints\n"
+msgstr "### 最初のブレークポイントの設定\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:122
@@ -260,7 +260,7 @@ msgstr "これであなたのデバッグセッションを始められるだろ
 #: emacs-30/etc/DEBUG_editable:150
 #, no-wrap
 msgid "*** Running Emacs from GDB\n"
-msgstr "### Running Emacs from GDB\n"
+msgstr "### GDBからのEmacs起動\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:155
@@ -321,7 +321,7 @@ msgid ""
 "important on systems which don't support core files, and instead print\n"
 "just the registers and some stack addresses.)\n"
 msgstr ""
-"## GDB(や他の適切なデバッガ)配下でEmacsを **常に** 実行するのは悪くないアイデアだ\n"
+"## GDB(や他の適切なデバッガ)配下でEmacsを実行するのは、 __如何なるときでも__ 悪くないアイデアだ\n"
 "そうしておけばEmacsがクラッシュした際にcoreダンプだけではなく、生きたプロセスをデバッグできるだろう(coreファイルをサポートしていないシステムや、単にレジスターや一部のスタックアドレスのプリントできないシステムでは、これが特に重要になる)。\n"
 
 #. type: Plain text
@@ -454,42 +454,42 @@ msgstr "この方法を使えばEmacsが表示されているのがGUIフレー�
 #: emacs-30/etc/DEBUG_editable:289
 #, no-wrap
 msgid "** Examining Lisp object values.\n"
-msgstr ""
+msgstr "## Lispオブジェクトの値の調べ方\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:294
 msgid "When you have a live process to debug, and it has not encountered a fatal error, you can use the GDB command 'pr'.  First print the value in the ordinary way, with the 'p' command.  Then type 'pr' with no arguments.  This calls a subroutine which uses the Lisp printer."
-msgstr ""
+msgstr "デバッグするのが生きたプロセスで、致命的なエラーにはまだ遭遇していなければ、GDBの`pr`コマンドを使うことができる。まずは通常のように`p`コマンドで値をプリントしよう。それから引数なしで`pr`をタイプするのだ。これはLispプリンターを使用するサブルーチンを呼び出す。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:296
 msgid "You can also use 'pp value' to print the emacs value directly."
-msgstr ""
+msgstr "emacsの値を直接プリントする`pp value`を使うことも可能だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:298
 msgid "To see the current value of a Lisp Variable, use 'pv variable'."
-msgstr ""
+msgstr "Lisp変数のカレント値を確認する場合には`pv variable'`を使う。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:304
 msgid "These commands send their output to stderr; if that is closed or redirected to some file you don't know, you won't see their output.  This is particularly so for Emacs invoked on MS-Windows from the desktop shortcut.  You can use the command 'redirect-debugging-output' to redirect stderr to a file."
-msgstr ""
+msgstr "これらのコマンドは出力をstderrに送信する。stderrがクローズされていたり、何処か知らない場所にリダイレクトされている場合には、出力は確認できないだろう。これは特にMS-WindowsでデスクトップのショートカットからEmacsを呼び出した場合が該当する。stderrをファイルにリダイレクトするためには、コマンド`redirect-debugging-output`を使うことができる。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:311
 msgid "Note: It is not a good idea to try 'pr', 'pp', or 'pv' if you know that Emacs is in deep trouble: its stack smashed (e.g., if it encountered SIGSEGV due to stack overflow), or crucial data structures, such as 'obarray', corrupted, etc.  In such cases, the Emacs subroutine called by 'pr' might make more damage, like overwrite some data that is important for debugging the original problem."
-msgstr ""
+msgstr "注意: Emacsが深刻なトラブルの最中にあると判っているのに`pr`、`pp`、`pv`といったコマンドを使うのはよいアイデアではない。これによりスタック(たとえばスタックオーバーフローによるSIGSEGVの発生)がめちゃくちゃになったり、あるいは`obarray`のような非常に重要なデータ構造が壊れてしまうかもしれないからだ。このような状況下では`pr`によって呼び出されるEmacsサブルーチンが、たとえば元の原因のデバッグにとって重要な何らかのデータを上書きしてしまうかもしれない。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:317
 msgid "Also, on some systems it is impossible to use 'pr' if you stopped Emacs while it was inside 'select'.  This is in fact what happens if you stop Emacs while it is waiting.  In such a situation, don't try to use 'pr'.  Instead, use 's' to step out of the system call.  Then Emacs will be between instructions and capable of handling 'pr'."
-msgstr ""
+msgstr "`select`の呼び出し中にEmacsを停止すると、`pr`の使用が不可能なシステムもある。実際のところ、Emacsがwaitを行っている間にEmacsを停止するとこの現象が発生する。このような状況において`pr`を使ってはならない。かわりにそのシステムコールから抜け出すために`s`を使うこと。そうすればEmacsが命令と命令の間に移って、`pr`を処理することが可能になるだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:321
 msgid "If you can't use 'pr' command, for whatever reason, you can use the 'xpr' command to print out the data type and value of the last data value, For example:"
-msgstr ""
+msgstr "何らかの理由により`pr`コマンドが使用できない場合には、`xpr`コマンドが使用できる。これはデータタイプとそのデータの最後の値をプリントするコマンドだ。たとえば:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:324
@@ -498,11 +498,15 @@ msgid ""
 "    p it->object\n"
 "    xpr\n"
 msgstr ""
+"```text\n"
+"    p it->object\n"
+"    xpr\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:329
 msgid "You may also analyze data values using lower-level commands.  Use the 'xtype' command to print out the data type of the last data value.  Once you know the data type, use the command that corresponds to that type.  Here are these commands:"
-msgstr ""
+msgstr "低レベルコマンドを用いたデータ値の分析もできるかもしれない。最後のデータ値のデータタイプをプリントするのは`xtype`コマンドだ。データタイプが判ってしまえば、そのタイプに応じたコマンドを使用すればよい。以下にその種のコマンドを挙げておこう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:335
@@ -514,26 +518,33 @@ msgid ""
 "    xchartable xsubchartable xboolvector xhashtable xlist xcoding\n"
 "    xcharset xfontset xfont\n"
 msgstr ""
+"```text\n"
+"    xint xptr xwindow xmarker xoverlay xmiscfree xintfwd xboolfwd xobjfwd\n"
+"    xbufobjfwd xkbobjfwd xbuflocal xbuffer xsymbol xstring xvector xframe\n"
+"    xwinconfig xcompiled xcons xcar xcdr xsubr xprocess xfloat xscrollbar\n"
+"    xchartable xsubchartable xboolvector xhashtable xlist xcoding\n"
+"    xcharset xfontset xfont\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:339
 msgid "Each one of them applies to a certain type or class of types.  (Some of these types are not visible in Lisp, because they exist only internally.)"
-msgstr ""
+msgstr "これらのコマンドはそれぞれ特定のタイプ、あるいはタイプクラスに適用できる(いくつかのタイプは内部的にしか存在しないのでLispでは目にしないタイプだろう)。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:343
 msgid "Each x... command prints some information about the value, and produces a GDB value (subsequently available in $) through which you can get at the rest of the contents."
-msgstr ""
+msgstr "これらの`x...`コマンドはいずれも値に関する情報、およびGDB値を生成する。このGDB値は以後`$`で使用できるので、これで残りの内容を取得できる筈だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:346
 msgid "In general, most of the rest of the contents will be additional Lisp objects which you can examine in turn with the x... commands."
-msgstr ""
+msgstr "残りの内容のほとんどは、一般的には順繰りに`x...`コマンドを使って調べることができるLispオブジェクトの筈だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:352
 msgid "Even with a live process, these x...  commands are useful for examining the fields in a buffer, window, process, frame or marker.  Here's an example using concepts explained in the node \"Value History\" of the GDB manual to print values associated with the variable called frame.  First, use these commands:"
-msgstr ""
+msgstr "たとえ生きたプロセスの場合であってもバッファー、ウィンドウ、プロセス、マーカーのフィールドを調べるのにも`x...`コマンドは役に立つだろう。以下にフレームと呼ばれる変数に割り当てられた値のプリントに、GDBマニュアルのノード\"Value History\"で説明されている概念を用いた例を示す。最初は以下のコマンドを使う:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:357
@@ -544,11 +555,17 @@ msgid ""
 "  b set_frame_buffer_list\n"
 "  r -q\n"
 msgstr ""
+"```shell\n"
+"  cd src\n"
+"  gdb emacs\n"
+"  b set_frame_buffer_list\n"
+"  r -q\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:359
 msgid "Then Emacs hits the breakpoint:"
-msgstr ""
+msgstr "その後にEmacsがブレークポイントに到達するので:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:374
@@ -569,11 +586,27 @@ msgid ""
 "    [...]\n"
 "  }\n"
 msgstr ""
+"```shell\n"
+"  (gdb) p frame\n"
+"  $1 = 139854428\n"
+"  (gdb) xpr\n"
+"  Lisp_Vectorlike\n"
+"  PVEC_FRAME\n"
+"  $2 = (struct frame *) 0x8560258\n"
+"  \"emacs@localhost\"\n"
+"  (gdb) p *$\n"
+"  $3 = {\n"
+"    size = 1073742931,\n"
+"    next = 0x85dfe58,\n"
+"    name = 140615219,\n"
+"    [...]\n"
+"  }\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:376
 msgid "Now we can use 'pp' to print the frame parameters:"
-msgstr ""
+msgstr "これで`pp`コマンドでフレームパラメーターをプリントできる:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:379
@@ -582,27 +615,34 @@ msgid ""
 "  (gdb) pp $->param_alist\n"
 "  ((background-mode . light) (display-type . color) [...])\n"
 msgstr ""
+"```shell\n"
+"  (gdb) pp $->param_alist\n"
+"  ((background-mode . light) (display-type . color) [...])\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:383
 msgid "The Emacs C code heavily uses macros defined in lisp.h.  So suppose we want the address of the l-value expression near the bottom of 'add_command_key' from keyboard.c:"
-msgstr ""
+msgstr "EmacsのCコードでは、`lisp.h`で定義されているマクロが頻繁に使用されている。ここでたとえば`keyboard.c`の終盤付近にある`add_command_key`の左辺値アドレスが知りたいとする:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:385
 #, no-wrap
 msgid "  XVECTOR (this_command_keys)->contents[this_command_key_count++] = key;\n"
 msgstr ""
+"```shell\n"
+"  XVECTOR (this_command_keys)->contents[this_command_key_count++] = key;\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:390
 msgid "XVECTOR is a macro, so GDB only knows about it if Emacs has been compiled with preprocessor macro information.  GCC provides this if you specify the options '-gdwarf-N' (where N is 2 or higher) and '-g3'.  In this case, GDB can evaluate expressions like \"p XVECTOR (this_command_keys)\"."
-msgstr ""
+msgstr "XVECTORはマクロなので、それに関してGDBが知ることができるのは、Emacsがプリプロセッサマクロ情報とともにコンパイルされた場合だけだ。オプション`-gdwarf-N`(`N`は2以上)、および`-g3`オプションを指定するとGCCがその情報を提供する。この場合には`p XVECTOR (this_command_keys)`のような式でもGDBが評価できるだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:393
 msgid "When this information isn't available, you can use the xvector command in GDB to get the same result.  Here is how:"
-msgstr ""
+msgstr "この情報が利用できない場合には、GDBの`xvector`コマンドを使って同じ結果を得ることができる。以下に手順を示そう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:403
@@ -618,6 +658,17 @@ msgid ""
 "  (gdb) p &$\n"
 "  $4 = (int *) 0x411008\n"
 msgstr ""
+"```shell\n"
+"  (gdb) p this_command_keys\n"
+"  $1 = 1078005760\n"
+"  (gdb) xvector\n"
+"  $2 = (struct Lisp_Vector *) 0x411000\n"
+"  0\n"
+"  (gdb) p $->contents[this_command_key_count]\n"
+"  $3 = 1077872640\n"
+"  (gdb) p &$\n"
+"  $4 = (int *) 0x411008\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:407
