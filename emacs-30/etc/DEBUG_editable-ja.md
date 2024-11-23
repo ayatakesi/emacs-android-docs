@@ -284,22 +284,27 @@ XVECTOR (this_command_keys)`のような式でもGDBが評価できるだろう�
 
 以下はマクロおよびGDBの`define`コマンドに関する例だ。`recent_keys`(直近3000回分のキーストロークが記録されている)のように多くのLispベクターが存在する。以下のようにすればこのLispベクターをプリントできる
 
+```shell
   p recent_keys
   pr
+```
 
-But this may be inconvenient, since 'recent_keys' is much more verbose than
-'C-h l'.  We might want to print only the last 10 elements of this vector.
-'recent_keys' is updated in keyboard.c by the command
+しかしこれでは少々使いにくいかもしれない、`C-h l`(訳注:
+`view-lossage`)に比べて`recent_keys`の出力は冗長だからだ。わたしたちがプリントしたいのは、このベクターの最後の10要素だけだとしよう。以下のコマンドで`keyboard.c`の`recent_keys`を変更できる
 
+```shell
   XVECTOR (recent_keys)->contents[recent_keys_index] = c;
+```
 
-So we define a GDB command 'xvector-elts', so the last 10 keystrokes are
-printed by
+では最後の10回分のキーストロークがプリントできるように、GDBコマンド`xvector-elts`コマンドを定義しよう
 
+```shell
   xvector-elts recent_keys recent_keys_index 10
+```
 
-where you can define xvector-elts as follows:
+`xvector-elts`は以下のように定義できる:
 
+```shell 
   define xvector-elts
   set $i = 0
   p $arg0
@@ -314,105 +319,83 @@ where you can define xvector-elts as follows:
   xvector-elts  v n i
   prints 'i' elements of the vector 'v' ending at the index 'n'.
   end
+```
 
-** Getting Lisp-level backtrace information within GDB
+## GDBでLispレベルのバックトレース情報を得るには
 
-The most convenient way is to use the 'xbacktrace' command.  This shows the
-names of the Lisp functions that are currently active.
+もっとも役に立つのが`xbacktrace`コマンドを使う方法だろう。これはカレントでアクティブなLisp関数の名前www表示するコマンドだ。
 
-If that doesn't work (e.g., because the 'backtrace_list' structure is
-corrupted), type "bt" at the GDB prompt, to produce the C-level backtrace,
-and look for stack frames that call Ffuncall.  Select them one by one in
-GDB, by typing "up N", where N is the appropriate number of frames to go up,
-and in each frame that calls Ffuncall type this:
+これが(たとえば構造体`backtrace_list`が壊れている等の理由で)機能しない場合には、GDBプロンプトで`bt`をタイプしてCレベルのバックトレースを生成して、Ffuncallを呼び出しているスタックフレームを調べることになる。`up
+N`をタイプして順繰りにスタックフレームを選択する。何個上のフレームを選択するかは、適切な数値を`N`に指定する。そしてFfuncallを呼び出しているフレームそれぞれにおいて以下をタイプするのだ:
 
-   p *args
+```shell
+  p *args
    pr
+```
 
-This will print the name of the Lisp function called by that level of
-function calling.
+これによりそのレベルにおける関数呼び出しによって呼び出された、Lisp関数の名前がプリントされるだろう。
 
-By printing the remaining elements of args, you can see the argument
-values.  Here's how to print the first argument:
+`arg`の残りの要素をプリントすることによって、引数の値を確認できる。1つ目ｎ９引数をプリントするには、以下のようにする:
 
-   p args[1]
-   pr
+```shell
+  p args[1]
+  pr
+```
 
-If you do not have a live process, you can use xtype and the other x...
-commands such as xsymbol to get such information, albeit less conveniently.
-For example:
+生きたプロセスがなければ、(若干便利さで劣るものの`xsymbol`のようなその種の情報を得られる別の`x...`コマンドを使うことができる。たとえば:
 
-   p *args
-   xtype
+```shell
+  p *args
+  xtype
+```
 
-and, assuming that "xtype" says that args[0] is a symbol:
+`xtype`は`arg[0]`がシンボルだと判断したようだ:
 
-   xsymbol
+```shell
+  xsymbol
+```
 
-** Debugging Emacs redisplay problems
+## Emacsの再表示にまつわる問題のデバッグ
 
-The Emacs display code includes special debugging code, but it is normally
-disabled.  Configuring Emacs with --enable-checking='yes,glyphs' enables it.
+Emacsのディスプレイに関するコードには特別なデバッグ用コードが含まれているが、通常だと無効になっている。`--enable-checking='yes,glyphs'`を指定してconfigureすることで、これを有効にできる。
 
-Building Emacs like that activates many assertions which scrutinize display
-code operation more than Emacs does normally.  (To see the code which tests
-these assertions, look for calls to the 'eassert' macros.)  Any assertion
-that is reported to fail should be investigated.  Redisplay problems that
-cause aborts or segfaults in production builds of Emacs will many times be
-caught by these assertions before they cause a crash.
+このようにEmacsをビルドすることで、ディスプレイコード処理精査のためのassertが通常のビルドよりも多くアクティブになる(`eassert`マクロの呼び出しを検索すれば、コードでこれらのassertをどのようにテストするのか確認できる)。失敗したassertはすべて調査するべきだ。正式版としてビルドされたEmacsでabortやsegfaultを発生させるような問題の多くは、クラッシュに至る前にこれらのassertによって捕獲されるだろう。
 
-If you configured Emacs with --enable-checking='glyphs', you can use
-redisplay tracing facilities from a running Emacs session.
+`--enable-checking='glyphs'`を指定してconfigureされたEmacsであれば、実行中のEmacsセッションから再表示のトレース機能を使うことができる。
 
-The command "M-x trace-redisplay RET" will produce a trace of what redisplay
-does on the standard error stream.  This is very useful for understanding
-the code paths taken by the display engine under various conditions,
-especially if some redisplay optimizations produce wrong results.  (You know
-that redisplay optimizations might be involved if "M-x redraw-display RET",
-or even just typing "M-x", causes Emacs to correct the bad display.)  Since
-the cursor blinking feature and ElDoc trigger periodic redisplay cycles, we
-recommend disabling 'blink-cursor-mode' and 'global-eldoc-mode' before
-invoking 'trace-redisplay', so that you have less clutter in the trace.  You
-can also have up to 30 last trace messages dumped to standard error by
-invoking the 'dump-redisplay-history' command.
+コマンド`M-x trace-redisplay
+RET`は、再表示が何を行ったかについてのトレースを標準エラーストリームに出力する。これはさまざまな条件において、ディスプレイエンジンが採用するコードパスの理解にとても役に立つだろう(`M-x
+redraw-display
+RET`の呼び出し、あるいは単に`M-x`とタイプするだけでも、Emacsが不正な表示を修正ための再表示最適化が関係するかもしれないことが判るだろう)。点滅カーソル機能およびEldocは定期的な再表示サイクルをトリガーするので、トレースの雑音を減少させるために、`trace-redisplay`呼び出しの前に`blink-cursor-mode`と`global-eldoc-mode`は無効にすることをお勧めする。dump-redisplay-historyコマンドを呼び出せば、直近のトレースメッセージを最大30個まで標準エラーにダンプすることもできる。
 
-To find the code paths which were taken by the display engine, search
-xdisp.c for the trace messages you see.
+あなたが目にしたトレースメッセージを`xdisp.c`で検索すれば、ディスプレイエンジンが採用しあコードパスを調べることができるだろう。
 
-The command 'dump-glyph-matrix' is useful for producing on standard error
-stream a full dump of the selected window's glyph matrix.  See the
-function's doc string for more details.
+標準エラーストリームに選択されたウィンドウのグリフマトリクスを出力するには、コマンド`dump-glyph-matrix`が役に立つ。詳細についてはこの関数のdoc文字列を参照のこと。
 
-If you run Emacs under GDB, you can print the contents of any glyph matrix
-by just calling that function with the matrix as its argument.  For example,
-the following command will print the contents of the current matrix of the
-window whose pointer is in 'w':
+GDB配下でEmacsを実行している場合には、引数にマトリクスを指定してこの関数を呼び出すだけで、任意のグリフマトリクスの内容をプリントできる。例として以下は、ポインター`w`が示すウィンドウのカレントマトリクスの内容をプリントするコマンドだ:
 
+```shell
   (gdb) p dump_glyph_matrix (w->current_matrix, 2)
+```
 
-(The second argument 2 tells dump_glyph_matrix to print the glyphs in a long
-form.)
+(2つ目の引数の`2`は長い形式でグリフをプリントするよう`dump_glyph_matrix`に指示している。)
 
-If you are debugging redisplay issues in text-mode frames, you may find the
-command 'dump-frame-glyph-matrix' useful.
+テキストモード端末で再表示問題をデバッグすれば、dump-frame-glyph-matrix``の有用性に気付くかもしれない。
 
-Other commands useful for debugging redisplay are 'dump-glyph-row' and
-'dump-tool-bar-row'.
+再表示のデバッグに役立つ他のコマンドとしては、`dump-glyph-row`と`dump-tool-bar-row`が挙げられる。
 
-When you debug display problems running emacs under X, you can use the 'ff'
-command to flush all pending display updates to the screen.
+X配下で実行中のEmacsにたいして再表示問題をデバッグする際には、`ff`コマンドを使用できる。これは保留されているすべてのディスプレイ更新をフラッシュするコマンドだ。
 
-The src/.gdbinit file defines many useful commands for dumping redisplay
-related data structures in a terse and user-friendly format:
+`src/.gdbinit`には再表示に関するデータ構造を、簡潔かつユーザーフレンドリーなフォーマットでダンプする多くのコマンドが定義されている:
 
- 'ppt' prints value of PT, narrowing, and gap in current buffer.
- 'pit' dumps the current display iterator 'it'.
- 'pwin' dumps the current window 'win'.
- 'prow' dumps the current glyph_row 'row'.
- 'pg' dumps the current glyph 'glyph'.
- 'pgi' dumps the next glyph.
- 'pgrow' dumps all glyphs in current glyph_row 'row'.
- 'pcursor' dumps current output_cursor.
+- `ppt` :: カレントバッファーのPT、ナローイング、gapの値をプリント
+- `pit` :: カレントディスプレイイテレータ`it`をダンプ
+- `pwin` :: カレントウィンドウ`win`をダンプ
+- `prow` :: glyph_row型のカレントの`row`をダンプ
+- `pg` :: カレントグリフ`glyph`をダンプ
+- `pgi` :: 次のグリフをダンプ
+- `pgrow` :: glyph_row型のカレント`row`のすべてのグリフをダンプ
+- `pcursor` :: カレントの`output_cursor`をダンプ
 
 The above commands also exist in a version with an 'x' suffix which takes an
 object of the relevant type as argument.  For example, 'pgrowx' dumps all
