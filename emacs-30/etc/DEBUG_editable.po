@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-24 10:08+0900\n"
+"PO-Revision-Date: 2024-11-24 15:53+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -1075,7 +1075,7 @@ msgid "     (declare (speed 1))\n"
 msgstr ""
 "```text\n"
 "    (declare (speed 1))\n"
-"``\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:617
@@ -1136,7 +1136,7 @@ msgid ""
 "1) The command gud-print is available on the tool bar (the 'p' icon) and\n"
 "   allows the user to print the s-expression of the variable at point,\n"
 "   in the GUD buffer.\n"
-msgstr ""
+msgstr "1) ツールバーのコマンド`gud-print` (\"p\"アイコン)を使えば、ポイント位置にある変数のS式をGUDバッファーにプリントできる。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:655
@@ -1144,7 +1144,7 @@ msgstr ""
 msgid ""
 "2) Pressing 'p' on a component of a watch expression that is a lisp object\n"
 "   in the speedbar prints its s-expression in the GUD buffer.\n"
-msgstr ""
+msgstr "2) lispオブジェクトにたいするスピードバー上のwatch式のコンポーネントの上で\"p\"を押下すると、GUDバッファーにそれのS式をプリントする。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:659
@@ -1153,7 +1153,7 @@ msgid ""
 "3) The STOP button on the tool bar and the Signals->STOP menu-bar menu\n"
 "   item are adjusted so that they send SIGTSTP instead of the usual\n"
 "   SIGINT.\n"
-msgstr ""
+msgstr "3) ツールバーの`STOP`ボタンおよびメニューバーのメニューアイテム`Signals->STOP`は通常だと`SIGINT`を送信するが、かわりにSIGTSTPを送信するように調整されている。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:662
@@ -1161,97 +1161,106 @@ msgstr ""
 msgid ""
 "4) The command gud-pv has the global binding 'C-x C-a C-v' and prints the\n"
 "   value of the lisp variable at point.\n"
-msgstr ""
+msgstr "4) コマンド`gud-pv`は`C-x C-a C-v`にグローバルにバインドされており、これを使えばポイント位置のlisp変数の値をプリントできる。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:664
 #, no-wrap
 msgid "** Debugging what happens while preloading and dumping Emacs\n"
-msgstr ""
+msgstr "## ロード前のEmacsやダンプ中のEmacsで起こっていることをデバッグする\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:668
 msgid "Debugging 'temacs' is useful when you want to establish whether a problem happens in an undumped Emacs.  To run 'temacs' under a debugger, type \"gdb temacs\", then start it with 'r -batch -l loadup'."
-msgstr ""
+msgstr "アンダンプされたEmacsで問題が発生しているかどうか確認したい場合には、`temacs`をデバッグすると役に立つかもしれない。`gdb temacs`とタイプしてから`r -batch -l loadup`で開始すれば、デバッガ配下で`temacs`を実行できる(訳注: 実行中のプロセスをメモリからディスクに書き出すのがダンプなので、アンダンプはその反対; 前にダンプしたファイルをメモリに読み込んで実行することを指す)。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:672
 msgid "If you need to debug what happens during dumping, start it with 'r -batch -l loadup dump' instead.  For debugging the bootstrap dumping, use \"loadup bootstrap\" instead of \"loadup dump\"."
-msgstr ""
+msgstr "ダンプ中に何が起きているかをデバッグする必要がある場合には、かわりに`r -batch -l loadup dump`で開始する。bootstrapでのダンプをデバッグする場合には、`loadup dump`ではなく`loadup bootstrap`を使えばよい。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:676
 msgid "If temacs actually succeeds when running under GDB in this way, do not try to run the dumped Emacs, because it was dumped with the GDB breakpoints in it."
-msgstr ""
+msgstr "この方法で実際にGDBから`temacs`を実行できた場合には、ダンプしたEmacsの実行を試みてはならない。GDBのブレークポイントが張られた状態でダンプされているからだ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:678
 #, no-wrap
 msgid "** If you encounter X protocol errors\n"
-msgstr ""
+msgstr "## Xプロトコルエラーに出くわしたら\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:682
 msgid "The X server normally reports protocol errors asynchronously, so you find out about them long after the primitive which caused the error has returned."
-msgstr ""
+msgstr "Xサーバーは通常だとプロトコルエラーを非同期に報告するので、エラー原因のプリミティブがリターンされてからかなり経った後にエラーに気づくことになる。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:688
 msgid "To get clear information about the cause of an error, try evaluating (x-synchronize t).  That puts Emacs into synchronous mode, where each Xlib call checks for errors before it returns.  This mode is much slower, but when you get an error, you will see exactly which call really caused the error."
-msgstr ""
+msgstr "エラー原因に関して明解な情報を得るためには、`(x-synchronize t)`を評価してみる。これによりEmacsはXlib呼び出しそれぞれが、リターンする前にエラーチェックを同期モードに移行する。これは非常に低速なモードだがエラー発生時には、どの呼び出しが本当のエラー原因なのかを正確に確認できるだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:691
 msgid "You can start Emacs in a synchronous mode by invoking it with the -xrm option, like this:"
-msgstr ""
+msgstr "以下のように`-xrm`オプションとともに呼び出すことで、同期モードでEmacsを開始することもできる:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:693
 #, no-wrap
 msgid "    emacs -xrm \"emacs.synchronous: true\"\n"
 msgstr ""
+"```shell\n"
+"    emacs -xrm \"emacs.synchronous: true\"\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:697
 msgid "Setting a breakpoint in the function 'x_error_quitter' and looking at the backtrace when Emacs stops inside that function will show what code causes the X protocol errors."
-msgstr ""
+msgstr "関数`x_error_quitter`にブレークポイントをセットして、Emacsがこの関数内部で停止した際にバックトレースを調べれば、どのコードがXプロトコルエラーを起こしたのか確認できるだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:702
 msgid "Note that the -xrm option may have no effect when you start a server in an Emacs session invoked with the -nw command-line option, and want to trace X protocol errors from GUI frames created by subsequent invocations of emacsclient.  In that case starting Emacs via"
-msgstr ""
+msgstr "`emacsclient`呼び出しによって作成されたGUIフレームのXプロトコルエラーをトレースしたくても、コマンドラインオプションに`-nw`を指定して開始したEmacsセッションのサーバーでは、`-xrm`オプションの効果がないかもしれないことに注意。そのような場合には以下のようにしてEmacsを開始すること"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:704
 #, no-wrap
 msgid "  emacs -nw --eval '(setq x-command-line-resources \"emacs.synchronous: true\")'\n"
 msgstr ""
+"```shell\n"
+"  emacs -nw --eval '(setq x-command-line-resources \"emacs.synchronous: true\")'\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:706
 msgid "should give more reliable results."
-msgstr ""
+msgstr "こうすればより確度の高い結果が得られる筈だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:709
 msgid "For X protocol errors related to displaying unusual characters or to font-related customizations, try invoking Emacs like this:"
-msgstr ""
+msgstr "通常使用しない文字の表示や、フォント関連のカスタマイズでのXプロトコルエラーにたいしては、以下のようにしてEmacsを呼び出してみよう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:711
 #, no-wrap
 msgid "  XFT_DEBUG=16 emacs -xrm \"emacs.synchronous: true\"\n"
 msgstr ""
+"```shell\n"
+"  XFT_DEBUG=16 emacs -xrm \"emacs.synchronous: true\"\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:714
 msgid "This should produce information from the libXft library which could give useful hints regarding font-related problems in that library."
-msgstr ""
+msgstr "これによりlibXftライブラリーでのフォントに関する問題について有益な情報が生成される筈だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:718
 msgid "Some bugs related to the X protocol disappear when Emacs runs in a synchronous mode.  To track down those bugs, we suggest the following procedure:"
-msgstr ""
+msgstr "Emacsを同期モードで実行すると、Xプロトコル関連の一部のバグが発生しなくなる。このようなバグを追跡する場合には、以下の手順を推奨している:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:723
@@ -1261,7 +1270,7 @@ msgid ""
 "    primitive function which, when called from Lisp, triggers the X\n"
 "    protocol errors.  For example, if the errors happen when you\n"
 "    delete a frame, put a breakpoint inside 'Fdelete_frame'.\n"
-msgstr ""
+msgstr "- デバッガからEmacsを実行して、Lispから呼び出されるとXプロトコルエラートリガーするプリミティブ関数の内部にブレークポイントを配置する。たとえばフレームの削除時にエラーが発生する場合には、`Fdelete_frame`の中にブレークポイントを配置する。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:727
@@ -1270,7 +1279,7 @@ msgid ""
 "  - When the breakpoint breaks, step through the code, looking for\n"
 "    calls to X functions (the ones whose names begin with \"X\" or\n"
 "    \"Xt\" or \"Xm\").\n"
-msgstr ""
+msgstr "- ブレークポイントで停止したらコードをステップ実行してX関数の呼び出しを探す(名前が\"X\"、\"Xt\"、\"Xm\"で始まる関数だ)。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:730
@@ -1278,13 +1287,16 @@ msgstr ""
 msgid ""
 "  - Insert calls to 'XSync' before and after each call to the X\n"
 "    functions, like this:\n"
-msgstr ""
+msgstr "- 以下のようにX関数の呼び出しそれぞれにたいして、前後に`XSync`呼び出しを挿入する:\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:732
 #, no-wrap
 msgid "       XSync (f->output_data.x->display_info->display, 0);\n"
 msgstr ""
+"```c\n"
+"      XSync (f->output_data.x->display_info->display, 0);\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:738
@@ -1295,7 +1307,7 @@ msgid ""
 "    functions which call X already have some variable that holds the\n"
 "    pointer to the frame, perhaps called 'f' or 'sf', so you shouldn't\n"
 "    need to compute it.)\n"
-msgstr ""
+msgstr "ここで`f`は選択されたフレーム`struct frame` (通常は`XFRAME (selected_frame)`を介して利用可能)へのポインターだ(Xを呼び出すほとんどの関数はフレームへのポインターを保持するために、多分`f`や`sf`のような名前の変数をすでにもっているので、改めて計算する必要はない筈だ)。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:742
@@ -1304,13 +1316,16 @@ msgid ""
 "    If your debugger can call functions in the program being debugged,\n"
 "    you should be able to issue the calls to 'XSync' without recompiling\n"
 "    Emacs.  For example, with GDB, just type:\n"
-msgstr ""
+msgstr "デバッグ中のプログラムの中から関数を呼び出せるデバッガであれば、Emacsをリコンパイルせずに`XSync`呼び出しを行える筈だ。たとえばGDBなら:\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:744
 #, no-wrap
 msgid "       call XSync (f->output_data.x->display_info->display, 0)\n"
 msgstr ""
+"```text\n"
+"      call XSync (f->output_data.x->display_info->display, 0)\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:748
@@ -1320,6 +1335,9 @@ msgid ""
 "    debugger does not support this, you will need to add these pairs\n"
 "    of calls in the source and rebuild Emacs.\n"
 msgstr ""
+"上記のように疑わしいX呼び出しの前と直後で呼び出せばよい。\n"
+"before and immediately after the suspect X calls.\n"
+"デバッガがこれをサポートしていなければ、ソースコードに呼び出しのペアーを追加して、Emacsをリビルドする必要があるだろう。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:754

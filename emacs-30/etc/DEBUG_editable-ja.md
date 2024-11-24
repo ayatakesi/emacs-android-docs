@@ -430,7 +430,7 @@ glyph_row`型の引数オブジェクトについて、すべてのグリフを�
 
 ```text
     (declare (speed 1))
-``
+```
 
 疑わしい関数(複数可)のbody先頭に上記宣言を追加して、それらの関数にたいしてのみ`native-comp-speed`を変更するのだ。どの関数が問題の原因となっているか特定する助けとなるかもしれない。
 
@@ -450,104 +450,80 @@ glibcの最近のバージョン(2.4以上か?)は`setjmp`および`longjmp`の�
 EmacsでのGDBを用いたデバッグには、コマンドラインから行う場合に比べていくつかの利点がある(Emacsマニュアルの"GDB Graphical
 Interface"ノードを参照)。Emacsのデバッグだけに利用可能な機能もいくつか存在する:
 
-1) The command gud-print is available on the tool bar (the 'p' icon) and
-   allows the user to print the s-expression of the variable at point,
-   in the GUD buffer.
+1) ツールバーのコマンド`gud-print` ("p"アイコン)を使えば、ポイント位置にある変数のS式をGUDバッファーにプリントできる。
 
-2) Pressing 'p' on a component of a watch expression that is a lisp object
-   in the speedbar prints its s-expression in the GUD buffer.
+2) lispオブジェクトにたいするスピードバー上のwatch式のコンポーネントの上で"p"を押下すると、GUDバッファーにそれのS式をプリントする。
 
-3) The STOP button on the tool bar and the Signals->STOP menu-bar menu
-   item are adjusted so that they send SIGTSTP instead of the usual
-   SIGINT.
+3) ツールバーの`STOP`ボタンおよびメニューバーのメニューアイテム`Signals->STOP`は通常だと`SIGINT`を送信するが、かわりにSIGTSTPを送信するように調整されている。
 
-4) The command gud-pv has the global binding 'C-x C-a C-v' and prints the
-   value of the lisp variable at point.
+4) コマンド`gud-pv`は`C-x C-a C-v`にグローバルにバインドされており、これを使えばポイント位置のlisp変数の値をプリントできる。
 
-** Debugging what happens while preloading and dumping Emacs
+## ロード前のEmacsやダンプ中のEmacsで起こっていることをデバッグする
 
-Debugging 'temacs' is useful when you want to establish whether a problem
-happens in an undumped Emacs.  To run 'temacs' under a debugger, type "gdb
-temacs", then start it with 'r -batch -l loadup'.
+アンダンプされたEmacsで問題が発生しているかどうか確認したい場合には、`temacs`をデバッグすると役に立つかもしれない。`gdb
+temacs`とタイプしてから`r -batch -l loadup`で開始すれば、デバッガ配下で`temacs`を実行できる(訳注:
+実行中のプロセスをメモリからディスクに書き出すのがダンプなので、アンダンプはその反対; 前にダンプしたファイルをメモリに読み込んで実行することを指す)。
 
-If you need to debug what happens during dumping, start it with 'r -batch -l
-loadup dump' instead.  For debugging the bootstrap dumping, use "loadup
-bootstrap" instead of "loadup dump".
+ダンプ中に何が起きているかをデバッグする必要がある場合には、かわりに`r -batch -l loadup
+dump`で開始する。bootstrapでのダンプをデバッグする場合には、`loadup dump`ではなく`loadup
+bootstrap`を使えばよい。
 
-If temacs actually succeeds when running under GDB in this way, do not try
-to run the dumped Emacs, because it was dumped with the GDB breakpoints in
-it.
+この方法で実際にGDBから`temacs`を実行できた場合には、ダンプしたEmacsの実行を試みてはならない。GDBのブレークポイントが張られた状態でダンプされているからだ。
 
-** If you encounter X protocol errors
+## Xプロトコルエラーに出くわしたら
 
-The X server normally reports protocol errors asynchronously, so you find
-out about them long after the primitive which caused the error has returned.
+Xサーバーは通常だとプロトコルエラーを非同期に報告するので、エラー原因のプリミティブがリターンされてからかなり経った後にエラーに気づくことになる。
 
-To get clear information about the cause of an error, try evaluating
-(x-synchronize t).  That puts Emacs into synchronous mode, where each Xlib
-call checks for errors before it returns.  This mode is much slower, but
-when you get an error, you will see exactly which call really caused the
-error.
+エラー原因に関して明解な情報を得るためには、`(x-synchronize
+t)`を評価してみる。これによりEmacsはXlib呼び出しそれぞれが、リターンする前にエラーチェックを同期モードに移行する。これは非常に低速なモードだがエラー発生時には、どの呼び出しが本当のエラー原因なのかを正確に確認できるだろう。
 
-You can start Emacs in a synchronous mode by invoking it with the -xrm
-option, like this:
+以下のように`-xrm`オプションとともに呼び出すことで、同期モードでEmacsを開始することもできる:
 
+```shell
     emacs -xrm "emacs.synchronous: true"
+```
 
-Setting a breakpoint in the function 'x_error_quitter' and looking at the
-backtrace when Emacs stops inside that function will show what code causes
-the X protocol errors.
+関数`x_error_quitter`にブレークポイントをセットして、Emacsがこの関数内部で停止した際にバックトレースを調べれば、どのコードがXプロトコルエラーを起こしたのか確認できるだろう。
 
-Note that the -xrm option may have no effect when you start a server in an
-Emacs session invoked with the -nw command-line option, and want to trace X
-protocol errors from GUI frames created by subsequent invocations of
-emacsclient.  In that case starting Emacs via
+`emacsclient`呼び出しによって作成されたGUIフレームのXプロトコルエラーをトレースしたくても、コマンドラインオプションに`-nw`を指定して開始したEmacsセッションのサーバーでは、`-xrm`オプションの効果がないかもしれないことに注意。そのような場合には以下のようにしてEmacsを開始すること
 
+```shell
   emacs -nw --eval '(setq x-command-line-resources "emacs.synchronous: true")'
+```
 
-should give more reliable results.
+こうすればより確度の高い結果が得られる筈だ。
 
-For X protocol errors related to displaying unusual characters or to
-font-related customizations, try invoking Emacs like this:
+通常使用しない文字の表示や、フォント関連のカスタマイズでのXプロトコルエラーにたいしては、以下のようにしてEmacsを呼び出してみよう:
 
+```shell
   XFT_DEBUG=16 emacs -xrm "emacs.synchronous: true"
+```
 
-This should produce information from the libXft library which could give
-useful hints regarding font-related problems in that library.
+これによりlibXftライブラリーでのフォントに関する問題について有益な情報が生成される筈だ。
 
-Some bugs related to the X protocol disappear when Emacs runs in a
-synchronous mode.  To track down those bugs, we suggest the following
-procedure:
+Emacsを同期モードで実行すると、Xプロトコル関連の一部のバグが発生しなくなる。このようなバグを追跡する場合には、以下の手順を推奨している:
 
-  - Run Emacs under a debugger and put a breakpoint inside the
-    primitive function which, when called from Lisp, triggers the X
-    protocol errors.  For example, if the errors happen when you
-    delete a frame, put a breakpoint inside 'Fdelete_frame'.
+- デバッガからEmacsを実行して、Lispから呼び出されるとXプロトコルエラートリガーするプリミティブ関数の内部にブレークポイントを配置する。たとえばフレームの削除時にエラーが発生する場合には、`Fdelete_frame`の中にブレークポイントを配置する。
 
-  - When the breakpoint breaks, step through the code, looking for
-    calls to X functions (the ones whose names begin with "X" or
-    "Xt" or "Xm").
+- ブレークポイントで停止したらコードをステップ実行してX関数の呼び出しを探す(名前が"X"、"Xt"、"Xm"で始まる関数だ)。
 
-  - Insert calls to 'XSync' before and after each call to the X
-    functions, like this:
+- 以下のようにX関数の呼び出しそれぞれにたいして、前後に`XSync`呼び出しを挿入する:
 
-       XSync (f->output_data.x->display_info->display, 0);
+```c
+      XSync (f->output_data.x->display_info->display, 0);
+```
 
-    where 'f' is the pointer to the 'struct frame' of the selected
-    frame, normally available via XFRAME (selected_frame).  (Most
-    functions which call X already have some variable that holds the
-    pointer to the frame, perhaps called 'f' or 'sf', so you shouldn't
-    need to compute it.)
+ここで`f`は選択されたフレーム`struct frame` (通常は`XFRAME (selected_frame)`を介して利用可能)へのポインターだ(Xを呼び出すほとんどの関数はフレームへのポインターを保持するために、多分`f`や`sf`のような名前の変数をすでにもっているので、改めて計算する必要はない筈だ)。
 
-    If your debugger can call functions in the program being debugged,
-    you should be able to issue the calls to 'XSync' without recompiling
-    Emacs.  For example, with GDB, just type:
+デバッグ中のプログラムの中から関数を呼び出せるデバッガであれば、Emacsをリコンパイルせずに`XSync`呼び出しを行える筈だ。たとえばGDBなら:
 
-       call XSync (f->output_data.x->display_info->display, 0)
+```text
+      call XSync (f->output_data.x->display_info->display, 0)
+```
 
-    before and immediately after the suspect X calls.  If your
-    debugger does not support this, you will need to add these pairs
-    of calls in the source and rebuild Emacs.
+上記のように疑わしいX呼び出しの前と直後で呼び出せばよい。
+before and immediately after the suspect X calls.
+デバッガがこれをサポートしていなければ、ソースコードに呼び出しのペアーを追加して、Emacsをリビルドする必要があるだろう。
 
     Either way, systematically step through the code and issue these
     calls until you find the first X function called by Emacs after
