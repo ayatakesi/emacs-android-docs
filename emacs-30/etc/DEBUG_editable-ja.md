@@ -525,60 +525,29 @@ Emacsを同期モードで実行すると、Xプロトコル関連の一部の�
 before and immediately after the suspect X calls.
 デバッガがこれをサポートしていなければ、ソースコードに呼び出しのペアーを追加して、Emacsをリビルドする必要があるだろう。
 
-    Either way, systematically step through the code and issue these
-    calls until you find the first X function called by Emacs after
-    which a call to 'XSync' winds up in the function
-    'x_error_quitter'.  The first X function call for which this
-    happens is the one that generated the X protocol error.
+どちらの方法でも計画的にコードをステップで追跡、Emacsが呼び出すX関数それぞれにたいしてこれらの呼び出しを行っていく。そして`XSync`呼び出しが関数`x_error_quitter`内で終了するような最初のX関数を突き止めよう。これが発生する最初のX関数呼び出しこそが、Xプロトコルエラーを生成している関数だ。
 
-  - You should now look around this offending X call and try to figure
-    out what is wrong with it.
+- これでこの忌々しいX呼び出しを調べて、何が問題なのか見つけだせる筈だ。
 
-** If Emacs causes errors or memory leaks in your X server
+## Xサーバー上でのEmacsのエラーやメモリーリーク
 
-You can trace the traffic between Emacs and your X server with a tool like
-xmon.
+`xmon`のようなツールを使えば、EmacsとXサーバーの間のトラフィックをトレースできる。
 
-Xmon can be used to see exactly what Emacs sends when X protocol errors
-happen.  If Emacs causes the X server memory usage to increase you can use
-xmon to see what items Emacs creates in the server (windows, graphical
-contexts, pixmaps) and what items Emacs delete.  If there are consistently
-more creations than deletions, the type of item and the activity you do when
-the items get created can give a hint where to start debugging.
+`xmon`を使えばlXプロトコルエラーの発生時に、実際にEmacsが何を送信したか調べることができる。Xサーバーのメモリー使用量増加の原因がEmacsの場合には、xmonを使ってEmacsがサーバー上で何のアイテム(ウィンドウ、グラフィカルコンテキスト、pixmap)を作成したか、何を削除したか調べることができる。作成の方が削除より一貫して多い場合には、そのアイテムのタイプ、アイテム作成時にあなたが行っていたアクティビティがデバッグ開始点のヒントを与えてくれるだろう。
 
-** If the symptom of the bug is that Emacs fails to respond
+## Emacsが応答に失敗するという症状のバグについて
 
-Don't assume Emacs is 'hung'--it may instead be in an infinite loop.  To
-find out which, make the problem happen under GDB and stop Emacs once it is
-not responding.  (If Emacs is using X Windows directly, you can stop Emacs
-by typing C-z at the GDB job.  On MS-Windows, run Emacs as usual, and then
-attach GDB to it -- that will usually interrupt whatever Emacs is doing and
-let you perform the steps described below.)
+Emacsが`hung`、つまり固まっていると判断を下すのは早計だ。無限ループのせいかもしれないのだから。どちらなのかを調べるためにはGDB配下で問題を再現して、応答しなくなったらEmacsを一度停止してみよう。(Emacsが直接Xウィンドウを使用している場合には、GDB上で`C-z`をタイプすればEmacsを停止できる。MS-Windowsの場合には通常通りEmacsを実行してからGDBをアタッチすれば、通常だとEmacsが何を行っていたとしても割り込むことができるので、以下に示すステップを実行できるだろう。)
 
-Then try stepping with 'step'.  If Emacs is hung, the 'step' command won't
-return.  If it is looping, 'step' will return.
+Emacsが停止したら`step`でステップ実行してみる。Emacsがhungしていた場合には`step`コマンドはリターンしないが、無限ループしていたのなら`step`がリターンして制御が戻る筈だ。
 
-If this shows Emacs is hung in a system call, stop it again and examine the
-arguments of the call.  If you report the bug, it is very important to state
-exactly where in the source the system call is, and what the arguments are.
+これによりEmacsが何らかのシステムコールでhungしている場合には、もう一度Emacsを停止してその呼び出しの引数を調べてみよう。あなたがバグレポートを送る際にはそのシステムコールがソースの何処にあるのか、引数が何なのかを正確に伝えることが非常に重要になるだろう。
 
-If Emacs is in an infinite loop, try to determine where the loop starts and
-ends.  The easiest way to do this is to use the GDB command 'finish'.  Each
-time you use it, Emacs resumes execution until it exits one stack frame.
-Keep typing 'finish' until it doesn't return--that means the infinite loop
-is in the stack frame which you just tried to finish.
+Emacsが無限ループしていたら、そのループの懐紙と終了を見つけ出そう。これをもっとも簡単に行うには、GDBコマンドの`finish`コマンドを使えばよい。このコマンドを使用する度に、Emacsは実行を再開して1階層分のスタックフレームを抜け出すと再び停止する。`finish`がリターンしなくなるまでこれを繰り返すのだ(`finish`を試してリターンしなければ、今試したスタックフレームに無限ループがあることを意味している)。
 
-Stop Emacs again, and use 'finish' repeatedly again until you get back to
-that frame.  Then use 'next' to step through that frame.  By stepping, you
-will see where the loop starts and ends.  Also, examine the data being used
-in the loop and try to determine why the loop does not exit when it should.
+Emacsをもう一度停止して、そのフレームに戻るまで繰り返し`finish`を実行する。戻ったらそのフレームをステップで追うために`next`を使用しよう。ステップ実行することによりループの開始と終了の位置が確認できるだろう。そのループで使用されているデータも調べて、終了すべきループから何故抜け出せないのかを特定するのだ。
 
-On GNU and Unix systems, you can also try sending Emacs SIGUSR2, which, if
-'debug-on-event' has its default value, will cause Emacs to attempt to break
-out of its current loop and enter the Lisp debugger.  (See the node
-"Debugging" in the ELisp manual for the details about the Lisp debugger.)
-This feature is useful when a C-level debugger is not conveniently
-available.
+GNUおよびUnixシステムでは、EmacsへのSIGUSR2の送信を試みることも可能だ。`debug-on-event`がデフォルト値のままなら、このシグナルによってEmacsはカレントループからの脱出を試みて、Lispデバッガにエンターする筈だ(Lispデバッガに関する詳細については、ELispマニュアルのノード"Debugging"を参照)。この機能はCレベルのデバッガが簡単に利用できないときに役に立つだろう。
 
 ** If certain operations in Emacs are slower than they used to be, here
 is some advice for how to find out why.
