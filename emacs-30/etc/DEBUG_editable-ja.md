@@ -397,117 +397,58 @@ X配下で実行中のEmacsにたいして再表示問題をデバッグする�
 - `pgrow` :: glyph_row型のカレント`row`のすべてのグリフをダンプ
 - `pcursor` :: カレントの`output_cursor`をダンプ
 
-The above commands also exist in a version with an 'x' suffix which takes an
-object of the relevant type as argument.  For example, 'pgrowx' dumps all
-glyphs in its argument, which must be of type 'struct glyph_row'.
+上記コマンドのについては、`x`を後置したバージョンのコマンドもある。関連するオブジェクトを引数として受け取るコマンドだ。たとえば`pgrowx`は`struct
+glyph_row`型の引数オブジェクトについて、すべてのグリフをダンプするコマンドだ。
 
-Since redisplay is performed by Emacs very frequently, you need to place
-your breakpoints cleverly to avoid hitting them all the time, when the issue
-you are debugging did not (yet) happen.  Here are some useful techniques for
-that:
+再表示はEmacsによって非常に頻繁に行われるので、デバッグ中の問題が(まだ)発生していないのに、再表示の度に停止しないよう、ブレークポイントの配置には考慮が要される。これに関する役に立つテクニックを挙げておこう:
 
- . Put a breakpoint at 'Frecenter' or 'Fredraw_display' before running Emacs.
-   Then do whatever is required to reproduce the bad display, and type C-l or
-   "M-x redraw-display" just before invoking the last action that reproduces
-   the bug.  The debugger will kick in, and you can set or enable breakpoints
-   in strategic places, knowing that the bad display will happen soon.  With a
-   breakpoint at 'Fredraw_display', you can even reproduce the bug and invoke
-   "M-x redraw-display" afterwards, knowing that the bad display will be
-   redrawn from scratch.
+- Emacsを実行する前に`Frecenter`か`Fredraw_display`にブレークポイントを配置する。それから表示バグの再現に必要なことを行い、バグ再現のための最後のアクションを呼び出す直前に`C-l`や`M-x redraw-display`を呼び出すのだ。デバッガに制御が渡るので、表示バグが間もなく発生すると判っている上で、戦略的な位置へのブレークポイントのセットや有効化が可能になる。`Fredraw_display`にブレークポイントを張っておけばバグの再現だけではなく、`M-x redraw-display`を呼び出すことによって表示バグが再描画される様を一から確認できるだろう。
 
- . For debugging incorrect cursor position, a good place to put a breakpoint
-   is in 'set_cursor_from_row'.  The first time this function is called as
-   part of 'redraw-display', Emacs is redrawing the minibuffer window, which
-   is usually not what you want; type "continue" to get to the call you want.
-   In general, always make sure 'set_cursor_from_row' is called for the right
-   window and buffer by examining the value of w->contents: it should be the
-   buffer whose display you are debugging.
+- 不正なカーソル位置をデバッグする際のブレークポイントの位置として相応しいのが`set_cursor_from_row`だ。この関数が`redraw-display`の一部として最初に呼び出される際には、ミニバッファーウィンドウが再描画されるがこれは多分あなたが欲する再描画ではないので、目的としている呼び出しに到達するために、`continue`をタイプしよう。一般的なデバッグ方法としては`w->contents`の値を調べる。`set_cursor_from_row`が正しいウィンドウおよびバッファーにたいして呼び出されているか調べるのだ。そのバッファーの表示は、デバッグしている再表示呼び出しによって行われている筈だからだ。
 
- . 'set_cursor_from_row' is also a good place to look at the contents of a
-   screen line (a.k.a. "glyph row"), by means of the 'pgrow' GDB command.  Of
-   course, you need first to make sure the cursor is on the screen line which
-   you want to investigate.  If you have set a breakpoint in 'Fredraw_display'
-   or 'Frecenter', as advised above, move cursor to that line before invoking
-   these commands.
+- `set_cursor_from_row`はGDBコマンド`pgrow`でスクリーン行(またの名を`glyph row`という)の内容を調べる場所としても適している。最初はもちろん調査したいスクリーン行にカーソルがあるか確認しよう。上記アドバイスにある`Fredraw_display`か`Frecenter`にブレークポイントをセットした場合には、これらのコマンドが呼び出される前にその行にカーソルを移動しておくこと。
 
- . If the problem happens only at some specific buffer position or for some
-   specific rarely-used character, you can make your breakpoints conditional
-   on those values.  The display engine maintains the buffer and string
-   position it is processing in the it->current member; for example, the
-   buffer character position is in it->current.pos.charpos.  Most redisplay
-   functions accept a pointer to a 'struct it' object as their argument, so
-   you can make conditional breakpoints in those functions, like this:
+- 特定のバッファー位置や滅多に使用されない特定の文字でのみ問題が発生する場合には、それらの値をブレークポイントのブレーク条件にセットできる。ディスプレイエンジンははバッファーや文字列の位置を`it->current`、バッファーでの文字位置を`it->current.pos.charpos`で保守している。ほとんどの再表示関数は`struct it`オブジェクトのポインターを引数として受け取るので、これらの関数のブレークポイントに以下のような条件を設定すればよい:
 
+```text
     (gdb) break x_produce_glyphs if it->current.pos.charpos == 1234
+```
 
-   For conditioning on the character being displayed, use it->c or
-   it->char_to_display.
+表示される文字に条件を設定する場合には`it->c`か`it->char_to_display`を使おう。
 
- . You can also make the breakpoints conditional on what object is being used
-   for producing glyphs for display.  The it->method member has the value
-   GET_FROM_BUFFER for displaying buffer contents, GET_FROM_STRING for
-   displaying a Lisp string (e.g., a 'display' property or an overlay string),
-   GET_FROM_IMAGE for displaying an image, etc.  See 'enum it_method' in
-   dispextern.h for the full list of values.
+- 表示用のグリフ生成に使用されるオブジェクトに条件を設けることもできる。`it->method`はバッファーコンテンツの表示では`GET_FROM_BUFFER`、Lisp文字列(`display`プロパティやオーバーレイ文字列のこと)の表示は`GET_FROM_STRING`、イメージの表示なら`GET_FROM_IMAGE`といった値となる。これらの値の完全なリストについては、`dispextern.h`の`enum it_method`を参照のこと。
 
- . When the display engine is processing a 'display' text property or an
-   overlay string, it pushes on the iterator stack the state variables
-   describing its iteration of buffer text, then reinitializes the iterator
-   object for processing the property or overlay.  The it->sp ("stack
-   pointer") member, if it is greater than zero, means the iterator's stack
-   was pushed at least once.  You can therefore condition your breakpoints on
-   the value of it->sp being positive or being of a certain positive value, to
-   debug display problems that happen only with display properties or
-   overlays.
+- ディスプレイエンジンがテキストプロパティ`display`やオーバーレイ文字列を処理する際には、バッファーテキストのイテレーションを記述する状態変数をイテレータ(反復)のスタックにpushしてから、プロパティやオーバーレイを処理するためにイテレータオブジェクトの再初期化を行う。`it->sp` (spは"スタックポインター")が0より大きければ、少なくとも1回はイテレータスタックにpush されたことを意味している。したがってブレークポイントの条件として`it->sp`の値が正、あるいは特定の正の値を設定すれば、`display`プロパティやオーバーレイでのみ発生する表示問題がデバッグできる。
 
-** Debugging problems with native-compiled Lisp.
+## ネイティブコンパイルされたLispのデバッグにまつわる問題
 
-When you encounter problems specific to native-compilation of Lisp, we
-recommend to follow the procedure below to try to identify the cause:
+ネイティブコンパイルされたLisp固有の問題に遭遇したときには、以下の手順にしたがって原因の特定を試みることを推奨する:
 
- . Reduce the problematic .el file to the minimum by bisection, and
-   try identifying the function that causes the problem.
+- 二分探索を用いて問題のある".el"ファイルのコード範囲を最小化して、問題の原因となっている関数の特定を試みる。
 
- . Try natively compiling the problematic file with
-   'native-comp-speed' set to 1 or even zero.  If doing that solves
-   the problem, you can use
+`native-comp-speed`を1、何なら0にセットして、問題のあるファイルのネイティブコンパイルを試みる。これで問題が解決するようなら、以下を使用できるだろう
 
-     (declare (speed 1))
+```text
+    (declare (speed 1))
+``
 
-   at the beginning of the body of suspected function(s) to change
-   'native-comp-speed' only for those functions -- this could help you
-   identify the function(s) which cause(s) the problem.
+疑わしい関数(複数可)のbody先頭に上記宣言を追加して、それらの関数にたいしてのみ`native-comp-speed`を変更するのだ。どの関数が問題の原因となっているか特定する助けとなるかもしれない。
 
- . Reduce the problematic function(s) to the minimal code that still
-   reproduces the problem.
+- 問題のある関数にたいして、依然として問題が発生する最小限のコードになるまで絞り込む。
 
- . Study the problem's artifacts, like Lisp or C backtraces, to try
-   identifying the cause of the problem.
+- 問題にたいしてLispやCのバックトレースのような資料を調べて、問題の原因特定を試みる。
 
-If you cannot figure out the cause for the problem using the above,
-native-compile the problematic file after setting the variable
-'comp-libgccjit-reproducer' to a non-nil value.  That should produce a file
-named ELNFILENAME_libgccjit_repro.c, where ELNFILENAME is the name of the
-problematic .eln file, either in the same directory where the .eln file is
-produced, or under your ~/.emacs.d/eln-cache (which one depends on how the
-native-compilation is invoked).  It is also possible that the reproducer
-file's name will be something like
-subr--trampoline-XXXXXXX_FUNCTION_libgccjit_repro.c, where XXXXXXX is a long
-string of hex digits and FUNCTION is some function from the compiled .el
-file.  Attach that reproducer C file to your bug report.
+上記手段を使用しても問題の原因を特定できない場合には、変数`comp-libgccjit-reproducer`に非`nil`値をセットした後に問題のあるファイルをネイティブコンパイルしてみる。これにより`ELNFILENAME_libgccjit_repro.c`という名前のファイルが生成される筈だ。ここで`ELNFILENAME`は問題のある".eln"と同じ名前であり".eln"ファイルが生成されるのと同じディレクトリー、あるいは"~/.emacs.d/eln-cache"というディレクトリーの配下に生成される(どちらのディレクトリーになるかはネイティブコンパイルがどのように呼び出されたかに依存する)。再生成するファイルを`subr--trampoline-XXXXXXX_FUNCTION_libgccjit_repro.c`
+(`XXXXXXX`は16進文字からなるながい文字列、`FUNCTION`はコンパイルされた".el"ファイルの中の関数)のような名前にすることも可能だ。この再生成したCファイルをバグレポートに添付して欲しい。
 
-** Following longjmp call.
+## `longjmp`呼び出しの後を追う
 
-Recent versions of glibc (2.4+?) encrypt stored values for setjmp/longjmp
-which prevents GDB from being able to follow a longjmp call using 'next'.
-To disable this protection you need to set the environment variable
-LD_POINTER_GUARD to 0.
+glibcの最近のバージョン(2.4以上か?)は`setjmp`および`longjmp`のための値を暗号化して保存するが、これによりGDBから`next`呼び出しで`longjmp`を追うのが不可能になった。この保護を無効にするには、環境変数`LD_POINTER_GUARD`に`0`をセットする必要がある。
 
-** Using GDB in Emacs
+## EmacsからGDBを使うには
 
-Debugging with GDB in Emacs offers some advantages over the command line
-(See the GDB Graphical Interface node of the Emacs manual).  There are also
-some features available just for debugging Emacs:
+EmacsでのGDBを用いたデバッグには、コマンドラインから行う場合に比べていくつかの利点がある(Emacsマニュアルの"GDB Graphical
+Interface"ノードを参照)。Emacsのデバッグだけに利用可能な機能もいくつか存在する:
 
 1) The command gud-print is available on the tool bar (the 'p' icon) and
    allows the user to print the s-expression of the variable at point,

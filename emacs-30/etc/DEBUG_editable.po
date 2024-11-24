@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-23 14:30+0900\n"
+"PO-Revision-Date: 2024-11-24 10:08+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -937,12 +937,12 @@ msgstr ""
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:541
 msgid "The above commands also exist in a version with an 'x' suffix which takes an object of the relevant type as argument.  For example, 'pgrowx' dumps all glyphs in its argument, which must be of type 'struct glyph_row'."
-msgstr ""
+msgstr "上記コマンドのについては、`x`を後置したバージョンのコマンドもある。関連するオブジェクトを引数として受け取るコマンドだ。たとえば`pgrowx`は`struct glyph_row`型の引数オブジェクトについて、すべてのグリフをダンプするコマンドだ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:545
 msgid "Since redisplay is performed by Emacs very frequently, you need to place your breakpoints cleverly to avoid hitting them all the time, when the issue you are debugging did not (yet) happen.  Here are some useful techniques for that:"
-msgstr ""
+msgstr "再表示はEmacsによって非常に頻繁に行われるので、デバッグ中の問題が(まだ)発生していないのに、再表示の度に停止しないよう、ブレークポイントの配置には考慮が要される。これに関する役に立つテクニックを挙げておこう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:554
@@ -956,7 +956,7 @@ msgid ""
 "   breakpoint at 'Fredraw_display', you can even reproduce the bug and invoke\n"
 "   \"M-x redraw-display\" afterwards, knowing that the bad display will be\n"
 "   redrawn from scratch.\n"
-msgstr ""
+msgstr "- Emacsを実行する前に`Frecenter`か`Fredraw_display`にブレークポイントを配置する。それから表示バグの再現に必要なことを行い、バグ再現のための最後のアクションを呼び出す直前に`C-l`や`M-x redraw-display`を呼び出すのだ。デバッガに制御が渡るので、表示バグが間もなく発生すると判っている上で、戦略的な位置へのブレークポイントのセットや有効化が可能になる。`Fredraw_display`にブレークポイントを張っておけばバグの再現だけではなく、`M-x redraw-display`を呼び出すことによって表示バグが再描画される様を一から確認できるだろう。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:562
@@ -969,7 +969,7 @@ msgid ""
 "   In general, always make sure 'set_cursor_from_row' is called for the right\n"
 "   window and buffer by examining the value of w->contents: it should be the\n"
 "   buffer whose display you are debugging.\n"
-msgstr ""
+msgstr "- 不正なカーソル位置をデバッグする際のブレークポイントの位置として相応しいのが`set_cursor_from_row`だ。この関数が`redraw-display`の一部として最初に呼び出される際には、ミニバッファーウィンドウが再描画されるがこれは多分あなたが欲する再描画ではないので、目的としている呼び出しに到達するために、`continue`をタイプしよう。一般的なデバッグ方法としては`w->contents`の値を調べる。`set_cursor_from_row`が正しいウィンドウおよびバッファーにたいして呼び出されているか調べるのだ。そのバッファーの表示は、デバッグしている再表示呼び出しによって行われている筈だからだ。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:569
@@ -981,7 +981,7 @@ msgid ""
 "   you want to investigate.  If you have set a breakpoint in 'Fredraw_display'\n"
 "   or 'Frecenter', as advised above, move cursor to that line before invoking\n"
 "   these commands.\n"
-msgstr ""
+msgstr "- `set_cursor_from_row`はGDBコマンド`pgrow`でスクリーン行(またの名を`glyph row`という)の内容を調べる場所としても適している。最初はもちろん調査したいスクリーン行にカーソルがあるか確認しよう。上記アドバイスにある`Fredraw_display`か`Frecenter`にブレークポイントをセットした場合には、これらのコマンドが呼び出される前にその行にカーソルを移動しておくこと。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:577
@@ -994,13 +994,16 @@ msgid ""
 "   buffer character position is in it->current.pos.charpos.  Most redisplay\n"
 "   functions accept a pointer to a 'struct it' object as their argument, so\n"
 "   you can make conditional breakpoints in those functions, like this:\n"
-msgstr ""
+msgstr "- 特定のバッファー位置や滅多に使用されない特定の文字でのみ問題が発生する場合には、それらの値をブレークポイントのブレーク条件にセットできる。ディスプレイエンジンははバッファーや文字列の位置を`it->current`、バッファーでの文字位置を`it->current.pos.charpos`で保守している。ほとんどの再表示関数は`struct it`オブジェクトのポインターを引数として受け取るので、これらの関数のブレークポイントに以下のような条件を設定すればよい:\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:579
 #, no-wrap
 msgid "    (gdb) break x_produce_glyphs if it->current.pos.charpos == 1234\n"
 msgstr ""
+"```text\n"
+"    (gdb) break x_produce_glyphs if it->current.pos.charpos == 1234\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:582
@@ -1008,7 +1011,7 @@ msgstr ""
 msgid ""
 "   For conditioning on the character being displayed, use it->c or\n"
 "   it->char_to_display.\n"
-msgstr ""
+msgstr "表示される文字に条件を設定する場合には`it->c`か`it->char_to_display`を使おう。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:589
@@ -1020,7 +1023,7 @@ msgid ""
 "   displaying a Lisp string (e.g., a 'display' property or an overlay string),\n"
 "   GET_FROM_IMAGE for displaying an image, etc.  See 'enum it_method' in\n"
 "   dispextern.h for the full list of values.\n"
-msgstr ""
+msgstr "- 表示用のグリフ生成に使用されるオブジェクトに条件を設けることもできる。`it->method`はバッファーコンテンツの表示では`GET_FROM_BUFFER`、Lisp文字列(`display`プロパティやオーバーレイ文字列のこと)の表示は`GET_FROM_STRING`、イメージの表示なら`GET_FROM_IMAGE`といった値となる。これらの値の完全なリストについては、`dispextern.h`の`enum it_method`を参照のこと。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:599
@@ -1035,18 +1038,18 @@ msgid ""
 "   the value of it->sp being positive or being of a certain positive value, to\n"
 "   debug display problems that happen only with display properties or\n"
 "   overlays.\n"
-msgstr ""
+msgstr "- ディスプレイエンジンがテキストプロパティ`display`やオーバーレイ文字列を処理する際には、バッファーテキストのイテレーションを記述する状態変数をイテレータ(反復)のスタックにpushしてから、プロパティやオーバーレイを処理するためにイテレータオブジェクトの再初期化を行う。`it->sp` (spは\"スタックポインター\")が0より大きければ、少なくとも1回はイテレータスタックにpush されたことを意味している。したがってブレークポイントの条件として`it->sp`の値が正、あるいは特定の正の値を設定すれば、`display`プロパティやオーバーレイでのみ発生する表示問題がデバッグできる。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:601
 #, no-wrap
 msgid "** Debugging problems with native-compiled Lisp.\n"
-msgstr ""
+msgstr "## ネイティブコンパイルされたLispのデバッグにまつわる問題\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:604
 msgid "When you encounter problems specific to native-compilation of Lisp, we recommend to follow the procedure below to try to identify the cause:"
-msgstr ""
+msgstr "ネイティブコンパイルされたLisp固有の問題に遭遇したときには、以下の手順にしたがって原因の特定を試みることを推奨する:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:607
@@ -1054,7 +1057,7 @@ msgstr ""
 msgid ""
 " . Reduce the problematic .el file to the minimum by bisection, and\n"
 "   try identifying the function that causes the problem.\n"
-msgstr ""
+msgstr "- 二分探索を用いて問題のある\".el\"ファイルのコード範囲を最小化して、問題の原因となっている関数の特定を試みる。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:611
@@ -1063,13 +1066,16 @@ msgid ""
 " . Try natively compiling the problematic file with\n"
 "   'native-comp-speed' set to 1 or even zero.  If doing that solves\n"
 "   the problem, you can use\n"
-msgstr ""
+msgstr "`native-comp-speed`を1、何なら0にセットして、問題のあるファイルのネイティブコンパイルを試みる。これで問題が解決するようなら、以下を使用できるだろう\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:613
 #, no-wrap
 msgid "     (declare (speed 1))\n"
 msgstr ""
+"```text\n"
+"    (declare (speed 1))\n"
+"``\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:617
@@ -1078,7 +1084,7 @@ msgid ""
 "   at the beginning of the body of suspected function(s) to change\n"
 "   'native-comp-speed' only for those functions -- this could help you\n"
 "   identify the function(s) which cause(s) the problem.\n"
-msgstr ""
+msgstr "疑わしい関数(複数可)のbody先頭に上記宣言を追加して、それらの関数にたいしてのみ`native-comp-speed`を変更するのだ。どの関数が問題の原因となっているか特定する助けとなるかもしれない。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:620
@@ -1086,7 +1092,7 @@ msgstr ""
 msgid ""
 " . Reduce the problematic function(s) to the minimal code that still\n"
 "   reproduces the problem.\n"
-msgstr ""
+msgstr "- 問題のある関数にたいして、依然として問題が発生する最小限のコードになるまで絞り込む。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:623
@@ -1094,34 +1100,34 @@ msgstr ""
 msgid ""
 " . Study the problem's artifacts, like Lisp or C backtraces, to try\n"
 "   identifying the cause of the problem.\n"
-msgstr ""
+msgstr "- 問題にたいしてLispやCのバックトレースのような資料を調べて、問題の原因特定を試みる。\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:635
 msgid "If you cannot figure out the cause for the problem using the above, native-compile the problematic file after setting the variable 'comp-libgccjit-reproducer' to a non-nil value.  That should produce a file named ELNFILENAME_libgccjit_repro.c, where ELNFILENAME is the name of the problematic .eln file, either in the same directory where the .eln file is produced, or under your ~/.emacs.d/eln-cache (which one depends on how the native-compilation is invoked).  It is also possible that the reproducer file's name will be something like subr--trampoline-XXXXXXX_FUNCTION_libgccjit_repro.c, where XXXXXXX is a long string of hex digits and FUNCTION is some function from the compiled .el file.  Attach that reproducer C file to your bug report."
-msgstr ""
+msgstr "上記手段を使用しても問題の原因を特定できない場合には、変数`comp-libgccjit-reproducer`に非`nil`値をセットした後に問題のあるファイルをネイティブコンパイルしてみる。これにより`ELNFILENAME_libgccjit_repro.c`という名前のファイルが生成される筈だ。ここで`ELNFILENAME`は問題のある\".eln\"と同じ名前であり\".eln\"ファイルが生成されるのと同じディレクトリー、あるいは\"~/.emacs.d/eln-cache\"というディレクトリーの配下に生成される(どちらのディレクトリーになるかはネイティブコンパイルがどのように呼び出されたかに依存する)。再生成するファイルを`subr--trampoline-XXXXXXX_FUNCTION_libgccjit_repro.c` (`XXXXXXX`は16進文字からなるながい文字列、`FUNCTION`はコンパイルされた\".el\"ファイルの中の関数)のような名前にすることも可能だ。この再生成したCファイルをバグレポートに添付して欲しい。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:637
 #, no-wrap
 msgid "** Following longjmp call.\n"
-msgstr ""
+msgstr "## `longjmp`呼び出しの後を追う\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:642
 msgid "Recent versions of glibc (2.4+?) encrypt stored values for setjmp/longjmp which prevents GDB from being able to follow a longjmp call using 'next'.  To disable this protection you need to set the environment variable LD_POINTER_GUARD to 0."
-msgstr ""
+msgstr "glibcの最近のバージョン(2.4以上か?)は`setjmp`および`longjmp`のための値を暗号化して保存するが、これによりGDBから`next`呼び出しで`longjmp`を追うのが不可能になった。この保護を無効にするには、環境変数`LD_POINTER_GUARD`に`0`をセットする必要がある。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:644
 #, no-wrap
 msgid "** Using GDB in Emacs\n"
-msgstr ""
+msgstr "## EmacsからGDBを使うには\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:648
 msgid "Debugging with GDB in Emacs offers some advantages over the command line (See the GDB Graphical Interface node of the Emacs manual).  There are also some features available just for debugging Emacs:"
-msgstr ""
+msgstr "EmacsでのGDBを用いたデバッグには、コマンドラインから行う場合に比べていくつかの利点がある(Emacsマニュアルの\"GDB Graphical Interface\"ノードを参照)。Emacsのデバッグだけに利用可能な機能もいくつか存在する:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:652
