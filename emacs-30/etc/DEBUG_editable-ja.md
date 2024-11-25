@@ -549,28 +549,19 @@ Emacsをもう一度停止して、そのフレームに戻るまで繰り返し
 
 GNUおよびUnixシステムでは、EmacsへのSIGUSR2の送信を試みることも可能だ。`debug-on-event`がデフォルト値のままなら、このシグナルによってEmacsはカレントループからの脱出を試みて、Lispデバッガにエンターする筈だ(Lispデバッガに関する詳細については、ELispマニュアルのノード"Debugging"を参照)。この機能はCレベルのデバッガが簡単に利用できないときに役に立つだろう。
 
-** If certain operations in Emacs are slower than they used to be, here
-is some advice for how to find out why.
+## Emacsで特定の操作が前より遅くなった原因を調べるためのアドバイス
 
-Stop Emacs repeatedly during the slow operation, and make a backtrace each
-time.  Compare the backtraces looking for a pattern--a specific function
-that shows up more often than you'd expect.
+その遅い処理の間に繰り返しEmacsを停止して、その都度バックトレースを取得する。パターンを見い出すためにバックトレースを比較しよう。あなたの予想よりも頻繁に出現する関数を見つけるのだ。
 
-If you don't see a pattern in the C backtraces, get some Lisp backtrace
-information by typing "xbacktrace" or by looking at Ffuncall frames (see
-above), and again look for a pattern.
+Cのバックトレースで特徴的なパターンが見つからなかったら`xbacktrace`をタイプするか、あるいは`Ffuncall`を呼び出すフレーム(上記参照)を調べて、もう一度パターンの発見を試みるのだ。
 
-When using X, you can stop Emacs at any time by typing C-z at GDB.  When not
-using X, you can do this with C-g.  On non-Unix platforms, such as MS-DOS,
-you might need to press C-BREAK instead.
+Xを使用していれば、GDBから`C-z`をタイプしていつでもEmacsを停止できる。X以外の場合には`C-g`でこれを行うことができる。Unix以外のプラットフォーム(MS-DOSとか)の場合には、かわりに`C-BREAK`を押下する必要があるかもしれない。
 
-** If GDB does not run and your debuggers can't load Emacs.
+## GDBが実行できずEmacsのロードもできないデバッガの場合
 
-On some systems, no debugger can load Emacs with a symbol table, perhaps
-because they all have fixed limits on the number of symbols and Emacs
-exceeds the limits.  Here is a method that can be used in such an
-extremity.  Do
+シンボルテーブルとともにEmacsをロードできるデバッガがないシステムも一部に存在する(多分シンボル数に固定値の制限があり、Emacsのシンボル数がその制限を超過するからだろう。そのような極限環境において用いることができる手法を紹介しておく。
 
+```shell
     nm -n temacs > nmout
     strip temacs
     adb temacs
@@ -578,126 +569,80 @@ extremity.  Do
     0xe:i
     14:i
     17:i
-    :r -l loadup   (or whatever)
+    :r -l loadup   (または何でもよい)
+```
 
-It is necessary to refer to the file 'nmout' to convert numeric addresses
-into symbols and vice versa.
+数値アドレスとシンボルの間の変換や逆変換を行うために、ファイル"nmout"の参照が必要になる。
 
-It is useful to be running under a window system.  Then, if Emacs becomes
-hopelessly wedged, you can create another window to do kill -9 in.  kill
--ILL is often useful too, since that may make Emacs dump core or return to
-adb.
+実行する環境は、何らかのウィンドウシステム配下だと便利だ。見込みのない状況でEmacsが立ち往生してしまった場合でも、別ウィンドウを作成して`kill
+-9`を実行できるからだ。`kill -ILL`も役に立つことが多い。これによりEmacsがcoreダンプするか、あるいはadbに制御が戻るだろう。
 
-** Debugging incorrect screen updating on a text terminal.
+## テキスト端末における不正なスクリーン更新のデバッグ
 
-To debug Emacs problems that update the screen wrong, it is useful to have a
-record of what input you typed and what Emacs sent to the screen.  To make
-these records, do
+Emacsが間違ってスクリーンを更新する問題をデバッグする際には何をタイプ入力したか、Emacsがスクリーンに何を送信したかを記録できれば役に立つだろう。これらを記録するには以下のようにする
 
+```lisp
 (open-dribble-file "~/.dribble")  (open-termscript "~/.termscript")
+```
 
-The dribble file contains all characters read by Emacs from the terminal,
-and the termscript file contains all characters it sent to the terminal.
-The use of the directory '~/' prevents interference with any other user.
+このdribbleファイルにはEmacsが端末から読み取ったすべての文字、termscriptファイルには端末に送信したすべての文字が記録される。ディレクトリー"~/"を使うのは、他のユーザーとの干渉を防ぐためだ。
 
-If you have irreproducible display problems, put those two expressions in
-your ~/.emacs file.  When the problem happens, exit the Emacs that you were
-running, kill it, and rename the two files.  Then you can start another
-Emacs without clobbering those files, and use it to examine them.
+思うように再現できない表示問題にたいしては、これら2つの式を"~/.emacs"ファイルに配置して、問題が発生したら実行中のEmacsをexitしてkill。その後これら2つのファイルの名前を変更する。ファイルが上書きされないようにしたら別のEmacsを起動して、そのEmacsを使って調査を行うのだ。
 
-** Debugging LessTif
+## Lesstifのデバッグ
 
-If you encounter bugs whereby Emacs built with LessTif grabs all mouse and
-keyboard events, or LessTif menus behave weirdly, it might be helpful to set
-the 'DEBUGSOURCES' and 'DEBUG_FILE' environment variables, so that one can
-see what LessTif was doing at this point.  For instance
+LesstifとともにビルドしたEmacsにおいて、Lesstifがマウスとキーボードのイベントをすべて奪ったり、Lesstifのメニューの動作がおかしいといったバグに遭遇した場合には、環境変数`DEBUGSOURCES`と`DEBUG_FILE`をセットすればその時点でLesstifが何を行っていたか確認できるので助けになるだろう。たとえば
 
+```shell
   export DEBUGSOURCES="RowColumn.c:MenuShell.c:MenuUtil.c"
   export DEBUG_FILE=/usr/tmp/LESSTIF_TRACE
   emacs &
+```
 
-causes LessTif to print traces from the three named source files to a file
-in '/usr/tmp' (that file can get pretty large).  The above should be typed
-at the shell prompt before invoking Emacs, as shown by the last line above.
+これにより名前を指定された3つのソースファイルからのトレースを、Lesstifが`/usr/tmp`のファイルにプリントするようになる(非常にサイズが大きくなるかもしれない)。上記で示したように、Emacsを呼び出す前にシェルプロンプトにコマンドをタイプすること。
 
-Running GDB from another terminal could also help with such problems.  You
-can arrange for GDB to run on one machine, with the Emacs display appearing
-on another.  Then, when the bug happens, you can go back to the machine
-where you started GDB and use the debugger from there.
+この種の問題のデバッグには、別の端末からGDBを実行することも助けとなるかもしれない。あるマシンでGDBを実行するよう手配しておいて、Emacsのディスプレイは別の端末に表示させるのだ。そうすればバグが発生した際にGDBを開始した端末に戻って、そこからデバッガを使用する。
 
-** Debugging problems which happen in GC
+## GCで発生する問題のデバッグ
 
-The array 'last_marked' (defined on alloc.c) can be used to display up to
-the 512 most-recent objects marked by the garbage collection process.
-Whenever the garbage collector marks a Lisp object, it records the pointer
-to that object in the 'last_marked' array, which is maintained as a circular
-buffer.  The variable 'last_marked_index' holds the index into the
-'last_marked' array one place beyond where the pointer to the very last
-marked object is stored.
+配列`last_marked`
+("alloc.c"で定義されている)を使えば、ガベージコレクションのプロセスによってもっとも最近マークされた、最大で512個のオブジェクトを確認できる。ガベージコレクタがLispオブジェクトをマークする際には、常にそのオブジェクトへのポインターが配列`last_marked`に記録される(循環バッファーとして保守されている)。変数`last_marked_index`には`last_marked`配列のインデックスが格納されており、このインデックスにはもっとも最近格納されたばかりのオブジェクトの1つ先を指す値がセットされている。
 
-The single most important goal in debugging GC problems is to find the Lisp
-data structure that got corrupted.  This is not easy since GC changes the
-tag bits and relocates strings which make it hard to look at Lisp objects
-with commands such as 'pr'.  It is sometimes necessary to convert
-Lisp_Object variables into pointers to C struct's manually.
+GC問題のデバッグにおけるもっとも重要な単一のゴールが、破壊されてしまったLispデータ構造の発見である。これは容易なことではない。GCはタグビットを変更して文字列を再配置する。それが`pr`のようなコマンドによる、Lispオブジェクトの調査を困難にしているのだ。Lisp_Object変数からC構造体のポインターへの変換に手作業が必要になることも間々ある。
 
-Use the 'last_marked' array and the source to reconstruct the sequence that
-objects were marked.  In general, you need to correlate the values recorded
-in the 'last_marked' array with the corresponding stack frames in the
-backtrace, beginning with the innermost frame.  Some subroutines of
-'mark_object' are invoked recursively, others loop over portions of the data
-structure and mark them as they go.  By looking at the code of those
-routines and comparing the frames in the backtrace with the values in
-'last_marked', you will be able to find connections between the values in
-'last_marked'.  E.g., when GC finds a cons cell, it recursively marks its
-car and its cdr.  Similar things happen with properties of symbols, elements
-of vectors, etc.  Use these connections to reconstruct the data structure
-that was being marked, paying special attention to the strings and names of
-symbols that you encounter: these strings and symbol names can be used to
-grep the sources to find out what high-level symbols and global variables
-are involved in the crash.
+マークされたオブジェクトの順序の再構築には、`last_marked`配列とソースを用いる。バックトレースから`last_marked`配列に記録された値に相当するスタックフレームを結びつけるためには、一般的にはもっとも内側のフレームから調べる必要がある。`mark_object`のサブルーチンには再帰的に呼び出されるもの、あるいはデータ構造の一部範囲をマークしながらループするものがある。これらのルーチンのコードを調べるとともに、バックトレース内のフレームと`last_marked`の値を比較することによって、`last_marked`の中の値同士の関連性を発見することが可能になるのである。たとえばGCがコンスセルを発見した際には、そのコンスセルの`car`と`cdr再帰的にマークするだろう。`同じことがシンボルのプロパティやベクターの要素等に発生するのである。マークされたデータ構造の再構築には、これらの関連性を使用する。遭遇する文字列やシンボルの名前に特別な注意を払いつつ行っていこう。これらの文字列やシンボル名は、ソースを"grep"して、クラッシュに関係がある高レベルのシンボルやグローバル変数を特定するのに役立つだろう。
 
-Once you discover the corrupted Lisp object or data structure, grep the
-sources for its uses and try to figure out what could cause the corruption.
-If looking at the sources doesn't help, you could try setting a watchpoint
-on the corrupted data, and see what code modifies it in some invalid way.
-(Obviously, this technique is only useful for data that is modified only
-very rarely.)
+破壊されたLispオブジェクトやデータ構造を発見したら、ソースを"grep"してそれが何に使用されているのか、そして何が破壊を引き起こす原因となったかを解決していこう。ソースの調査で手掛かりが見つからなかった場合には、破壊されたデータにウォッチポイントをセットして、無効な方法でそれを変更するコードがどれか確認することができるかもしれない(当然ながらこのテクニックは滅多に変更されないデータでなければ役に立たないだろう)。
 
-It is also useful to look at the corrupted object or data structure in a
-fresh Emacs session and compare its contents with a session that you are
-debugging.  This might be somewhat harder on modern systems which randomize
-addresses of running executables (the so-called Address Space Layout
-Randomization, or ASLR, feature).  If you have this problem, see below under
-"How to disable ASLR".
+破壊されたオブジェクトやデータ構造を手つかずの新鮮なEmacsセッションで調べたり、デバッグ中のセッションと中身を比較することも役に立つかもしれない。これは実行中の実行可能ファイルのアドレスをランダム化(ASLR:Address
+Space Layout
+Randomization、すなわちアドレス空間配置のランダム化)を行う現代的なシステムでは幾分困難かもしれない。この問題に遭遇してしまったら、"How
+to disable ASLR"を参照して欲しい。
 
-** Debugging the TTY (non-windowed) version
+## (ウィンドウ化されていない)TTYバージョンのデバッグ
 
-The most convenient method of debugging the character-terminal display is to
-do that on a window system such as X.  Begin by starting an xterm window,
-then type these commands inside that window:
+文字端末のディスプレイでデバッグする際にもっとも便利な方法は、Xのようなウィンドウシステムでデバッグする方法だろう。xtermウィンドウを開始してそのウィンドウで以下のコマンドをタイプしよう:
 
+```shell
   $ tty
   $ echo $TERM
+```
 
-Let's say these commands print "/dev/ttyp4" and "xterm", respectively.
+これらのコマンドがそれぞれ`/dev/ttyp4`および`xterm`と応えたとしよう。
 
-Now start Emacs (the normal, windowed-display session, i.e. without the
-'-nw' option), and invoke "M-x gdb RET emacs RET" from there.  Now type
-these commands at GDB's prompt:
+ここでEmacsを開始して(通常のようにウィンドウで表示されるセッション、つまり`-nw`オプションを指定せずに開始する。そして今度はGDBのプロンプトから以下のコマンドをタイプしよう:
 
+```text
   (gdb) set args -nw -t /dev/ttyp4
   (gdb) set environment TERM xterm
   (gdb) run
+``
 
-The debugged Emacs should now start in no-window mode with its display
-directed to the xterm window you opened above.
+デバッグされることになるEmacsが上記でオープンしたxtermに直接表示されるように、今度は非ウィンドウモードで開始すること。
 
-Similar arrangement is possible on a character terminal by using the
-'screen' package.
+`screen`パッケージを使用すれば、文字端末の場合と同じようなアレンジが可能になる。
 
-On MS-Windows, you can start Emacs in its own separate console by setting
-the new-console option before running Emacs under GDB:
+MS-Windowsの場合にはGDB配下でEmacsを実行する前に`new-console`オプションをセットすることで、別個に独自のコンソールでEmacsを開始できる:
 
 ```text
   (gdb) set new-console 1
