@@ -636,7 +636,7 @@ to disable ASLR"を参照して欲しい。
   (gdb) set args -nw -t /dev/ttyp4
   (gdb) set environment TERM xterm
   (gdb) run
-``
+```
 
 デバッグされることになるEmacsが上記でオープンしたxtermに直接表示されるように、今度は非ウィンドウモードで開始すること。
 
@@ -649,72 +649,62 @@ MS-Windowsの場合にはGDB配下でEmacsを実行する前に`new-console`オ�
   (gdb) run
 ```
 
-** Running Emacs with undefined-behavior sanitization
+## 振る舞いが未定義のサニタイザとともにEmacsを実行する
 
-Building Emacs with undefined-behavior sanitization can help find several
-kinds of low-level problems in C code, including:
+挙動が未定義なサニタイザとともにEmacsをビルドすることによって、Cコードに存在する低レベルな問題の何種類かが見つかる助けになることがある。これらの問題には以下が含まれる:
 
-  * Out-of-bounds access of many (but not all) arrays.
-  * Signed integer overflow, e.g., (INT_MAX + 1).
-  * Integer shifts by a negative or wider-than-word value.
-  * Misaligned pointers and pointer overflow.
-  * Loading a bool or enum value that is out of range for its type.
-  * Passing NULL to or returning NULL from a function requiring nonnull.
-  * Passing a size larger than the corresponding array to memcmp etc.
-  * Passing invalid values to some builtin functions, e.g., __builtin_clz (0).
-  * Reaching __builtin_unreachable calls (in Emacs, 'eassume' failure).
+- (すべてではないが)多くの配列の境界外アクセス
+- 符号付き整数のオーバーフロー(`INT_MAX + 1`とか)
+- 整数の負の値やwordより大きい量のシフト演算
+- アライメントがおかしいポインターやポインターのオーバーフロー
+- 型の範囲を超えたbool値やenum値のロード
+- NULLを許容しない関数へlにたいするNULLの受け渡し
+- 対応するサイズより大きい配列をmemcmp等に渡す
+- `__builtin_clz (0)`のようにビルトイン関数に無効な値を渡す
+- `__builtin_unreachable`呼び出しに届いてしまう(Emacsでは`eassume`に相当する)
 
-To use GCC's UndefinedBehaviorSanitizer, append '-fsanitize=undefined' to
-CFLAGS, either when running 'configure' or running 'make'.  When supported,
-you can also specify 'bound-strict' and 'float-cast-overflow'.  For example:
+GCCの`UndefinedBehaviorSanitizer`を使用するには`configure`か`make`を実行する際に、`CFLAGS`に`-fsanitize=undefined`を指定する。サポートされていれば`bound-strict`と`float-cast-overflow`も指定できる。たとえば:
 
+```shell
   ./configure \
     CFLAGS='-O0 -g3 -fsanitize=undefined,bounds-strict,float-cast-overflow'
+```
 
-You may need to append '-static-libubsan' to CFLAGS if your version of GCC
-is installed in an unusual location.
+あなたのGCCが普通の場所以外にインストールされたバージョンの場合には、`CFLAGS`に-static-libubsan`の追加が必要かもしれない。
 
-Clang's UB sanitizer can also be used, but has coverage problems.  You'll
-need '-fsanitize=undefined -fno-sanitize=pointer-overflow' to suppress
-misguided warnings about adding zero to a null pointer, although this also
-suppresses any valid pointer overflow warnings.
+Clangのサニタイザも使用できるが、カバレッジに問題がある。NULLポインターへの0の追加に関する見当違いの警告を抑止するために、`-fsanitize=undefined
+-fno-sanitize=pointer-overflow`を追加する必要があるだろう。とはいえこれによりポインターのオーバーフローに関する、他の有効な警告もすべて抑止されてしまう訳だが。
 
-When using GDB to debug an executable with undefined-behavior sanitization,
-the GDB command:
+GDBを使用して挙動が未定義なサニタイザでとともに実行可能ファイルをデバッグする際には:
 
+```text
   (gdb) rbreak ^__ubsan_handle_
+```
 
-will let you gain control when an error is detected and before
-UndefinedBehaviorSanitizer outputs to stderr or terminates the program.
+上記GDBコマンドによりエラーが検出されて`UndefinedBehaviorSanitizer`が`stderr`に出力したり、プログラムが終了する前に制御が得られるようになった。
 
-** Running Emacs with address sanitization
+## アドレスサニタイザとともにEmacsを実行する
 
-Building Emacs with address sanitization can help debug memory-use problems,
-such as freeing the same object twice.  To use AddressSanitizer with GCC and
-similar compilers, append '-fsanitize=address' to CFLAGS, either when
-running 'configure' or running 'make'.  Configure, build and run Emacs with
-ASAN_OPTIONS='detect_leaks=0' in the environment to suppress diagnostics of
-minor memory leaks in Emacs.  For example:
+アドレスサニタイジングとともにEmacsをビルドすることにより、同一オブジェクトを2回freeするといったような、不正なメモリー使用をデバッグする助けになるかもしれない。GCCやこの類のコンパイラーとともにAddressSanitizerを使用するためには、`configure`や`make`のいずれかを実行する際に`CFLAGS`に`-fsanitize=address`を追加する。`configure`してビルドしたらEmacs実行できる。実行時に環境変数に`ASAN_OPTIONS='detect_leaks=0`を設定してあれば、マイナーなメモリーリークに関する冗長な診断を抑止できる。たとえば:
 
+```shell
   export ASAN_OPTIONS='detect_leaks=0'
   ./configure CFLAGS='-O0 -g3 -fsanitize=address'
   make
   src/emacs
+```
 
-You may need to append '-static-libasan' to CFLAGS if your version of GCC is
-installed in an unusual location.
+普通とは違う場所にインストールされたバージョンのGCCでは、`CFLAGS`に`-static-libasan`を追加する必要があるかもしれない。
 
-When using GDB to debug an executable with address sanitization, the GDB
-command:
+アドレスサニタイジングされた実行可能ファイルのデバッグにGDBを用いる際には、以下のGDBコマンド:
 
+```text
   (gdb) rbreak ^__asan_report_
+```
 
-will let you gain control when an error is detected and before
-AddressSanitizer outputs to stderr or terminates the program.
+上記GDBコマンドによりエラーが検出されて`UndefinedBehaviorSanitizer`が`stderr`に出力したり、プログラムが終了する前に制御が得られるようになった。
 
-Address sanitization is incompatible with undefined-behavior sanitization,
-unfortunately.  Address sanitization is also incompatible with the
---with-dumping=unexec option of 'configure'.
+残念なことにアドレスサニタイジングは動作が未定義のサニタイザとの互換性はなく、`configure`の`--with-dumping=unexec`オプションとも互換性がない。
 
 *** Address poisoning/unpoisoning
 

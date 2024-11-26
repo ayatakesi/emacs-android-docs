@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-25 21:45+0900\n"
+"PO-Revision-Date: 2024-11-27 08:16+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -1618,7 +1618,7 @@ msgstr ""
 "  (gdb) set args -nw -t /dev/ttyp4\n"
 "  (gdb) set environment TERM xterm\n"
 "  (gdb) run\n"
-"``\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:957
@@ -1639,12 +1639,12 @@ msgstr "MS-Windowsの場合にはGDB配下でEmacsを実行する前に`new-cons
 #: emacs-30/etc/DEBUG_editable:968
 #, no-wrap
 msgid "** Running Emacs with undefined-behavior sanitization\n"
-msgstr ""
+msgstr "## 振る舞いが未定義のサニタイザとともにEmacsを実行する\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:971
 msgid "Building Emacs with undefined-behavior sanitization can help find several kinds of low-level problems in C code, including:"
-msgstr ""
+msgstr "挙動が未定義なサニタイザとともにEmacsをビルドすることによって、Cコードに存在する低レベルな問題の何種類かが見つかる助けになることがある。これらの問題には以下が含まれる:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:981
@@ -1660,11 +1660,20 @@ msgid ""
 "  * Passing invalid values to some builtin functions, e.g., __builtin_clz (0).\n"
 "  * Reaching __builtin_unreachable calls (in Emacs, 'eassume' failure).\n"
 msgstr ""
+"- (すべてではないが)多くの配列の境界外アクセス\n"
+"- 符号付き整数のオーバーフロー(`INT_MAX + 1`とか)\n"
+"- 整数の負の値やwordより大きい量のシフト演算\n"
+"- アライメントがおかしいポインターやポインターのオーバーフロー\n"
+"- 型の範囲を超えたbool値やenum値のロード\n"
+"- NULLを許容しない関数へlにたいするNULLの受け渡し\n"
+"- 対応するサイズより大きい配列をmemcmp等に渡す\n"
+"- `__builtin_clz (0)`のようにビルトイン関数に無効な値を渡す\n"
+"- `__builtin_unreachable`呼び出しに届いてしまう(Emacsでは`eassume`に相当する)\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:986
 msgid "To use GCC's UndefinedBehaviorSanitizer, append '-fsanitize=undefined' to CFLAGS, either when running 'configure' or running 'make'.  When supported, you can also specify 'bound-strict' and 'float-cast-overflow'.  For example:"
-msgstr ""
+msgstr "GCCの`UndefinedBehaviorSanitizer`を使用するには`configure`か`make`を実行する際に、`CFLAGS`に`-fsanitize=undefined`を指定する。サポートされていれば`bound-strict`と`float-cast-overflow`も指定できる。たとえば:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:989
@@ -1673,43 +1682,50 @@ msgid ""
 "  ./configure \\\n"
 "    CFLAGS='-O0 -g3 -fsanitize=undefined,bounds-strict,float-cast-overflow'\n"
 msgstr ""
+"```shell\n"
+"  ./configure \\\n"
+"    CFLAGS='-O0 -g3 -fsanitize=undefined,bounds-strict,float-cast-overflow'\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:992
 msgid "You may need to append '-static-libubsan' to CFLAGS if your version of GCC is installed in an unusual location."
-msgstr ""
+msgstr "あなたのGCCが普通の場所以外にインストールされたバージョンの場合には、`CFLAGS`に-static-libubsan`の追加が必要かもしれない。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:997
 msgid "Clang's UB sanitizer can also be used, but has coverage problems.  You'll need '-fsanitize=undefined -fno-sanitize=pointer-overflow' to suppress misguided warnings about adding zero to a null pointer, although this also suppresses any valid pointer overflow warnings."
-msgstr ""
+msgstr "Clangのサニタイザも使用できるが、カバレッジに問題がある。NULLポインターへの0の追加に関する見当違いの警告を抑止するために、`-fsanitize=undefined -fno-sanitize=pointer-overflow`を追加する必要があるだろう。とはいえこれによりポインターのオーバーフローに関する、他の有効な警告もすべて抑止されてしまう訳だが。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1000
 msgid "When using GDB to debug an executable with undefined-behavior sanitization, the GDB command:"
-msgstr ""
+msgstr "GDBを使用して挙動が未定義なサニタイザでとともに実行可能ファイルをデバッグする際には:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1002
 #, no-wrap
 msgid "  (gdb) rbreak ^__ubsan_handle_\n"
 msgstr ""
+"```text\n"
+"  (gdb) rbreak ^__ubsan_handle_\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1006
 msgid "will let you gain control when an error is detected and before UndefinedBehaviorSanitizer outputs to stderr or terminates the program."
-msgstr ""
+msgstr "上記GDBコマンドによりエラーが検出されて`UndefinedBehaviorSanitizer`が`stderr`に出力したり、プログラムが終了する前に制御が得られるようになった。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1008
 #, no-wrap
 msgid "** Running Emacs with address sanitization\n"
-msgstr ""
+msgstr "## アドレスサニタイザとともにEmacsを実行する\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1016
 msgid "Building Emacs with address sanitization can help debug memory-use problems, such as freeing the same object twice.  To use AddressSanitizer with GCC and similar compilers, append '-fsanitize=address' to CFLAGS, either when running 'configure' or running 'make'.  Configure, build and run Emacs with ASAN_OPTIONS='detect_leaks=0' in the environment to suppress diagnostics of minor memory leaks in Emacs.  For example:"
-msgstr ""
+msgstr "アドレスサニタイジングとともにEmacsをビルドすることにより、同一オブジェクトを2回freeするといったような、不正なメモリー使用をデバッグする助けになるかもしれない。GCCやこの類のコンパイラーとともにAddressSanitizerを使用するためには、`configure`や`make`のいずれかを実行する際に`CFLAGS`に`-fsanitize=address`を追加する。`configure`してビルドしたらEmacs実行できる。実行時に環境変数に`ASAN_OPTIONS='detect_leaks=0`を設定してあれば、マイナーなメモリーリークに関する冗長な診断を抑止できる。たとえば:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1021
@@ -1720,32 +1736,41 @@ msgid ""
 "  make\n"
 "  src/emacs\n"
 msgstr ""
+"```shell\n"
+"  export ASAN_OPTIONS='detect_leaks=0'\n"
+"  ./configure CFLAGS='-O0 -g3 -fsanitize=address'\n"
+"  make\n"
+"  src/emacs\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1024
 msgid "You may need to append '-static-libasan' to CFLAGS if your version of GCC is installed in an unusual location."
-msgstr ""
+msgstr "普通とは違う場所にインストールされたバージョンのGCCでは、`CFLAGS`に`-static-libasan`を追加する必要があるかもしれない。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1027
 msgid "When using GDB to debug an executable with address sanitization, the GDB command:"
-msgstr ""
+msgstr "アドレスサニタイジングされた実行可能ファイルのデバッグにGDBを用いる際には、以下のGDBコマンド:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1029
 #, no-wrap
 msgid "  (gdb) rbreak ^__asan_report_\n"
 msgstr ""
+"```text\n"
+"  (gdb) rbreak ^__asan_report_\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1032
 msgid "will let you gain control when an error is detected and before AddressSanitizer outputs to stderr or terminates the program."
-msgstr ""
+msgstr "上記GDBコマンドによりエラーが検出されて`UndefinedBehaviorSanitizer`が`stderr`に出力したり、プログラムが終了する前に制御が得られるようになった。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1036
 msgid "Address sanitization is incompatible with undefined-behavior sanitization, unfortunately.  Address sanitization is also incompatible with the --with-dumping=unexec option of 'configure'."
-msgstr ""
+msgstr "残念なことにアドレスサニタイジングは動作が未定義のサニタイザとの互換性はなく、`configure`の`--with-dumping=unexec`オプションとも互換性がない。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1038
