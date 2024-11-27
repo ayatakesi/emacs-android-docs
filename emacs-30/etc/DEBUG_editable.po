@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-28 08:10+0900\n"
+"PO-Revision-Date: 2024-11-28 08:15+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -1825,7 +1825,7 @@ msgstr "## Valgrind配下でのEmacsの実行\n"
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1070
 msgid "Valgrind <https://valgrind.org/> is free software that can be useful when debugging low-level Emacs problems.  Unlike GCC sanitizers, Valgrind does not need you to compile Emacs with special debugging flags, so it can be helpful in investigating problems that vanish when Emacs is recompiled with debugging enabled.  However, by default Valgrind generates many false alarms with Emacs, and you will need to maintain a suppressions file to suppress these false alarms and use Valgrind effectively.  For example, you might invoke Valgrind this way:"
-msgstr "[Valgrind](<https://valgrind.org/)とは低レベルな問題をEmacsでデバッグする際に役に立つフリーソフトウェアのことだ。GCCサニタイザとは異なり、ValgrindとともにEmacsをコンパイルするために特別なデバッグ用のフラグは必要ない。したがってデバッグを有効にしてリコンパイルしたら消滅してしまうような問題の調査に便利だ。ただしデフォルトのValgrindはにたいして大量の誤検出を生成するので、Valgrindを効果的に使用するためにはこれらの誤検出を抑制するための抑止ファイルを保守する必要があるだろう。たとえば以下のようにValgrindを呼び出すのだ:"
+msgstr "[Valgrind](https://valgrind.org/)とは低レベルな問題をEmacsでデバッグする際に役に立つフリーソフトウェアのことだ。GCCサニタイザとは異なり、ValgrindとともにEmacsをコンパイルするために特別なデバッグ用のフラグは必要ない。したがってデバッグを有効にしてリコンパイルしたら消滅してしまうような問題の調査に便利だ。ただしデフォルトのValgrindはにたいして大量の誤検出を生成するので、Valgrindを効果的に使用するためにはこれらの誤検出を抑制するための抑止ファイルを保守する必要があるだろう。たとえば以下のようにValgrindを呼び出すのだ:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1072
