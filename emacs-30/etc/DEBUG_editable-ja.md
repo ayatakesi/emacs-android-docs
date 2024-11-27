@@ -706,54 +706,46 @@ GDBを使用して挙動が未定義なサニタイザでとともに実行可�
 
 残念なことにアドレスサニタイジングは動作が未定義のサニタイザとの互換性はなく、`configure`の`--with-dumping=unexec`オプションとも互換性がない。
 
-*** Address poisoning/unpoisoning
+### アドレスポイズニング(address poisoning)とその無毒化
 
-When compiled with address sanitization, Emacs will also try to mark
-dead/free lisp objects as poisoned, forbidding them from being accessed
-without being unpoisoned first.  This adds an extra layer of checking with
-objects in internal free lists, which may otherwise evade traditional
-use-after-free checks. To disable this, add 'allow_user_poisoning=0' to
-ASAN_OPTIONS, or build Emacs with '-DGC_ASAN_POISON_OBJECTS=0' in CFLAGS.
+アドレスサニタイジングとともにコンパイルしたEmacsだと、dead/freeのlispオブジェクトをまず"poisoned"とマークしようと試みるので、最初にその"poisoned"を解除しなければアクセスが禁じられる。これはフリーな内部リストの中のオブジェクトにたいするチェックを行う余計なレイヤーを追加するが、伝統的な"使用後にフリー"のチェックによって回避できるかもしれない。これを無効にするためには`ASAN_OPTIONS`に`allow_user_poisoning=0`を追加するか、あるいは`CFLAGS`に`-DGC_ASAN_POISON_OBJECTS=0`を指定してEmacsをビルドすること。
 
-While using GDB, memory addresses can be inspected by using helper functions
-additionally provided by the ASan library:
+GDB使用中のメモリーアドレスの検証は、ASanライブラリーが追加で提供するヘルパー関数を用いて行っている:
 
+```text
   (gdb) call __asan_describe_address(ptr)
+```
 
-To check whether an address range is poisoned or not, use:
+あるアドレス範囲が"poisoned"かどうかをチェックするには以下のように行う:
 
+```text
   (gdb) call __asan_region_is_poisoned(ptr, 8)
+```
 
-Additional functions can be found in the header 'sanitizer/asan_interface.h'
-in your compiler's headers directory.
+他の追加関数についても、あなたのコンピューター用のヘッダーディレクトリーにあるヘッダー"sanitizer/asan_interface.h"で見つけることができる。
 
-** Running Emacs under Valgrind
+## Valgrind配下でのEmacsの実行
 
-Valgrind <https://valgrind.org/> is free software that can be useful when
-debugging low-level Emacs problems.  Unlike GCC sanitizers, Valgrind does
-not need you to compile Emacs with special debugging flags, so it can be
-helpful in investigating problems that vanish when Emacs is recompiled with
-debugging enabled.  However, by default Valgrind generates many false alarms
-with Emacs, and you will need to maintain a suppressions file to suppress
-these false alarms and use Valgrind effectively.  For example, you might
-invoke Valgrind this way:
+[Valgrind](<https://valgrind.org/)とは低レベルな問題をEmacsでデバッグする際に役に立つフリーソフトウェアのことだ。GCCサニタイザとは異なり、ValgrindとともにEmacsをコンパイルするために特別なデバッグ用のフラグは必要ない。したがってデバッグを有効にしてリコンパイルしたら消滅してしまうような問題の調査に便利だ。ただしデフォルトのValgrindはにたいして大量の誤検出を生成するので、Valgrindを効果的に使用するためにはこれらの誤検出を抑制するための抑止ファイルを保守する必要があるだろう。たとえば以下のようにValgrindを呼び出すのだ:
 
-   valgrind --suppressions=valgrind.supp ./emacs
+```shell
+    valgrind --suppressions=valgrind.supp ./emacs
+```
 
-where valgrind.supp contains groups of lines like the following, which
-suppresses some Valgrind false alarms during Emacs garbage collection:
+ここで"valgrind.supp"は、以下のような行のグループを含んだファイルだ(以下の例はEmacsのガベージコレクションの間に生成されるValgrindの誤検出の一部を抑止するための設定):
 
-   {
-     Fgarbage_collect Cond - conservative garbage collection
-     Memcheck:Cond
-     ...
-     fun:Fgarbage_collect
-   }
+```text
+    {
+      Fgarbage_collect Cond - 抑止的なガベージコレクション
+      Memcheck:Cond
+      ...
+      fun:Fgarbage_collect
+    }
+```
 
-Unfortunately Valgrind suppression files tend to be system-dependent, so you
-will need to keep one around that matches your system.
+残念なことにValgrindの抑止ファイルはシステムに依存する傾向があるので、あなたのシステムに合致するファイルを維持する必要があるだろう。
 
-** How to disable ASLR
+## ASLRを無効にする方法
 
 Modern systems use the so-called Address Space Layout Randomization, (ASLR)
 feature, which randomizes the base address of running programs, making it
