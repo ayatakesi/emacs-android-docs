@@ -747,73 +747,55 @@ GDB使用中のメモリーアドレスの検証は、ASanライブラリーが�
 
 ## ASLRを無効にする方法
 
-Modern systems use the so-called Address Space Layout Randomization, (ASLR)
-feature, which randomizes the base address of running programs, making it
-harder for malicious software or hackers to find the address of some
-function or variable in a running program by looking at its executable
-file.  This causes the address of the same symbol to be different across
-rerunning of the same program.  Sometimes, it can be useful to disable ASLR,
-for example, if you want to compare objects in two different Emacs sessions.
+現代的なシステムではASLR(Address Space Layout Randomization:
+アドレス空間配置のランダム化)という機能を使用している。これは実行中のプログラムのベースアドレスをランダム化する。この機能によって、怪しげなソフトウェアやハッカーが実行可能ファイルを調べて実行中のプログラムの関数や変数のアドレスを見つけることが難しくなるのだ。これにより同じプログラムを再実行しても、同じ変数に異なるアドレスが割り振られることになる。しかしたとえば2つの異なるEmacsセッションでオブジェクトを比較したい場合などは、ASLRを無効にすることが役に立つときもあるかもしれない。
 
-On GNU/Linux, you can disable ASLR temporarily with the following shell
-command:
+GNU/Linuxシステムであれば、以下のシェルコマンドでASLRを一時的に無効化できる:
 
   echo 0 > /proc/sys/kernel/randomize_va_space
 
-or by running Emacs in an environment where ASLR is temporarily disabled:
+またはASLRを一時的に無効にした環境でEmacsを実行する:
 
+```text
   setarch -R emacs [args...]
+```
 
-To disable ASLR in Emacs on MS-Windows, you will have to rebuild Emacs while
-adding '-Wl,-disable-dynamicbase' to LD_SWITCH_SYSTEM_TEMACS variable
-defined in src/Makefile.  Alternatively, use some tool to edit the PE header
-of the Emacs executable file and reset the DYNAMIC_BASE (0x40) flag in the
-DllCharacteristics flags recorded by the PE header.
+MS-WindowsのEmacsでASLRを無効にするためには、"src/Makefile"で定義されている変数`LD_SWITCH_SYSTEM_TEMACS`に`-Wl,-disable-dynamicbase`を追加してEmacsをリビルドする必要があるだろう。代替えとしてEmacsの実行可能ファイルのPEヘッダーを編集するツールなどを使用して、PEヘッダーに記録されている`DllCharacteristics`フラグを`DYNAMIC_BASE
+(0x40)`にリセットする手もある。
 
-On macOS, there's no official way for disabling ASLR, but there are various
-hacks that can be found by searching the Internet.
+macOSでASLRを無効にする方法は公式には存在しないが、インターネットを検索すれば色々なハックの存在を確認できる筈だ。
 
-** How to recover buffer contents from an Emacs core dump file
+## Emacsのcoreダンプファイルからバッファー内容を復旧する方法
 
-The file etc/emacs-buffer.gdb defines a set of GDB commands for recovering
-the contents of Emacs buffers from a core dump file.  You might also find
-those commands useful for displaying the list of buffers in human-readable
-format from within the debugger.
+ファイル"etc/emacs-buffer.gdb"にはcoreダンプファイルからEmacsのバッファー内容を復旧するために、一連のGDBコマンドが定義されている。それらのコマンドを使えば、デバッガから人間が読めるフォーマットで、バッファーのリストを表示できることにも気付くかもしれない。
 
-** Debugging Emacs with LLDB
+## LLDBを使ったデバッグ
 
-On systems where GDB is not available, like macOS with M1 chip, you can also
-use LLDB for Emacs debugging.
+GDBが利用できないM1チップのmacOS等では、EmacsのデバッグにLLDBを使うこともできる。
 
-To start LLDB to debug Emacs, you can simply type "lldb ./emacs RET" at the
-shell prompt in directory of the Emacs executable, usually the 'src'
-sub-directory of the Emacs tree).
+LLDBによるEmacsのデバッグを開始するには、Emacsの実行可能ファイルがあるディレクトリー(通常はEmacsディストリビューションツリーのサブディレクトリー"src")で、シェルプロンプトから単に`lldb
+./emacs RET`ちタイプすればよい。
 
-When you debug Emacs with LLDB, you should start LLDB in the directory where
-the Emacs executable was built.  That directory has an .lldbinit file that
-loads a Python module emacs_lldb.py from the 'etc' directory of the Emacs
-source tree.  The Python module defines "user-defined" commands for
-debugging Emacs.
+LLDBでEmacsをデバッグする際には、EmacsをビルドしたディレクトリーでLLDBを開始するべきだ。このディレクトリーにあるファイル".lldbinit"は、Emacsソースツリーの"etc"ディレクトリーにあるPythonモジュール"emacs_lldb.py"をロードする。このPythonモジュールにはEmacsのデバッグ用のコマンド`user-defined`が定義されている。
 
-LLDB by default does not automatically load .lldbinit files in the current
-directory.  The simplest way to fix this is to add the following line to
-your ~/.lldbinit file (creating such a file if it doesn't already exist):
+LLDBはデフォルトではカレントディレクトリーにある".lldbinit"ファイルを自動的にロードしない。あなたの"~/.lldbinit"ファイル(なければ作成する)に、以下の行を追加するのがもっとも簡単な方法だろう:
 
+```text
   settings set target.load-cwd-lldbinit true
+```
 
-Alternatively, you can type "lldb --local-lldbinit ./emacs RET".
+かわりに`lldb --local-lldbinit ./emacs RET`とタイプしてもよい。
 
-If everything worked, you should see something like "Emacs debugging support
-has been installed" after starting LLDB.  You can see which Emacs-specific
-commands are defined with
+ここまで上手くいけば、LLDBの開始後に"Emacs debugging support has been
+installed"のようなメッセージを目にする筈だ。どのようなEmacs固有コマンドが定義されているかは、以下のようにして確認できる
 
+```text
   (lldb) help
+```
 
-User-defined commands for Emacs debugging start with an "x".
+"x"で始まるのがEmacs用にユーザー定義されたコマンドだ。
 
-Please refer to the LLDB reference on the web for more information about
-LLDB.  If you already know GDB, you will also find a mapping from GDB
-commands to corresponding LLDB commands there.
+LLDBに関する情報については、ウェブにあるLLDBリファレンスを参照して欲しい。すでにGDBに関する知識がある場合には、ウェブでGDBコマンドに相当するLLDBコマンドのマッピングも見つけられるだろう。
 
 ** Debugging Emacs on OpenBSD
 

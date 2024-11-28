@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-28 08:15+0900\n"
+"PO-Revision-Date: 2024-11-28 19:43+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -1875,108 +1875,120 @@ msgstr "## ASLRを無効にする方法\n"
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1096
 msgid "Modern systems use the so-called Address Space Layout Randomization, (ASLR) feature, which randomizes the base address of running programs, making it harder for malicious software or hackers to find the address of some function or variable in a running program by looking at its executable file.  This causes the address of the same symbol to be different across rerunning of the same program.  Sometimes, it can be useful to disable ASLR, for example, if you want to compare objects in two different Emacs sessions."
-msgstr ""
+msgstr "現代的なシステムではASLR(Address Space Layout Randomization: アドレス空間配置のランダム化)という機能を使用している。これは実行中のプログラムのベースアドレスをランダム化する。この機能によって、怪しげなソフトウェアやハッカーが実行可能ファイルを調べて実行中のプログラムの関数や変数のアドレスを見つけることが難しくなるのだ。これにより同じプログラムを再実行しても、同じ変数に異なるアドレスが割り振られることになる。しかしたとえば2つの異なるEmacsセッションでオブジェクトを比較したい場合などは、ASLRを無効にすることが役に立つときもあるかもしれない。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1099
 msgid "On GNU/Linux, you can disable ASLR temporarily with the following shell command:"
-msgstr ""
+msgstr "GNU/Linuxシステムであれば、以下のシェルコマンドでASLRを一時的に無効化できる:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1101
-#, no-wrap
+#, no-wrap, fuzzy
 msgid "  echo 0 > /proc/sys/kernel/randomize_va_space\n"
 msgstr ""
+"```shell\n"
+"  echo 0 > /proc/sys/kernel/randomize_va_space\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1104
 msgid "or by running Emacs in an environment where ASLR is temporarily disabled:"
-msgstr ""
+msgstr "またはASLRを一時的に無効にした環境でEmacsを実行する:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1106
 #, no-wrap
 msgid "  setarch -R emacs [args...]\n"
 msgstr ""
+"```text\n"
+"  setarch -R emacs [args...]\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1113
 msgid "To disable ASLR in Emacs on MS-Windows, you will have to rebuild Emacs while adding '-Wl,-disable-dynamicbase' to LD_SWITCH_SYSTEM_TEMACS variable defined in src/Makefile.  Alternatively, use some tool to edit the PE header of the Emacs executable file and reset the DYNAMIC_BASE (0x40) flag in the DllCharacteristics flags recorded by the PE header."
-msgstr ""
+msgstr "MS-WindowsのEmacsでASLRを無効にするためには、\"src/Makefile\"で定義されている変数`LD_SWITCH_SYSTEM_TEMACS`に`-Wl,-disable-dynamicbase`を追加してEmacsをリビルドする必要があるだろう。代替えとしてEmacsの実行可能ファイルのPEヘッダーを編集するツールなどを使用して、PEヘッダーに記録されている`DllCharacteristics`フラグを`DYNAMIC_BASE (0x40)`にリセットする手もある。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1116
 msgid "On macOS, there's no official way for disabling ASLR, but there are various hacks that can be found by searching the Internet."
-msgstr ""
+msgstr "macOSでASLRを無効にする方法は公式には存在しないが、インターネットを検索すれば色々なハックの存在を確認できる筈だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1118
 #, no-wrap
 msgid "** How to recover buffer contents from an Emacs core dump file\n"
-msgstr ""
+msgstr "## Emacsのcoreダンプファイルからバッファー内容を復旧する方法\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1123
 msgid "The file etc/emacs-buffer.gdb defines a set of GDB commands for recovering the contents of Emacs buffers from a core dump file.  You might also find those commands useful for displaying the list of buffers in human-readable format from within the debugger."
-msgstr ""
+msgstr "ファイル\"etc/emacs-buffer.gdb\"にはcoreダンプファイルからEmacsのバッファー内容を復旧するために、一連のGDBコマンドが定義されている。それらのコマンドを使えば、デバッガから人間が読めるフォーマットで、バッファーのリストを表示できることにも気付くかもしれない。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1125
 #, no-wrap
 msgid "** Debugging Emacs with LLDB\n"
-msgstr ""
+msgstr "## LLDBを使ったデバッグ\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1128
 msgid "On systems where GDB is not available, like macOS with M1 chip, you can also use LLDB for Emacs debugging."
-msgstr ""
+msgstr "GDBが利用できないM1チップのmacOS等では、EmacsのデバッグにLLDBを使うこともできる。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1132
 msgid "To start LLDB to debug Emacs, you can simply type \"lldb ./emacs RET\" at the shell prompt in directory of the Emacs executable, usually the 'src' sub-directory of the Emacs tree)."
-msgstr ""
+msgstr "LLDBによるEmacsのデバッグを開始するには、Emacsの実行可能ファイルがあるディレクトリー(通常はEmacsディストリビューションツリーのサブディレクトリー\"src\")で、シェルプロンプトから単に`lldb ./emacs RET`ちタイプすればよい。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1138
 msgid "When you debug Emacs with LLDB, you should start LLDB in the directory where the Emacs executable was built.  That directory has an .lldbinit file that loads a Python module emacs_lldb.py from the 'etc' directory of the Emacs source tree.  The Python module defines \"user-defined\" commands for debugging Emacs."
-msgstr ""
+msgstr "LLDBでEmacsをデバッグする際には、EmacsをビルドしたディレクトリーでLLDBを開始するべきだ。このディレクトリーにあるファイル\".lldbinit\"は、Emacsソースツリーの\"etc\"ディレクトリーにあるPythonモジュール\"emacs_lldb.py\"をロードする。このPythonモジュールにはEmacsのデバッグ用のコマンド`user-defined`が定義されている。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1143
 msgid "LLDB by default does not automatically load .lldbinit files in the current directory.  The simplest way to fix this is to add the following line to your ~/.lldbinit file (creating such a file if it doesn't already exist):"
-msgstr ""
+msgstr "LLDBはデフォルトではカレントディレクトリーにある\".lldbinit\"ファイルを自動的にロードしない。あなたの\"~/.lldbinit\"ファイル(なければ作成する)に、以下の行を追加するのがもっとも簡単な方法だろう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1145
 #, no-wrap
 msgid "  settings set target.load-cwd-lldbinit true\n"
 msgstr ""
+"```text\n"
+"  settings set target.load-cwd-lldbinit true\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1147
 msgid "Alternatively, you can type \"lldb --local-lldbinit ./emacs RET\"."
-msgstr ""
+msgstr "かわりに`lldb --local-lldbinit ./emacs RET`とタイプしてもよい。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1151
 msgid "If everything worked, you should see something like \"Emacs debugging support has been installed\" after starting LLDB.  You can see which Emacs-specific commands are defined with"
-msgstr ""
+msgstr "ここまで上手くいけば、LLDBの開始後に\"Emacs debugging support has been installed\"のようなメッセージを目にする筈だ。どのようなEmacs固有コマンドが定義されているかは、以下のようにして確認できる"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1153
 #, no-wrap
 msgid "  (lldb) help\n"
 msgstr ""
+"```text\n"
+"  (lldb) help\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1155
 msgid "User-defined commands for Emacs debugging start with an \"x\"."
-msgstr ""
+msgstr "\"x\"で始まるのがEmacs用にユーザー定義されたコマンドだ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1159
 msgid "Please refer to the LLDB reference on the web for more information about LLDB.  If you already know GDB, you will also find a mapping from GDB commands to corresponding LLDB commands there."
-msgstr ""
+msgstr "LLDBに関する情報については、ウェブにあるLLDBリファレンスを参照して欲しい。すでにGDBに関する知識がある場合には、ウェブでGDBコマンドに相当するLLDBコマンドのマッピングも見つけられるだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1161
