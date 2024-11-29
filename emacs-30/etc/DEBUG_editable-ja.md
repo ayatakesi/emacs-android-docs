@@ -752,7 +752,9 @@ GDB使用中のメモリーアドレスの検証は、ASanライブラリーが�
 
 GNU/Linuxシステムであれば、以下のシェルコマンドでASLRを一時的に無効化できる:
 
+```shell
   echo 0 > /proc/sys/kernel/randomize_va_space
+```
 
 またはASLRを一時的に無効にした環境でEmacsを実行する:
 
@@ -797,84 +799,81 @@ installed"のようなメッセージを目にする筈だ。どのようなEmac
 
 LLDBに関する情報については、ウェブにあるLLDBリファレンスを参照して欲しい。すでにGDBに関する知識がある場合には、ウェブでGDBコマンドに相当するLLDBコマンドのマッピングも見つけられるだろう。
 
-** Debugging Emacs on OpenBSD
+## OpenBSDでのEmacsのデバッグ
 
-To debug Emacs on OpenBSD, use the 'egdb' command from the 'gdb' package.
-This reportedly works both if Emacs was compiled with GCC and if it was
-compiled with clang.
+OpenBSDでEmacsをデバッグするには、"gdb"パッケージの`egdb`コマンドを使用する。GCCおよびclangどちらでコンパイルしたEmacsでも機能すると報告されている。
 
-** Debugging Emacs on Android.
+## AndroidでのEmacsのデバッグ
 
-A script located in the java/ directory automates the procedures necessary
-run Emacs under a Gdb session on an Android device connected to a computer
-using USB.
+"java/"ディレクトリーには、USBを使ってコンピューターに接続されたAndroidデバイスにおいて、EmacsをGDBセッション配下で実行するために必要な手順を自動化するためのスクリプトがある。
 
-Its requirements are the `adb' (Android Debug Bridge) utility and the Java
-debugger (jdb), utilized to cue the Android system to resume the Emacs
-process after the debugger attaches.
+必要なユーティリティーは`adb` (Android Debug
+Bridge)、デバッガのアタッチ後にEmacsが再開するようにAndroidシステムに合図を起こるように調整されたJavaデバッガ("jdb")だ。
 
-If all three of those tools are present, simply run (from the Emacs source
-directory):
+これら3つのツールがあれば、(Emacsのソースディレクトリーから)単に以下を実行するだけでよい:
 
-  ../java/debug.sh -- [any extra arguments you wish to pass to gdb]
+```shell
+  ../java/debug.sh -- [gdbに渡したい追加の引数があれば追加]
+```
 
-Several lines of debug information will be printed, after which the Gdb
-prompt should be displayed.
+デバッグ情報が何行かプリントされた後に、GDBプロンプトが表示される筈だ。
 
-If there is no Gdbserver binary present on the device, then specify one to
-upload, like so:
+そのデバイスにGdbserverが存在しない場合には、以下のようにしてアップロードしよう:
 
+```shell
   ../java/debug.sh --gdbserver /path/to/gdbserver
+```
 
-This Gdbserver should be statically linked or compiled using the Android
-NDK, and must target the same architecture as the debugged Emacs binary.
-Older versions of the Android NDK (such as r24)  distribute suitable
-Gdbserver binaries, usually located within
+このGdbserverはAndroid
+NDKを使って静的にリンク、あるいはコンパイルされている筈なので、デバッグするEmacsバイナリと同じアーキテクチャを対象としたものでなければならない。古いバージョンのAndroid
+NDK(r24とか)に相当するGdbserverバイナリは、普通は以下の場所にあるだろう
 
+```text
   prebuilt/android-<arch>/gdbserver/gdbserver
+```
 
-relative to the root of the NDK distribution.
+これはNDKディストリビューションのルートからの相対ディレクトリーだ。
 
-To attach Emacs to an existing process on a target device, use the
-`--attach-existing' argument to debug.sh:
+ターゲットdeviceの既存のEmacsプロセスにアタッチするためには、"debug.sh"の引数に`--attach-existing`を指定する:
 
+```shell
   ../java/debug.sh --attach-existing [other arguments]
+```
 
-If multiple Emacs processes are running, debug.sh will display the names and
-PIDs of each running process, and prompt for the process that it should
-attach to.
+Emacsプロセス複数実行中の場合には、"debug.sh"が実行中のプロセスそれぞれについて名前とPIDを表示して、どのプロセスにアタッチするべきか入力を求めるだろう。
 
-After Emacs starts, type:
+Emacsが開始されたら、以下のようにタイプしよう:
 
+```text
   (gdb) handle SIGUSR1 noprint pass
+```
 
-to ignore the SIGUSR1 signal that is sent by the Android port's `select'
-emulation.  If this is overlooked, Emacs will stop each time a windowing
-event is received, which is probably unwanted.
+これはAndroidポートの`select`エミュレーションが送信する`SIGUSR1`シグナルを無視するためだ。これを失念すると、ウィンドウイベントを受信する度にEmacsが停止するが、それは恐らくあなたがやりたいことではないだろう。
 
-On top of the debugging procedure described above, Android also maintains a
-"logcat" buffer, where it prints backtraces during or after each crash.  Its
-contents are of interest when performing post-mortem debugging after a
-crash, and can also be retrieved through the `adb' tool, like so:
+上述のデバッグ手順に加えて、Androidにはクラッシュの最中およびクラッシュ後に毎回バックトレースをプリントする`logcat`バッファーも保守している。このバッファーの内容はクラッシュ後の検死デバッグ(post-mortem
+debug: 事後デバッグ)を行う際には役に立つだろう。これは以下のように`adb`ツールを通じて取得することも可能だ:
 
+```shell
   $ adb logcat
+```
 
-There are three forms of crash messages printed by Android.  The first form
-is printed when a crash arises within Java code, and should resemble the
-following when printed in the logcat buffer:
+Androidによってプリントされるクラッシュメッセージには3つの形式がある。1つ目はJavaコード内でクラッシュが発生した際の形式で、logcatバッファーには以下のようにプリントされる筈だ:
 
-E AndroidRuntime: FATAL EXCEPTION: main E AndroidRuntime: Process:
-org.gnu.emacs, PID: 18057 E AndroidRuntime: java.lang.RuntimeException:
-sample crash E AndroidRuntime: 	at
-org.gnu.emacs.EmacsService.onCreate(EmacsService.java:308)  E
-AndroidRuntime: 	at
-android.app.ActivityThread.handleCreateService(ActivityThread.java:4485)  E
-AndroidRuntime: 	... 9 more
+```text
+E AndroidRuntime: FATAL EXCEPTION: main
+E AndroidRuntime: Process: org.gnu.emacs, PID: 18057
+E AndroidRuntime: java.lang.RuntimeException: sample crash
+E AndroidRuntime: 	at
+org.gnu.emacs.EmacsService.onCreate(EmacsService.java:308)
+E AndroidRuntime: 	at
+android.app.ActivityThread.handleCreateService(ActivityThread.java:4485)
+E AndroidRuntime: 	... 9 more<
+```
 
-The second form is printed when a fatal signal (such as an abort, or
-segmentation fault) is raised within C code.  Here is an example of such a
-crash:
+2つ目は致命的なシグナル("abort"や"segmentation
+fault"など)を受信して、Cコード内でクラッシュが発生した際の形式。この種のクラッシュでは以下のようにプリントされるだろう:
 
+```text
 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x3 in tid 32644
  (Emacs main thre), pid 32619 (org.gnu.emacs)
 F DEBUG   : Cmdline: org.gnu.emacs
@@ -918,15 +917,13 @@ F DEBUG   :       #35 pc 0016c0d8  /.../lib/arm64/libemacs.so (recursive_edit_1+
 F DEBUG   :       #36 pc 0016c4fc  /.../lib/arm64/libemacs.so (Frecursive_edit+348)
 F DEBUG   :       #37 pc 0016af9c  /.../lib/arm64/libemacs.so (android_emacs_init+7132)
 F DEBUG   :       #38 pc 002ab8d4  /.../lib/arm64/libemacs.so (Java_org_gnu_emacs_...+3816)
+```
 
-Where the first line (the one containing "libc") mentions the number of the
-fatal signal, the address of any VM fault, and the name and ID of the thread
-which crashed.  Subsequent lines then contain a backtrace, recounting each
-function in the call stack culminating in the crash.
+1行目("libc"を含む行)には致命的なシグナルの番号、シグナルが発生したVMのアドレス、クラッシュしたスレッドの名前とIDがプリントされている。以降の行にはクラッシュに至るまでのコールスタック含まれる関数それぞれを物語るバックトレースが含まれている。
 
-The third form is printed when Emacs misuses the JVM in some fashion that is
-detected by the Android CheckJNI facility.  It looks like:
+3つ目はAndroidのCheckJNI機能によって検知された、EmacsによるJVMの誤用についてプリントされた形式だ。以下のようにプリントされるだろう:
 
+```text
 A/art: art/runtime/check_jni.cc:65] JNI DETECTED ERROR IN APPLICATION: ...
 A/art: art/runtime/check_jni.cc:65]     in call to CallVoidMethodV
 A/art: art/runtime/check_jni.cc:65]     from void android.os.MessageQueue.nativePollOnce(long, int)
@@ -960,58 +957,56 @@ A/art: art/runtime/check_jni.cc:65]   at java.lang.reflect.Method.invoke(Method.
 A/art: art/runtime/check_jni.cc:65]   at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1399)
 A/art: art/runtime/check_jni.cc:65]   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1194)
 A/art: art/runtime/check_jni.cc:65]
+```
 
-In such situations, the first line explains what infraction Emacs committed,
-while the ensuing ones print backtraces for each running Java thread at the
-time of the error.
+このような状況では最初の行にまずEmacsが犯した罪状、それ以降の行にはエラー発生時に実行中だったスレッドそれぞれについてバックトレースがプリントされる。
 
-If Emacs is executing on Android 5.0 and later, placing a breakpoint on
+Android 5.0以上でEmacsを実行している場合には、以下にブレークポイントを置くとよい
 
+```text
   (gdb) break art::JavaVMExt::JniAbort
+```
 
-will set a breakpoint that is hit each time such an error is detected.
+ここにブレークポイントを張っておけば、上記のようなエラー検出時に毎回ブレークする筈だ。
 
-Since the logcat output is always rapidly being amended, it is worth piping
-it to a file or shell command buffer, and then searching for keywords such
-as "AndroidRuntime", "Fatal signal", or "JNI DETECTED ERROR IN APPLICATION".
+"logcat"出力は常に高速に更新されるので、ファイルやシェルコマンドバッファーにpipeしてから"AndroidRuntime"、"Fatal
+signal"、"JNI DETECTED ERROR IN APPLICATION"といったキーワードを検索する方がよいだろう。
 
-Once in a blue moon, it proves necessary to debug Java rather than C code.
-To this end, the `--jdb' option will attach the Java debugger instead of
-gdbserver.  Lametably, it seems impossible to debug both C and Java code in
-concert.
+滅多にないことだが、CではなくJavaコードのデバッグ必要なことが判るだろう。gdbserverではなくJavaデバッガにアタッチする場合はオプション`--jdb`を指定する。遺憾ながらCとJavaのコードを同時にデバッグするのは不可能だと思われる。
 
-C code within Emacs rigorously checks for Java exceptions after calling any
-JVM function that may signal an out-of-memory error, employing one of the
-android_exception_check(_N) functions defined within android.c for this
-purpose.  These functions operate presuming the preceding Java code does not
-signal exceptions of its own, and report out-of-memory errors upon any type
-of exception, not just OOM errors.
+EmacsのCコードではout-of-memoryエラー(メモリー不足)をシグナルするかもしれないJVM関数にたいしては、呼び出し後にJava例外を徹底的にチェックしている。このチェックのための関数が`android_exception_check(_N)`であり、"android.c"で定義されている。これらの関数は前述のJavaコード自身が例外をシグナルしない前提で動作するとともに、メモリー不足以外のすべての種類の例外にたいしてメモリー不足エラーと報告するだろう。
 
-If Emacs protests that it is out of memory, yet you witness a substantial
-amount of free space remaining, search the log buffer for a string
-containing:
+空き容量がかなり残っているにも関わらずEmacsがメモリーの不足を訴えるようなら、ログバッファーから以下の文字列を含む行を検索して欲しい:
 
+```text
   "Possible out of memory error.  The Java exception follows:"
+```
 
-subsequent to which a reproduction of the exception precipitating the
-spurious OOM error should be located.  This exception is invariably
-indicative of a bug within Emacs that should be fixed.
+そうすれば偽りのメモリー不足エラーに隠れていた例外を改めて発見できるかもしれない。このような例外はいつでも、修正すべきバグがEmacsにあることを示している。
 
 
+```text
 This file is part of GNU Emacs.
+```
 
-GNU Emacs is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free
-Software Foundation, either version 3 of the License, or (at your option)
-any later version.
+```text
+GNU Emacs is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+```
 
-GNU Emacs is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
-details.
+```text
+GNU Emacs is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+```
 
-You should have received a copy of the GNU General Public License along with
-GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+```text
+You should have received a copy of the GNU General Public License
+along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.
+```
 
 
 Local variables: mode: outline paragraph-separate: "[ 	]*$" end:

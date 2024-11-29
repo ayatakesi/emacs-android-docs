@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2024-11-18 07:30+0900\n"
-"PO-Revision-Date: 2024-11-28 19:43+0900\n"
+"PO-Revision-Date: 2024-11-29 21:14+0900\n"
 "Last-Translator: ayatakesi\n"
 "Language-Team: japanese\n"
 "Language: ja\n"
@@ -1884,7 +1884,7 @@ msgstr "GNU/Linuxシステムであれば、以下のシェルコマンドでASL
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1101
-#, no-wrap, fuzzy
+#, no-wrap
 msgid "  echo 0 > /proc/sys/kernel/randomize_va_space\n"
 msgstr ""
 "```shell\n"
@@ -1994,129 +1994,155 @@ msgstr "LLDBに関する情報については、ウェブにあるLLDBリファ�
 #: emacs-30/etc/DEBUG_editable:1161
 #, no-wrap
 msgid "** Debugging Emacs on OpenBSD\n"
-msgstr ""
+msgstr "## OpenBSDでのEmacsのデバッグ\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1165
 msgid "To debug Emacs on OpenBSD, use the 'egdb' command from the 'gdb' package.  This reportedly works both if Emacs was compiled with GCC and if it was compiled with clang."
-msgstr ""
+msgstr "OpenBSDでEmacsをデバッグするには、\"gdb\"パッケージの`egdb`コマンドを使用する。GCCおよびclangどちらでコンパイルしたEmacsでも機能すると報告されている。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1167
 #, no-wrap
 msgid "** Debugging Emacs on Android.\n"
-msgstr ""
+msgstr "## AndroidでのEmacsのデバッグ\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1171
 msgid "A script located in the java/ directory automates the procedures necessary run Emacs under a Gdb session on an Android device connected to a computer using USB."
-msgstr ""
+msgstr "\"java/\"ディレクトリーには、USBを使ってコンピューターに接続されたAndroidデバイスにおいて、EmacsをGDBセッション配下で実行するために必要な手順を自動化するためのスクリプトがある。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1175
 msgid "Its requirements are the `adb' (Android Debug Bridge) utility and the Java debugger (jdb), utilized to cue the Android system to resume the Emacs process after the debugger attaches."
-msgstr ""
+msgstr "必要なユーティリティーは`adb` (Android Debug Bridge)、デバッガのアタッチ後にEmacsが再開するようにAndroidシステムに合図を起こるように調整されたJavaデバッガ(\"jdb\")だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1178
 msgid "If all three of those tools are present, simply run (from the Emacs source directory):"
-msgstr ""
+msgstr "これら3つのツールがあれば、(Emacsのソースディレクトリーから)単に以下を実行するだけでよい:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1180
 #, no-wrap
 msgid "  ../java/debug.sh -- [any extra arguments you wish to pass to gdb]\n"
 msgstr ""
+"```shell\n"
+"  ../java/debug.sh -- [gdbに渡したい追加の引数があれば追加]\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1183
 msgid "Several lines of debug information will be printed, after which the Gdb prompt should be displayed."
-msgstr ""
+msgstr "デバッグ情報が何行かプリントされた後に、GDBプロンプトが表示される筈だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1186
 msgid "If there is no Gdbserver binary present on the device, then specify one to upload, like so:"
-msgstr ""
+msgstr "そのデバイスにGdbserverが存在しない場合には、以下のようにしてアップロードしよう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1188
 #, no-wrap
 msgid "  ../java/debug.sh --gdbserver /path/to/gdbserver\n"
 msgstr ""
+"```shell\n"
+"  ../java/debug.sh --gdbserver /path/to/gdbserver\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1193
 msgid "This Gdbserver should be statically linked or compiled using the Android NDK, and must target the same architecture as the debugged Emacs binary.  Older versions of the Android NDK (such as r24)  distribute suitable Gdbserver binaries, usually located within"
-msgstr ""
+msgstr "このGdbserverはAndroid NDKを使って静的にリンク、あるいはコンパイルされている筈なので、デバッグするEmacsバイナリと同じアーキテクチャを対象としたものでなければならない。古いバージョンのAndroid NDK(r24とか)に相当するGdbserverバイナリは、普通は以下の場所にあるだろう"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1195
 #, no-wrap
 msgid "  prebuilt/android-<arch>/gdbserver/gdbserver\n"
 msgstr ""
+"```text\n"
+"  prebuilt/android-<arch>/gdbserver/gdbserver\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1197
 msgid "relative to the root of the NDK distribution."
-msgstr ""
+msgstr "これはNDKディストリビューションのルートからの相対ディレクトリーだ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1200
 msgid "To attach Emacs to an existing process on a target device, use the `--attach-existing' argument to debug.sh:"
-msgstr ""
+msgstr "ターゲットdeviceの既存のEmacsプロセスにアタッチするためには、\"debug.sh\"の引数に`--attach-existing`を指定する:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1202
 #, no-wrap
 msgid "  ../java/debug.sh --attach-existing [other arguments]\n"
 msgstr ""
+"```shell\n"
+"  ../java/debug.sh --attach-existing [other arguments]\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1206
 msgid "If multiple Emacs processes are running, debug.sh will display the names and PIDs of each running process, and prompt for the process that it should attach to."
-msgstr ""
+msgstr "Emacsプロセス複数実行中の場合には、\"debug.sh\"が実行中のプロセスそれぞれについて名前とPIDを表示して、どのプロセスにアタッチするべきか入力を求めるだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1208
 msgid "After Emacs starts, type:"
-msgstr ""
+msgstr "Emacsが開始されたら、以下のようにタイプしよう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1210
 #, no-wrap
 msgid "  (gdb) handle SIGUSR1 noprint pass\n"
 msgstr ""
+"```text\n"
+"  (gdb) handle SIGUSR1 noprint pass\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1214
 msgid "to ignore the SIGUSR1 signal that is sent by the Android port's `select' emulation.  If this is overlooked, Emacs will stop each time a windowing event is received, which is probably unwanted."
-msgstr ""
+msgstr "これはAndroidポートの`select`エミュレーションが送信する`SIGUSR1`シグナルを無視するためだ。これを失念すると、ウィンドウイベントを受信する度にEmacsが停止するが、それは恐らくあなたがやりたいことではないだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1220
 msgid "On top of the debugging procedure described above, Android also maintains a \"logcat\" buffer, where it prints backtraces during or after each crash.  Its contents are of interest when performing post-mortem debugging after a crash, and can also be retrieved through the `adb' tool, like so:"
-msgstr ""
+msgstr "上述のデバッグ手順に加えて、Androidにはクラッシュの最中およびクラッシュ後に毎回バックトレースをプリントする`logcat`バッファーも保守している。このバッファーの内容はクラッシュ後の検死デバッグ(post-mortem debug: 事後デバッグ)を行う際には役に立つだろう。これは以下のように`adb`ツールを通じて取得することも可能だ:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1222
 #, no-wrap
 msgid "  $ adb logcat\n"
 msgstr ""
+"```shell\n"
+"  $ adb logcat\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1226
 msgid "There are three forms of crash messages printed by Android.  The first form is printed when a crash arises within Java code, and should resemble the following when printed in the logcat buffer:"
-msgstr ""
+msgstr "Androidによってプリントされるクラッシュメッセージには3つの形式がある。1つ目はJavaコード内でクラッシュが発生した際の形式で、logcatバッファーには以下のようにプリントされる筈だ:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1233
 msgid "E AndroidRuntime: FATAL EXCEPTION: main E AndroidRuntime: Process: org.gnu.emacs, PID: 18057 E AndroidRuntime: java.lang.RuntimeException: sample crash E AndroidRuntime: \tat org.gnu.emacs.EmacsService.onCreate(EmacsService.java:308)  E AndroidRuntime: \tat android.app.ActivityThread.handleCreateService(ActivityThread.java:4485)  E AndroidRuntime: \t... 9 more"
 msgstr ""
+"```text\n"
+"E AndroidRuntime: FATAL EXCEPTION: main\n"
+"E AndroidRuntime: Process: org.gnu.emacs, PID: 18057\n"
+"E AndroidRuntime: java.lang.RuntimeException: sample crash\n"
+"E AndroidRuntime: \tat org.gnu.emacs.EmacsService.onCreate(EmacsService.java:308)\n"
+"E AndroidRuntime: \tat android.app.ActivityThread.handleCreateService(ActivityThread.java:4485)\n"
+"E AndroidRuntime: \t... 9 more<\n"
+"```"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1237
 msgid "The second form is printed when a fatal signal (such as an abort, or segmentation fault) is raised within C code.  Here is an example of such a crash:"
-msgstr ""
+msgstr "2つ目は致命的なシグナル(\"abort\"や\"segmentation fault\"など)を受信して、Cコード内でクラッシュが発生した際の形式。この種のクラッシュでは以下のようにプリントされるだろう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1281
@@ -2166,16 +2192,61 @@ msgid ""
 "F DEBUG   :       #37 pc 0016af9c  /.../lib/arm64/libemacs.so (android_emacs_init+7132)\n"
 "F DEBUG   :       #38 pc 002ab8d4  /.../lib/arm64/libemacs.so (Java_org_gnu_emacs_...+3816)\n"
 msgstr ""
+"```text\n"
+"F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x3 in tid 32644\n"
+" (Emacs main thre), pid 32619 (org.gnu.emacs)\n"
+"F DEBUG   : Cmdline: org.gnu.emacs\n"
+"F DEBUG   : pid: 32619, tid: 32644, name: Emacs main thre  >>> org.gnu.emacs <<<\n"
+"F DEBUG   :       #00 pc 002b27b0  /.../lib/arm64/libemacs.so (sfnt_read_cmap_table+32)\n"
+"F DEBUG   :       #01 pc 002c4ee8  /.../lib/arm64/libemacs.so (sfntfont_read_cmap+84)\n"
+"F DEBUG   :       #02 pc 002c4dc4  /.../lib/arm64/libemacs.so (sfntfont_lookup_char+396)\n"
+"F DEBUG   :       #03 pc 002c23d8  /.../lib/arm64/libemacs.so (sfntfont_list+1688)\n"
+"F DEBUG   :       #04 pc 0021112c  /.../lib/arm64/libemacs.so (font_list_entities+864)\n"
+"F DEBUG   :       #05 pc 002138d8  /.../lib/arm64/libemacs.so (font_find_for_lface+1532)\n"
+"F DEBUG   :       #06 pc 00280c50  /.../lib/arm64/libemacs.so (fontset_find_font+2760)\n"
+"F DEBUG   :       #07 pc 0027cadc  /.../lib/arm64/libemacs.so (fontset_font+792)\n"
+"F DEBUG   :       #08 pc 0027c710  /.../lib/arm64/libemacs.so (face_for_char+412)\n"
+"F DEBUG   :       #09 pc 00217314  /.../lib/arm64/libemacs.so (Finternal_char_font+324)\n"
+"F DEBUG   :       #10 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #11 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #12 pc 001f3cf0  /.../lib/arm64/libemacs.so (eval_sub+2260)\n"
+"F DEBUG   :       #13 pc 001f853c  /.../lib/arm64/libemacs.so (Feval+80)\n"
+"F DEBUG   :       #14 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #15 pc 00240130  /.../lib/arm64/libemacs.so (Fbyte_code+120)\n"
+"F DEBUG   :       #16 pc 001f3d84  /.../lib/arm64/libemacs.so (eval_sub+2408)\n"
+"F DEBUG   :       #17 pc 00221d7c  /.../lib/arm64/libemacs.so (readevalloop+1748)\n"
+"F DEBUG   :       #18 pc 002201a0  /.../lib/arm64/libemacs.so (Fload+2544)\n"
+"F DEBUG   :       #19 pc 00221f3c  /.../lib/arm64/libemacs.so (save_match_data_load+88)\n"
+"F DEBUG   :       #20 pc 001f8414  /.../lib/arm64/libemacs.so (load_with_autoload_queue+252)\n"
+"F DEBUG   :       #21 pc 001f6550  /.../lib/arm64/libemacs.so (Fautoload_do_load+608)\n"
+"F DEBUG   :       #22 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #23 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #24 pc 001f1120  /.../lib/arm64/libemacs.so (Ffuncall_interactively+64)\n"
+"F DEBUG   :       #25 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #26 pc 001f8b8c  /.../lib/arm64/libemacs.so (Fapply+916)\n"
+"F DEBUG   :       #27 pc 001f137c  /.../lib/arm64/libemacs.so (Fcall_interactively+576)\n"
+"F DEBUG   :       #28 pc 00240d78  /.../lib/arm64/libemacs.so (exec_byte_code+3112)\n"
+"F DEBUG   :       #29 pc 001f5ff8  /.../lib/arm64/libemacs.so (Ffuncall+392)\n"
+"F DEBUG   :       #30 pc 0016d054  /.../lib/arm64/libemacs.so (command_loop_1+1344)\n"
+"F DEBUG   :       #31 pc 001f6d90  /.../lib/arm64/libemacs.so (internal_condition_case+92)\n"
+"F DEBUG   :       #32 pc 0016cafc  /.../lib/arm64/libemacs.so (command_loop_2+48)\n"
+"F DEBUG   :       #33 pc 001f6660  /.../lib/arm64/libemacs.so (internal_catch+84)\n"
+"F DEBUG   :       #34 pc 0016c288  /.../lib/arm64/libemacs.so (command_loop+264)\n"
+"F DEBUG   :       #35 pc 0016c0d8  /.../lib/arm64/libemacs.so (recursive_edit_1+144)\n"
+"F DEBUG   :       #36 pc 0016c4fc  /.../lib/arm64/libemacs.so (Frecursive_edit+348)\n"
+"F DEBUG   :       #37 pc 0016af9c  /.../lib/arm64/libemacs.so (android_emacs_init+7132)\n"
+"F DEBUG   :       #38 pc 002ab8d4  /.../lib/arm64/libemacs.so (Java_org_gnu_emacs_...+3816)\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1287
 msgid "Where the first line (the one containing \"libc\") mentions the number of the fatal signal, the address of any VM fault, and the name and ID of the thread which crashed.  Subsequent lines then contain a backtrace, recounting each function in the call stack culminating in the crash."
-msgstr ""
+msgstr "1行目(\"libc\"を含む行)には致命的なシグナルの番号、シグナルが発生したVMのアドレス、クラッシュしたスレッドの名前とIDがプリントされている。以降の行にはクラッシュに至るまでのコールスタック含まれる関数それぞれを物語るバックトレースが含まれている。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1290
 msgid "The third form is printed when Emacs misuses the JVM in some fashion that is detected by the Android CheckJNI facility.  It looks like:"
-msgstr ""
+msgstr "3つ目はAndroidのCheckJNI機能によって検知された、EmacsによるJVMの誤用についてプリントされた形式だ。以下のようにプリントされるだろう:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1324
@@ -2215,80 +2286,144 @@ msgid ""
 "A/art: art/runtime/check_jni.cc:65]   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1194)\n"
 "A/art: art/runtime/check_jni.cc:65]\n"
 msgstr ""
+"```text\n"
+"A/art: art/runtime/check_jni.cc:65] JNI DETECTED ERROR IN APPLICATION: ...\n"
+"A/art: art/runtime/check_jni.cc:65]     in call to CallVoidMethodV\n"
+"A/art: art/runtime/check_jni.cc:65]     from void android.os.MessageQueue.nativePollOnce(long, int)\n"
+"A/art: art/runtime/check_jni.cc:65] \"main\" prio=5 tid=1 Runnable\n"
+"A/art: art/runtime/check_jni.cc:65]   | group=\"main\" sCount=0 dsCount=0 obj=0x87d30ef0 self=0xb4f07800\n"
+"A/art: art/runtime/check_jni.cc:65]   | sysTid=18828 nice=-11 cgrp=apps sched=0/0 handle=0xb6fdeec8\n"
+"A/art: art/runtime/check_jni.cc:65]   | state=R schedstat=( 2249126546 506089308 3210 ) utm=183 stm=41 core=3 HZ=100\n"
+"A/art: art/runtime/check_jni.cc:65]   | stack=0xbe0c8000-0xbe0ca000 stackSize=8MB\n"
+"A/art: art/runtime/check_jni.cc:65]   | held mutexes= \"mutator lock\"(shared held)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #00 pc 00004640  /system/lib/libbacktrace_libc++.so (UnwindCurrent::Unwind(unsigned int, ucontext*)+23)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #01 pc 00002e8d  /system/lib/libbacktrace_libc++.so (Backtrace::Unwind(unsigned int, ucontext*)+8)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #02 pc 00248381  /system/lib/libart.so (art::DumpNativeStack(std::__1::basic_ostream<char, std::__1::char_traits<char> >&, int, char const*, art::mirror::ArtMethod*)+68)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #03 pc 0022cd0b  /system/lib/libart.so (art::Thread::Dump(std::__1::basic_ostream<char, std::__1::char_traits<char> >&) const+146)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #04 pc 000b189b  /system/lib/libart.so (art::JniAbort(char const*, char const*)+582)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #05 pc 000b1fd5  /system/lib/libart.so (art::JniAbortF(char const*, char const*, ...)+60)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #06 pc 000b50e5  /system/lib/libart.so (art::ScopedCheck::ScopedCheck(_JNIEnv*, int, char const*)+1284)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #07 pc 000bc59f  /system/lib/libart.so (art::CheckJNI::CallVoidMethodV(_JNIEnv*, _jobject*, _jmethodID*, std::__va_list)+30)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #08 pc 00063803  /system/lib/libandroid_runtime.so (???)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #09 pc 000776bd  /system/lib/libandroid_runtime.so (android::NativeDisplayEventReceiver::dispatchVsync(long long, int, unsigned int)+40)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #10 pc 00077885  /system/lib/libandroid_runtime.so (android::NativeDisplayEventReceiver::handleEvent(int, int, void*)+80)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #11 pc 00010f6f  /system/lib/libutils.so (android::Looper::pollInner(int)+482)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #12 pc 00011019  /system/lib/libutils.so (android::Looper::pollOnce(int, int*, int*, void**)+92)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #13 pc 000830c1  /system/lib/libandroid_runtime.so (android::NativeMessageQueue::pollOnce(_JNIEnv*, int)+22)\n"
+"A/art: art/runtime/check_jni.cc:65]   native: #14 pc 000b22d7  /system/framework/arm/boot.oat (Java_android_os_MessageQueue_nativePollOnce__JI+102)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.os.MessageQueue.nativePollOnce(Native method)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.os.MessageQueue.next(MessageQueue.java:143)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.os.Looper.loop(Looper.java:130)\n"
+"A/art: art/runtime/check_jni.cc:65]   at android.app.ActivityThread.main(ActivityThread.java:5832)\n"
+"A/art: art/runtime/check_jni.cc:65]   at java.lang.reflect.Method.invoke!(Native method)\n"
+"A/art: art/runtime/check_jni.cc:65]   at java.lang.reflect.Method.invoke(Method.java:372)\n"
+"A/art: art/runtime/check_jni.cc:65]   at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1399)\n"
+"A/art: art/runtime/check_jni.cc:65]   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1194)\n"
+"A/art: art/runtime/check_jni.cc:65]\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1328
 msgid "In such situations, the first line explains what infraction Emacs committed, while the ensuing ones print backtraces for each running Java thread at the time of the error."
-msgstr ""
+msgstr "このような状況では最初の行にまずEmacsが犯した罪状、それ以降の行にはエラー発生時に実行中だったスレッドそれぞれについてバックトレースがプリントされる。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1331
 msgid "If Emacs is executing on Android 5.0 and later, placing a breakpoint on"
-msgstr ""
+msgstr "Android 5.0以上でEmacsを実行している場合には、以下にブレークポイントを置くとよい"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1333
 #, no-wrap
 msgid "  (gdb) break art::JavaVMExt::JniAbort\n"
 msgstr ""
+"```text\n"
+"  (gdb) break art::JavaVMExt::JniAbort\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1335
 msgid "will set a breakpoint that is hit each time such an error is detected."
-msgstr ""
+msgstr "ここにブレークポイントを張っておけば、上記のようなエラー検出時に毎回ブレークする筈だ。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1340
 msgid "Since the logcat output is always rapidly being amended, it is worth piping it to a file or shell command buffer, and then searching for keywords such as \"AndroidRuntime\", \"Fatal signal\", or \"JNI DETECTED ERROR IN APPLICATION\"."
-msgstr ""
+msgstr "\"logcat\"出力は常に高速に更新されるので、ファイルやシェルコマンドバッファーにpipeしてから\"AndroidRuntime\"、\"Fatal signal\"、\"JNI DETECTED ERROR IN APPLICATION\"といったキーワードを検索する方がよいだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1345
 msgid "Once in a blue moon, it proves necessary to debug Java rather than C code.  To this end, the `--jdb' option will attach the Java debugger instead of gdbserver.  Lametably, it seems impossible to debug both C and Java code in concert."
-msgstr ""
+msgstr "滅多にないことだが、CではなくJavaコードのデバッグ必要なことが判るだろう。gdbserverではなくJavaデバッガにアタッチする場合はオプション`--jdb`を指定する。遺憾ながらCとJavaのコードを同時にデバッグするのは不可能だと思われる。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1353
 msgid "C code within Emacs rigorously checks for Java exceptions after calling any JVM function that may signal an out-of-memory error, employing one of the android_exception_check(_N) functions defined within android.c for this purpose.  These functions operate presuming the preceding Java code does not signal exceptions of its own, and report out-of-memory errors upon any type of exception, not just OOM errors."
-msgstr ""
+msgstr "EmacsのCコードではout-of-memoryエラー(メモリー不足)をシグナルするかもしれないJVM関数にたいしては、呼び出し後にJava例外を徹底的にチェックしている。このチェックのための関数が`android_exception_check(_N)`であり、\"android.c\"で定義されている。これらの関数は前述のJavaコード自身が例外をシグナルしない前提で動作するとともに、メモリー不足以外のすべての種類の例外にたいしてメモリー不足エラーと報告するだろう。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1357
 msgid "If Emacs protests that it is out of memory, yet you witness a substantial amount of free space remaining, search the log buffer for a string containing:"
-msgstr ""
+msgstr "空き容量がかなり残っているにも関わらずEmacsがメモリーの不足を訴えるようなら、ログバッファーから以下の文字列を含む行を検索して欲しい:"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1359
 #, no-wrap
 msgid "  \"Possible out of memory error.  The Java exception follows:\"\n"
 msgstr ""
+"```text\n"
+"  \"Possible out of memory error.  The Java exception follows:\"\n"
+"```\n"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1363
 msgid "subsequent to which a reproduction of the exception precipitating the spurious OOM error should be located.  This exception is invariably indicative of a bug within Emacs that should be fixed."
-msgstr ""
+msgstr "そうすれば偽りのメモリー不足エラーに隠れていた例外を改めて発見できるかもしれない。このような例外はいつでも、修正すべきバグがEmacsにあることを示している。"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1366
 msgid "This file is part of GNU Emacs."
 msgstr ""
+"```text\n"
+"This file is part of GNU Emacs.\n"
+"```"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1371
 msgid "GNU Emacs is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
 msgstr ""
+"```text\n"
+"GNU Emacs is free software: you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation, either version 3 of the License, or\n"
+"(at your option) any later version.\n"
+"```"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1376
 msgid "GNU Emacs is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
 msgstr ""
+"```text\n"
+"GNU Emacs is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"```"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1379
 msgid "You should have received a copy of the GNU General Public License along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>."
 msgstr ""
+"```text\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with GNU Emacs.  If not, see <https://www.gnu.org/licenses/>.\n"
+"```"
 
 #. type: Plain text
 #: emacs-30/etc/DEBUG_editable:1384
 msgid "Local variables: mode: outline paragraph-separate: \"[ \t\f]*$\" end:"
 msgstr ""
+"Local variables:\n"
+"mode: markdown\n"
+"paragraph-separate: \"[ \t\f]*$\"\n"
+"end:"
